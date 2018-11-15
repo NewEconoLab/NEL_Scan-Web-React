@@ -43,7 +43,7 @@ export default {
     amount: "金额",
     id: "ID",
     available: "总量",
-    precision: "精确到小数点后位数",
+    precision: "小数点后位数",
     rank: "排名",
     domainName: "域名",
     highestBid: "当前最高价",
@@ -116,7 +116,7 @@ export default {
     hash: "Hash",
     type: "类型",
     available: "总量",
-    precision: "精确到小数点后位数",
+    precision: "小数点后位数",
     admin: "发行商地址"
   },
   nns: {

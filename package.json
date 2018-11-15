@@ -165,7 +165,8 @@
     "text-fff": "#fff",
     "background": "#F6F6F6",
     "line-color": "#ECECEC",
-    "hearder-line": "#B6C9FF"
+    "hearder-line": "#B6C9FF",
+    "footer-color":"#5F86FB"
   },
   "testtheme": {
     "main-color": "#151A1E",
@@ -186,6 +187,7 @@
     "text-fff": "#fff",
     "background": "#F6F6F6",
     "line-color": "#ECECEC",
-    "hearder-line": "#B6C9FF"
+    "hearder-line": "#B6C9FF",
+    "footer-color":"#282B2E"
   }
 }
