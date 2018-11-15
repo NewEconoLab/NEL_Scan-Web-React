@@ -52,7 +52,7 @@ export default () => {
   if (process.env.REACT_APP_SERVER_ENV === 'DEV') {
     return (
       <Provider {...store}>
-        <HashRouter basename="test">
+        <HashRouter>
           <Layout>
             <Switch>
               <ObserverRender />
@@ -65,15 +65,13 @@ export default () => {
 
   return (
     <Provider {...store}>
-      {/* <BrowserRouter > */}
-      <HashRouter>
+      <HashRouter >
         <Layout>
           <Switch>
             <ObserverRender />
           </Switch>
         </Layout>
       </HashRouter>
-      {/* </BrowserRouter> */}
     </Provider>
   );
 };

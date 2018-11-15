@@ -200,7 +200,7 @@ export default class Header extends React.Component<IProps, IState>{
   }
   public getPath = (base) => {
     const locations = this.props.history.location;
-    window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`
+    window.location.href = `${location.origin}${base || ''}#${locations.pathname}${locations.search}${locations.hash}`
   }
   public onClickEnglish = () => {
     store['common'].language = 'en';
