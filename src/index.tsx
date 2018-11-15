@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import App from './App';
 import './reset.less';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import en_US from 'antd/lib/locale-provider/en_US';
 import { LocaleProvider } from 'antd';
@@ -38,4 +38,4 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-registerServiceWorker();
+// registerServiceWorker();
