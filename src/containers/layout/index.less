@@ -1,0 +1,36 @@
+.layout-container {
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  .layout-main{
+    min-height: 100%;
+    padding-top:58px;
+    margin-bottom:-450px;
+    padding-bottom:450px;
+    box-sizing: border-box;
+  }
+  .ant-layout-has-sider {
+    height:100%;
+  }
+  .nodata-page{
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    top: 45px;
+    height: 100%;
+    z-index: 2;
+  }
+}
+
+
+@media screen and (max-width:1000px) {
+  .header-wrap{display:none}
+  .header-mobile-container {display: flex}
+  .layout-container .layout-main{
+    padding-top:48px;
+    margin-bottom:0;
+    padding-bottom:0;
+  }
+} 

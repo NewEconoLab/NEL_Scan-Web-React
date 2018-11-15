@@ -1,0 +1,60 @@
+.button-group{
+    display: inline-block;
+    width: 70px;
+    height: 24px;
+    font-size: 12px;
+    line-height: 24px;
+    text-align: center;
+    border: 1px solid @main-color;
+    border-radius: 3px;
+    color: @main-color;
+    background: none;
+    box-sizing: border-box;
+    &:hover{
+        background: @main-color;
+        color: @text-fff;
+    }
+    &.search-btn{
+        border: 1px solid @text-fff;
+        color: @text-fff;
+        &:hover{
+            background: @text-fff;
+            color: @main-color;
+        }
+    }
+    &.bg-btn{
+        width: 90px;
+        border: 1px solid @text-fff;
+        color: @text-fff;
+        &:hover{
+            background: @text-fff;
+            color: @main-color;
+        }
+    }
+    &.mobile-btn{
+        background: @main-color;
+        box-shadow: 0 2px 4px 0 @btn-shadowColor;
+        border-radius: 3px;
+        border: none;
+        color: @text-fff;
+        font-size: 10px;
+    }
+}
+@media (min-width:2560px){
+    .button-group{     
+        &.search-btn{
+            border: 1px solid @text-fff;
+            color: @text-fff;
+            &:hover{
+                background: @text-fff;
+                color: @main-color;
+            }
+        }
+        &.bg-btn{
+            width: 157px;
+            height: 40px;
+            font-size: 20px;
+            line-height: 40px;
+        }
+    }
+}

@@ -1,0 +1,147 @@
+.table-wrap{
+    // border: 1px solid red;
+    background: #FFFFFF;
+    // box-shadow: 0 2px 10px 0 rgba(185,185,185,0.50);
+    // border-radius: 3px;    
+    .table-content{     
+        display: block;
+        .no-data-content{
+            text-align: center;
+            height: 54px;
+            line-height: 54px;
+        }
+        .table-th{
+            border-bottom: 3px solid @line-color;
+            padding: 0 15px;
+            ul{
+                display: flex;
+                padding:10px 0;
+                li{
+                    flex:1;
+                    text-align: center;
+                    font-size: 12px;
+                    font-family: NotoSansHans-Regular;
+                    &.addr-text{
+                        min-width: 315px;
+                    } 
+                }
+            }
+        }
+        .table-body{
+            ul{
+                li{
+                    border-bottom: 1px solid @line-color;
+                    padding: 20px 0;
+                    display: flex;
+                    text-align: center;
+                    align-items: center;
+                    height: 54px;
+                    box-sizing: border-box;
+                    padding: 0 15px;
+                    span{
+                        flex: 1;
+                        font-size: 14px;
+                        font-family: NotoSansHans-Regular;  
+                        &.img-text {
+                            text-align: left;
+                            text-indent: .25rem;   
+                        }
+                        &.img-text-bg{
+                            text-align: left;
+                            text-indent: .95rem;
+                        }
+                        &.tran-img-text{
+                            text-align: left;
+                            text-indent: 1rem;
+                        } 
+                        &.addr-text{
+                            min-width: 315px;
+                        }   
+                        &.small-font{
+                            font-size: 12px;
+                        }
+                        &.addr-utxo-text{
+                            min-width: 540px;
+                        }
+                        &.nns-peirod{
+                            color:@nns-peirod;
+                        } 
+                        &.nns-overtime{
+                            color:@nns-overtime;
+                        }                                  
+                        a{
+                            color: @text-link;
+                            &:hover{
+                                color:@link-hover;
+                                text-decoration: underline;
+                            }
+                        } 
+                        img{
+                            width: 20px;
+                            height: 20px;
+                            vertical-align: middle;
+                            margin-right: 5px;
+                            border: none;
+                        }             
+                    }
+                }
+            }
+        }
+    }
+    .mobile-table-content{
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .table-wrap{
+        .table-content{
+            display: none;
+        }
+        .mobile-table-content{
+            display: block;
+            margin-bottom: 30px;
+            .table-body{
+                ul{
+                    li{
+                        padding: 20px 10px;
+                        border-bottom: 1px solid @line-color;
+                        .table-line{                            
+                            font-size: 12px;
+                            margin-bottom: 20px;
+                            .line-title{
+                                display: inline-block;
+                                vertical-align: middle;
+                                text-align: left;
+                                width:85px;
+                                color: @notallow;
+                            }
+                            .line-content{
+                                display: inline-block;
+                                vertical-align: middle;
+                                text-align:left;
+                                word-break: break-word;
+                                width: 1.8rem;
+                                img {
+                                    display: none;
+                                }
+
+                                .hint-img img {
+                                    display: initial;
+                                }
+                            }
+                            &:last-child{
+                                margin-bottom: 0;
+                            }
+                        }
+
+                        span {
+                            a {
+                                color: @text-link;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  }

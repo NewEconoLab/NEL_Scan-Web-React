@@ -1,0 +1,106 @@
+.transaction-page,.transactioninfo-page{
+    width: 10.88rem;
+    min-width: 1088px;
+    padding: 0 20px;
+    margin: 0 auto;
+    margin-top: .8rem;
+    margin-bottom: 1rem;
+}
+.transactioninfo-page{
+    .transactioninfo-input-output{
+        display: flex;
+        justify-content: center;        
+        .input-wrapper,.output-wrapper{
+            flex:1;
+            margin-bottom: 50px;
+        }
+        .input-wrapper{
+            margin-right: 20px;
+        }
+    }
+    .nep5-trans-wrapper{ 
+        .nep5-trans-table {
+            background:@text-fff;
+            box-shadow: 0 2px 10px 0 rgba(185,185,185,0.50);
+            border-radius: 3px; 
+            .table-th li:nth-of-type(2), .table-th li:nth-of-type(3){
+                min-width:315px;
+            }
+        }
+    }
+}
+
+   
+.transaction-page{
+    .transaction-table{
+        background:@text-fff;
+        box-shadow: 0 2px 10px 0 rgba(185,185,185,0.50);
+        border-radius: 3px;
+    }
+}
+
+
+@media screen and (max-width:768px) {
+    .transaction-page,.transactioninfo-page{
+        width: 100%;
+        min-width: 3.75rem;
+        padding: 0 20px;
+        margin: 0 auto;
+        margin-top: .5rem;
+        margin-bottom: 1rem;
+        box-sizing: border-box;
+        .inline-select{
+            margin-top: 15px !important;
+        }
+        .info-content {
+            .info-list {
+                ul {
+                    li {
+                        min-height:.54rem;
+                        height:auto;
+                        padding-top:.05rem;
+                        padding-bottom:.05rem;
+                        box-sizing: border-box;
+                        span.type-name {
+                            flex-grow: 0;
+                            width:1.1rem;
+                            min-width: 1.1rem;
+                            text-indent: .15rem;
+                        }
+
+                        span.type-content {
+                            flex-shrink: 0;
+                            padding-right:.1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .transactioninfo-page{
+        .transactioninfo-input-output{
+            display: block;
+            flex-wrap:wrap;       
+            .input-wrapper,.output-wrapper{
+                flex:1;
+                margin-right: 0;
+                margin-bottom: 50px;
+                .table-wrap{
+                    background:@text-fff;
+                    box-shadow: 0 2px 10px 0 rgba(185,185,185,0.50);                    
+                }
+                
+            }
+        }
+        .nep5-trans-wrapper{ 
+            .nep5-trans-table {
+                background:@text-fff;
+                box-shadow: 0 2px 10px 0 rgba(185,185,185,0.50);
+                border-radius: 3px; 
+                .table-th li:nth-of-type(2), .table-th li:nth-of-type(3){
+                    min-width:315px;
+                }
+            }
+        }
+    }
+}
