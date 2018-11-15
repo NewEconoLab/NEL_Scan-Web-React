@@ -2,7 +2,7 @@
     // border: 1px solid red;
     background: #FFFFFF;
     // box-shadow: 0 2px 10px 0 rgba(185,185,185,0.50);
-    // border-radius: 3px;    
+    border-radius: 3px;    
     .table-content{     
         display: block;
         .no-data-content{
@@ -84,6 +84,9 @@
                             border: none;
                         }             
                     }
+                    &:last-child{
+                        border-bottom: none;
+                    }
                 }
             }
         }
@@ -133,7 +136,9 @@
                                 margin-bottom: 0;
                             }
                         }
-
+                        &:last-child{
+                            border-bottom: none;
+                        }
                         span {
                             a {
                                 color: @text-link;
