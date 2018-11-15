@@ -5,7 +5,8 @@ import './index.less';
 
 interface IState
 {
-    isShowCode: boolean
+    isShowCode: boolean,
+    isShowqqCode:boolean
 }
 interface IProps {
     locale:any
@@ -13,7 +14,8 @@ interface IProps {
 export default class Footer extends React.Component<IProps, IState>
 {
     public state = {
-        isShowCode: false
+        isShowCode: false,
+        isShowqqCode:false
     }
 
     public isShowWechat = () =>
@@ -23,6 +25,12 @@ export default class Footer extends React.Component<IProps, IState>
         })
     }
 
+    public isShowQQ = () =>
+    {
+        this.setState({
+            isShowqqCode: !this.state.isShowqqCode
+        })
+    }
     public render()
     {
         return (
@@ -57,19 +65,25 @@ export default class Footer extends React.Component<IProps, IState>
                                 </li>
                                 <li>
                                     <img src={require('@/img/qq.png')} alt="" />
-                                    <a href="https://jq.qq.com/?_wv=1027&k=5SahDHr" target="_blank">{this.props.locale.qq}</a>
+                                    <span onClick={this.isShowQQ}>{this.props.locale.qq}</span>
+                                    {
+                                        this.state.isShowqqCode && (
+                                            <div className="code-wrap">
+                                                <img src={require('@/img/wechatcode.png')} alt="qqcode.png" />
+                                            </div>
+                                        )
+                                    }
                                 </li>
                                 <li>
                                     <img src={require('@/img/wechat.png')} alt="" />
                                     <span onClick={this.isShowWechat}>{this.props.locale.wechat}</span>
                                     {
                                         this.state.isShowCode && (
-                                            <div className="wechat-code">
+                                            <div className="code-wrap">
                                                 <img src={require('@/img/wechatcode.png')} alt="wechatcode.png" />
                                             </div>
                                         )
                                     }
-
                                 </li>
                             </ul>
                         </div>

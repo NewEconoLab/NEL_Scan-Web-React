@@ -249,7 +249,7 @@ export default class Header extends React.Component<IProps, IState>{
                       <div className="select-wrap" id="selectlang" onClick={this.toggleEnv}>
                         <ul>
                           <li><a onClick={this.getPath.bind(this, '')}>{this.props.locale.mainnet}</a></li>
-                          <li><a onClick={this.getPath.bind(this, '/test/')}>{this.props.locale.testnet}</a></li>
+                          <li><a onClick={this.getPath.bind(this, '/test')}>{this.props.locale.testnet}</a></li>
                         </ul>
                       </div>
                     )

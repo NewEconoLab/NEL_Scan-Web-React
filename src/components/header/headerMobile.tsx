@@ -239,7 +239,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
                     this.state.isShowEnv && (
                       <div className="child" onClick={this.toggleEnv2}>
                         <span><a onClick={this.getPath.bind(this, '')}>{this.props.locale.mainnet}</a></span>
-                        <span><a onClick={this.getPath.bind(this, '/test/')}>{this.props.locale.testnet}</a></span>
+                        <span><a onClick={this.getPath.bind(this, '/test')}>{this.props.locale.testnet}</a></span>
                       </div>
                     )
                   }

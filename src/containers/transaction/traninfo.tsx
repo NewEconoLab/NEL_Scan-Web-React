@@ -100,6 +100,13 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
         return this.props.transaction.nep5Info ? this.props.transaction.nep5Info.symbol : ""
     }
     // 列表特殊处理
+    public renderVinVout = (value, key) => {
+        if (key === 'address') {
+            return <span className="addr-text">{value}</span>
+        }
+        return null;
+    }
+    // 列表特殊处理
     public renderNep5Trans = (value, key) => {
 
         if (key === 'asset') {
