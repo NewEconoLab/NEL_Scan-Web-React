@@ -45,7 +45,7 @@ class NNSInfo extends React.Component<INNSInfoProps, {}> {
     return (
       <div className="nnsinfo-page">
         <div className="goback-wrapper">
-          <span className="goback-text" onClick={this.onGoBack} >&lt;&lt;  {this.intrl.btn.goback}</span>
+          <span className="goback-text" onClick={this.onGoBack} >&lt;&lt;  {this.intrl.btn.goback2}</span>
         </div>
         {
           (this.props.nnsinfo.nnsInfo && this.props.nnsinfo.nnsInfo.auctionState === '0401') && (

@@ -1,10 +1,11 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/transcation.api'
-import { ITransactionsStore, ITransInfo, ITransactionList, INep5Trans } from '../interface/transaction.interface';
+import { ITransactionsStore, ITransInfo, ITransaction, INep5Trans } from '../interface/transaction.interface';
 import { INep5Asset } from '@/containers/asset/interface/asset.interface';
 
 class Transaction implements ITransactionsStore {
-    @observable public transList: ITransactionList | null = null;
+    @observable public transList: ITransaction[];
+    @observable public transListCount:number;
     @observable public tranInfo: ITransInfo;
     @observable public nep5Trans: INep5Trans[] = [];
     @observable public nep5Info: INep5Asset | null = null;
@@ -19,9 +20,11 @@ class Transaction implements ITransactionsStore {
         try {
             result = await Api.gettransactionlist(page, size, type);
         } catch (error) {
+            this.transListCount = 0;
             return false;
         }
-        this.transList = result ? result[0] : [];
+        this.transListCount = result[0].count || 0;
+        this.transList = result ? result[0].list : [];
         return true;
     }
     /**

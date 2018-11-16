@@ -114,6 +114,20 @@ export default class Footer extends React.Component<IProps, IState>
                                 </li>
                                 <li>
                                     {
+                                        process.env.REACT_APP_SERVER_ENV === 'DEV' && <img src={require('@/img/nellogo-t.png')} alt="nel.png" />
+                                    }
+                                    {
+                                        process.env.REACT_APP_SERVER_ENV !== 'DEV' && <img src={require('@/img/nellogo-m.png')} alt="nel.png" />
+                                    }
+                                    {
+                                        store.language === 'zh' && <a href="https://nel.group/index.html" target="_blank">{this.props.locale.nel}</a>
+                                    }
+                                    {
+                                        store.language === 'en' && <a href="https://nel.group/index-En.html" target="_blank">{this.props.locale.nel}</a>
+                                    }                                    
+                                </li>
+                                <li>
+                                    {
                                         process.env.REACT_APP_SERVER_ENV === 'DEV' && <img src={require('@/img/nns-t.png')} alt="nns.png" />
                                     }
                                     {

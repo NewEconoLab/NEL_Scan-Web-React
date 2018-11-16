@@ -23,7 +23,8 @@ export default {
   btn: {
     viewAll: "查看所有",
     search: "查询",
-    goback: "返回"
+    goback: "返回列表",
+    goback2:"返回"
   },
   tableTh: {
     height: "高度",
@@ -172,6 +173,7 @@ export default {
     nns:"NNS 官网",
     neodun:"Neodun 官网",
     wechat:"微信群",
-    qq:"QQ群"
+    qq:"QQ群",
+    nel:"NEL官网"
   }
 }

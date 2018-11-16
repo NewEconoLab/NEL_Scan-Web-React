@@ -23,7 +23,8 @@ export default {
   btn: {
     viewAll: "View all",
     search: "Search",
-    goback: "Go back"
+    goback: "Back to list",
+    goback2:"Go back"
   },
   tableTh: {
     height: "Height",
@@ -172,6 +173,7 @@ export default {
     nns:"NNS Official Website",
     neodun:"Neodun Official Website",
     wechat:"WeChat Subscription",
-    qq:"QQ Group"
+    qq:"QQ Group",
+    nel:"NEL Official Website"
   }
 }

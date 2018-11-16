@@ -1,7 +1,8 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { INep5Asset } from '@/containers/asset/interface/asset.interface';
 export interface ITransactionsStore {
-    transList: ITransactionList| null,
+    transList: ITransaction[],
+    transListCount:number,
     tranInfo:ITransInfo,
     nep5Trans:INep5Trans[],
     nep5Info:INep5Asset|null,

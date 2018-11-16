@@ -133,7 +133,7 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
         return (
             <div className="transactioninfo-page">
                 <div className="goback-wrapper">
-                    <span className="goback-text" onClick={this.onGoBack}>&lt;&lt;  Go back</span>
+                    <span className="goback-text" onClick={this.onGoBack}>&lt;&lt;  {this.intrl.btn.goback}</span>
                 </div>
                 <div className="info-content">
                     <TitleText text={this.intrl.transaction.titleinfo1} isInfoTitle={true} />
@@ -180,10 +180,10 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                 <div className="transactioninfo-input-output">
                     <div className="input-wrapper">
                         <TitleText text={this.intrl.transaction.input} />
-                        <Table tableTh={this.transVTableTh} tableData={this.state.vinList} />
+                        <Table tableTh={this.transVTableTh} tableData={this.state.vinList} /> 
                     </div>
                     <div className="output-wrapper">
-                        <TitleText text={this.intrl.transaction.output} />
+                        <TitleText text={this.intrl.transaction.output} />                        
                         <Table tableTh={this.transVTableTh} tableData={this.state.outList} />
                     </div>
                 </div>

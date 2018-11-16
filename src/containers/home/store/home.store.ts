@@ -25,7 +25,8 @@ class Home implements IHomeStore
         {
             return false;
         }
-        this.blockCount = result ? toThousands(result[0].blockcount) : '0';
+        const count = (parseInt(result[0].blockcount,10) - 1).toString();
+        this.blockCount = result ? toThousands(count) : '0';
         return true;
     }
     /**

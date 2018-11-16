@@ -23,7 +23,7 @@ class Search extends React.Component<INNSProps, any> {
   public onChange = (value: string) =>
   {
     this.setState({
-      inputValue: value.trim(),
+      inputValue: value.trim().toLocaleLowerCase(),
       searchType: 0
     })
   }

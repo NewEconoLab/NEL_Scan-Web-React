@@ -11,6 +11,7 @@ import { ITransactionsProps } from './interface/transaction.interface';
 import { observer, inject } from 'mobx-react';
 import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
+import Spinner from '@/components/spinner'
 
 @inject('transaction')
 @observer
@@ -89,57 +90,79 @@ class Transactions extends React.Component<ITransactionsProps, {}>
   public state = {
     currentPage: 1,
     pageSize: 15,
-    type: "all"
+    type: "all",
+    isLoading: true
   }
-  
-  // public componentWillUnmount() {
-  //   this.props.transaction.transList = null;
-  // }
+
+  public componentWillUnmount()
+  {
+    this.props.transaction.transList = [];
+  }
   // 列表特殊处理
-  public renderTran = (value, key) => {
-    if (key === 'type') {
+  public renderTran = (value, key) =>
+  {
+    if (key === 'type')
+    {
       value = value.replace('Transaction', '');
       return <span className="img-text-bg"><img src={this.imgs[value.toLowerCase()]} alt="" />{value}</span>
     }
 
-    if (key === 'txid') {
+    if (key === 'txid')
+    {
       const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
       return <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, value)}>{txid}</a></span>
     }
-    if (key === 'blockindex') {
+    if (key === 'blockindex')
+    {
       return <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, value)}>{toThousands(value.toString())}</a></span>
     }
-    if (key === 'size') {
+    if (key === 'size')
+    {
       return <span>{value} bytes</span>
     }
     return null;
   }
   // 区块详情链接
-  public goBlockInfo = (index: string) => {
+  public goBlockInfo = (index: string) =>
+  {
     this.props.history.push('/block/' + index)
   }
   // 交易详情链接
-  public goTransInfo = (txid: string) => {
+  public goTransInfo = (txid: string) =>
+  {
     this.props.history.push('/transaction/' + txid)
   }
   // 下拉选择功能
-  public onCallback = (item) => {
+  public onCallback = (item) =>
+  {
     this.setState({
       currentPage: 1,
-      type: item.id
-    }, () => {
-      this.props.transaction.getTransList(this.state.currentPage, this.state.pageSize, this.state.type);
-    })
+      type: item.id,
+      isLoading: true
+    }, async () =>
+      {
+        await this.props.transaction.getTransList(this.state.currentPage, this.state.pageSize, this.state.type);
+        this.setState({
+          isLoading: false
+        })
+      })
   }
   // 翻页功能
-  public onGoPage = (index: number) => {
+  public onGoPage = (index: number) =>
+  {
     this.setState({
-      currentPage: index
-    }, () => {
-      this.props.transaction.getTransList(this.state.currentPage, this.state.pageSize, this.state.type);
-    })
+      currentPage: index,
+      isLoading: true
+    }, async () =>
+      {
+        await this.props.transaction.getTransList(this.state.currentPage, this.state.pageSize, this.state.type);
+        this.setState({
+          isLoading: false
+        })
+      })
   }
-  public render() {
+  public render()
+  {
 
     return (
       <div className="transaction-page">
@@ -147,15 +170,22 @@ class Transactions extends React.Component<ITransactionsProps, {}>
           <Select options={this.options} text="Type" onCallback={this.onCallback} />
         </TitleText>
         {
-          this.props.transaction.transList && (
+          this.state.isLoading && (
+            <div className="loading-wrapper">
+              <Spinner />
+            </div>
+          )
+        }
+        {
+          !this.state.isLoading && (
             <div className="transaction-table">
               <Table
                 tableTh={this.transTableTh}
-                tableData={this.props.transaction.transList && this.props.transaction.transList.list}
+                tableData={this.props.transaction.transList && this.props.transaction.transList}
                 render={this.renderTran}
               />
               <Page
-                totalCount={this.props.transaction.transList && this.props.transaction.transList.count}
+                totalCount={this.props.transaction.transListCount && this.props.transaction.transListCount}
                 pageSize={this.state.pageSize}
                 currentPage={this.state.currentPage}
                 onChange={this.onGoPage}
