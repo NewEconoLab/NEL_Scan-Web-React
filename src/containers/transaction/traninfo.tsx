@@ -81,7 +81,7 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                     vinList: vinlist
                 })
             }
-            if (this.props.transaction.tranInfo.vin.length !== 0) {
+            if (this.props.transaction.tranInfo.vout.length !== 0) {
                 const voutlist = this.props.transaction.tranInfo.vout.map((key) => {
                     const newObj = {
                         address: key.address,
@@ -93,6 +93,8 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                     outList: voutlist
                 })
             }
+            console.log(this.state);
+            
         }
     }
     public getNep5Name = async (asset) => {
