@@ -67,7 +67,7 @@ export default {
     total2: " 页"
   },
   home: {
-    lastBlock: "上一个区块",
+    lastBlock: "最新区块",
     totalTrans: "交易总数",
     totalAddr: "已创建的钱包地址数",
     blocks: "最新的10个区块",

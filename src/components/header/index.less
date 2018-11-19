@@ -29,7 +29,8 @@
                     font-size: 15px;
                     text-align: center;
                     margin-right: .5rem; 
-                    line-height: 58px;                   
+                    line-height: 58px;    
+                    position: relative;               
                     a{
                         color: @text-fff;
                         cursor: pointer;
@@ -41,6 +42,19 @@
                     }
                     &:last-child{
                         margin-right: 0;
+                    }
+                    &.underLine{
+                        height: 6px;
+                        &::after{
+                            content: '';
+                            width: 100%;
+                            height: 6px;
+                            background: #fff;
+                            border-radius: 20px;
+                            position: absolute;
+                            top: 52px;
+                            left: 0;
+                        }
                     }
                 }
             }
