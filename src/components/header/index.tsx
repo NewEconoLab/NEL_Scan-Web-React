@@ -109,7 +109,7 @@ export default class Header extends React.Component<IProps, IState>{
     if (search) {
       if (search.length === 34) {
         if (Neotool.verifyPublicKey(search)) { // 是否是地址
-          window.location.href ='/address/' + search;
+          window.location.href = '/address/' + search;
           // this.props.history.push('/address/' + search);
         } else {
           return false;
@@ -118,16 +118,16 @@ export default class Header extends React.Component<IProps, IState>{
       } else {
         search = search.replace('0x', '');
         if (search.length === 64) {
-          window.location.href ='/transaction/0x' + search;
+          window.location.href = '/transaction/0x' + search;
         }
         else if (search.length === 40) {
-          window.location.href ='/nep5/0x' + search;
+          window.location.href = '/nep5/0x' + search;
         }
         else if (!isNaN(Number(search))) {
-          window.location.href ='/block/' + search;
+          window.location.href = '/block/' + search;
         }
         else if (search.length > 64) {
-          window.location.href ='/asset/0x' + search;
+          window.location.href = '/asset/0x' + search;
         } else {
           return false;
         }
@@ -144,9 +144,9 @@ export default class Header extends React.Component<IProps, IState>{
   public goAssetInfo = (assetid) => {
     // this.props.home.searchAssetList = [];
     if (assetid.length === 42) {
-      window.location.href ='/nep5/' + assetid;
+      window.location.href = '/nep5/' + assetid;
     } else {
-      window.location.href ='/asset/' + assetid;
+      window.location.href = '/asset/' + assetid;
     }
   }
   // 是否显示search
@@ -193,11 +193,20 @@ export default class Header extends React.Component<IProps, IState>{
   }
   public componentWillUnmount() {
     EventHandler.remove(this.globalClick);
+
+    this.setState({
+      isShowSearch: false,
+      isShowSearchBtn: false,
+      inputValue: '',
+      isShowBrowse: false,
+      isShowEnv: false,
+      isShowLanguage: false,
+    })
   }
   public getPath = (base) => {
     const locations = this.props.history.location;
     console.log(location.origin);
-    
+
     window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`
   }
   public onClickEnglish = () => {
@@ -221,6 +230,19 @@ export default class Header extends React.Component<IProps, IState>{
     setTimeout(() => {
       window.location.reload();
     })
+  }
+  public mapRouterUnderline = (path) => {
+    if (path instanceof Array) {
+      for (const i in path) {
+        if (new RegExp(path[i], 'i').test(this.props.history.location.pathname)) {
+          return "under-line"
+        }
+      }
+    }
+    if (path === this.props.history.location.pathname) {
+      return "under-line"
+    }
+    return '';
   }
   public render() {
     return (
@@ -280,8 +302,8 @@ export default class Header extends React.Component<IProps, IState>{
           </div>
           <div className="header-menu">
             <ul>
-              <li><Link to="/">{this.props.locale.explorer}</Link></li>
-              <li>
+              <li className={this.mapRouterUnderline('/')}><Link to="/">{this.props.locale.explorer}</Link></li>
+              <li className={this.mapRouterUnderline(['/blocks', '/block', '/transactions', '/transaction', '/addresses', '/address'])}>
                 <div className="select-box">
                   <div className="select-content">
                     <label onClick={this.toggleBrowse}>
@@ -302,8 +324,8 @@ export default class Header extends React.Component<IProps, IState>{
                   }
                 </div>
               </li>
-              <li><Link to="/assets">{this.props.locale.assets}</Link></li>
-              <li><Link to="/nns">{this.props.locale.nnsevent}</Link></li>
+              <li className={this.mapRouterUnderline(['/asset', '/assets', '/nep5'])}><Link to="/assets">{this.props.locale.assets}</Link></li>
+              <li className={this.mapRouterUnderline(['/nns', '/nnsinfo', '/nnsbeing', '/nnsrank'])}><Link to="/nns">{this.props.locale.nnsevent}</Link></li>
               <li>
                 {
                   process.env.REACT_APP_SERVER_ENV === 'DEV' ? <a href="https://testwallet.nel.group/" target="_blank">{this.props.locale.wallet}</a> : <a href="https://wallet.nel.group/" target="_blank">{this.props.locale.wallet}</a>
