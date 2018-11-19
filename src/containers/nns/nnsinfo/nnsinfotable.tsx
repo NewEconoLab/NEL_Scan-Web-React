@@ -75,7 +75,7 @@ class NNSInfoTable extends React.Component<INNSInfoProps, {}> {
     }
     // 获取竞拍排行列表
     public getAuctionBidInfoTx(id) {
-        return this.props.nnsinfo.getAuctionBidInfoTx(id, this.state.currentPageBidRank, this.state.pageSizeBidRank);
+        return this.props.nnsinfo.getAuctionBidInfoTx(id, this.state.currentPageBidInfo, this.state.pageSizeBidInfo);
     }
     // 加价排行列表特殊处理
     public renderBidRank = (value, key) => {

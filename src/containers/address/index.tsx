@@ -42,6 +42,9 @@ class Address extends React.Component<IAddressProps, {}> {
     this.props.address.getAddrCount();
     this.props.address.getAddressList(this.state.pageSize, this.state.currentPage);
   }
+  public componentWillUnmount() {
+    this.props.address.addrList = [];
+  }
   // 列表特殊处理
   public renderAddress = (value, key) => {
     if (key === 0) {

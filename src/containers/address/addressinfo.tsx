@@ -83,14 +83,19 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     const params = this.props.match.params;
     this.setState({
       address: params["address"]
-    });
+    });    
     this.props.addressinfo.getAddressInfo(params["address"]);
     this.props.addressinfo.getAddressBalance(params["address"]);
     this.props.addressinfo.getAddressNep5Asset(params["address"]);
     this.props.addressinfo.getAddressTrans(params["address"], this.state.transSize, this.state.transPage);
     this.getUtxoList(params["address"]);
   }
-
+  public componentWillUnmount() {
+    this.props.addressinfo.addrBalanceList = [];
+    this.props.addressinfo.addrTransList = [];
+    this.props.addressinfo.addrUtxoList = [];
+    this.props.addressinfo.addrUtxoListCount = 0;
+  }
   // 获取utxo列表
   public getUtxoList = (address: string) => {
     return this.props.addressinfo.getAddrUtxoList(address, this.state.utxoPage, this.state.utxoSize)
@@ -215,12 +220,12 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
           <div className="addrinfo-utxo-table">
             <Table
               tableTh={this.utxoTableTh}
-              tableData={this.props.addressinfo.addrUtxoList && this.props.addressinfo.addrUtxoList.list}
+              tableData={this.props.addressinfo.addrUtxoList && this.props.addressinfo.addrUtxoList}
               render={this.renderUtxo}
               className="address-utxo-table"
             />
             <Page
-              totalCount={this.props.addressinfo.addrUtxoList && this.props.addressinfo.addrUtxoList.count}
+              totalCount={this.props.addressinfo.addrUtxoListCount && this.props.addressinfo.addrUtxoListCount}
               pageSize={this.state.utxoSize}
               currentPage={this.state.utxoPage}
               onChange={this.onUtxoPage}

@@ -50,6 +50,10 @@ class NNSBeing extends React.Component<INNSProps, {}> {
       key: 'auctionState'
     }
   ]
+  public componentWillUnmount()
+  {
+    this.props.nns.nnsAuctingList = [];
+  }
   public onCallback = (item) => {
     this.props.nns.orderBy = item.id;
     this.getAuctingList();

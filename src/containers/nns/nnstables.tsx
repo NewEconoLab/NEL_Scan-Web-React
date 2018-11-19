@@ -87,6 +87,11 @@ class TableData extends React.Component<INNSProps, any>
   public async componentDidMount() {
     await this.props.nns.getAuctedDomain(1, 10);
   }
+  public componentWillUnmount()
+  {
+    this.props.nns.nnsAuctingList = [];
+    this.props.nns.nnsAuctionedList = [];
+  }
   // 区块列表特殊处理
   public renderAucting = (value, key) => {
     if (key === 'fulldomain') {

@@ -109,7 +109,8 @@ export default class Header extends React.Component<IProps, IState>{
     if (search) {
       if (search.length === 34) {
         if (Neotool.verifyPublicKey(search)) { // 是否是地址
-          this.props.history.push('/address/' + search);
+          window.location.href ='/address/' + search;
+          // this.props.history.push('/address/' + search);
         } else {
           return false;
         }
@@ -117,21 +118,16 @@ export default class Header extends React.Component<IProps, IState>{
       } else {
         search = search.replace('0x', '');
         if (search.length === 64) {
-          this.props.history.push('/transaction/0x' + search);
+          window.location.href ='/transaction/0x' + search;
         }
         else if (search.length === 40) {
-          this.props.history.push('/nep5/0x' + search);
+          window.location.href ='/nep5/0x' + search;
         }
         else if (!isNaN(Number(search))) {
-          this.props.history.push('/block/' + search);
+          window.location.href ='/block/' + search;
         }
         else if (search.length > 64) {
-          // let length = this.searchList.children.length;
-          // if (length) {
-          // let data = this.searchList.children[this.currentLine - 1].getAttribute("data");
-
-          // }
-          this.props.history.push('/asset/0x' + search);
+          window.location.href ='/asset/0x' + search;
         } else {
           return false;
         }
@@ -148,9 +144,9 @@ export default class Header extends React.Component<IProps, IState>{
   public goAssetInfo = (assetid) => {
     // this.props.home.searchAssetList = [];
     if (assetid.length === 42) {
-      this.props.history.push('/nep5/' + assetid);
+      window.location.href ='/nep5/' + assetid;
     } else {
-      this.props.history.push('/asset/' + assetid);
+      window.location.href ='/asset/' + assetid;
     }
   }
   // 是否显示search

@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/addressinfo.api';
-import { IAddressInfoStore, IAddrBalance, IAddrTrans, IUtxoByAddress, IBanlance, INep5OfAddress, ITransOfAddress } from '../interface/addressinfo.interface';
+import { IAddressInfoStore, IAddrBalance, IAddrTrans, IBanlance, INep5OfAddress, ITransOfAddress, IUtxobyAddresslist } from '../interface/addressinfo.interface';
 import { IAddress } from '../interface/address.interface';
 import * as CoinTool from '@/utils/cointool';
 class AddressInfo implements IAddressInfoStore
@@ -8,7 +8,8 @@ class AddressInfo implements IAddressInfoStore
     @observable public addrInfo: IAddress;
     @observable public addrBalanceList: IAddrBalance[] = [];
     @observable public addrTransList: IAddrTrans[];
-    @observable public addrUtxoList: IUtxoByAddress;
+    @observable public addrUtxoList: IUtxobyAddresslist[] = [];
+    @observable public addrUtxoListCount:number;
 
     /**
      * 获取该地址详情
@@ -137,9 +138,12 @@ class AddressInfo implements IAddressInfoStore
             result = await Api.getaddrutxolist(address, page, size);
         } catch (error)
         {
+            this.addrUtxoListCount = 0;
+            this.addrUtxoList = [];
             return false;
         }
-        this.addrUtxoList = result ? result[0] : null;
+        this.addrUtxoListCount = result ? result[0].count:0;
+        this.addrUtxoList = result ? result[0].list : null;
         return true;
     }
 }

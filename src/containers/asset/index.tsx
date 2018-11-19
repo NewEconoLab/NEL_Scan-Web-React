@@ -61,6 +61,11 @@ class Assets extends React.Component<IAssetProps, {}>
         this.props.asset.getAssetList();
         this.props.asset.getNep5List();
     }
+    public componentWillUnmount()
+    {
+        this.props.asset.assetList = [];
+        this.props.asset.nep5List = [];
+    }
     public onCallback = (item) =>
     {
         if (item.id === this.state.type)
@@ -95,7 +100,7 @@ class Assets extends React.Component<IAssetProps, {}>
         }
         return null;
     }
-    public renderNep5 = (value, key,item) =>
+    public renderNep5 = (value, key, item) =>
     {
         if (key === 'asset')
         {
@@ -133,13 +138,15 @@ class Assets extends React.Component<IAssetProps, {}>
             currentPageNep5: index
         })
     }
-    public assetListByPage = () => {
+    public assetListByPage = () =>
+    {
         const startNum = this.state.pageSizeAsset * (this.state.currentPageAsset - 1);
         const list = [...this.props.asset.assetList];
         return list.slice(startNum, startNum + this.state.pageSizeAsset);
     }
 
-    public nep5ListByPage = () => {
+    public nep5ListByPage = () =>
+    {
         const startNum = this.state.pageSizeNep5 * (this.state.currentPageNep5 - 1);
         const list = [...this.props.asset.nep5List];
         return list.slice(startNum, startNum + this.state.pageSizeNep5);

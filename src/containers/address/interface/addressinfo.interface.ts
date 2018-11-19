@@ -5,7 +5,8 @@ export interface IAddressInfoStore
     addrInfo: IAddress,                // 地址详情
     addrBalanceList:IAddrBalance[],    // 地址balance列表
     addrTransList:IAddrTrans[],        // 地址交易列表
-    addrUtxoList: IUtxoByAddress,      // 地址utxo列表
+    addrUtxoList: IUtxobyAddresslist[],      // 地址utxo列表
+    addrUtxoListCount:number,               // 交易总数
     getAddressInfo:(address:string) => Promise<boolean>,
     getAddrUtxoList:(address:string,size:number,page:number) => Promise<boolean>,
     getAddressBalance:(address:string) => Promise<boolean>,

@@ -51,9 +51,12 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
         await this.getTransactionInfo(params["txid"]);
         this.doVinVoutList();
         await this.props.transaction.getNep5Transbytxid(params["txid"]);
-
-
     }
+    public componentWillUnmount()
+  {
+    this.props.transaction.transList = [];
+    this.props.transaction.transListCount = 0;
+  }
     // 请求数据
     public getTransactionInfo = (txid: string) => {
         return this.props.transaction.getTransInfo(txid);
@@ -92,9 +95,7 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                 this.setState({
                     outList: voutlist
                 })
-            }
-            console.log(this.state);
-            
+            }            
         }
     }
     public getNep5Name = async (asset) => {

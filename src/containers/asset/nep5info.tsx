@@ -63,6 +63,13 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         this.props.assetinfo.getNep5TransCount("asset", params["nep5id"]);
         this.props.assetinfo.getNep5Transaction(params["nep5id"], this.state.pageSize, this.state.currentPage);
     }
+    public componentWillUnmount()
+    {
+        this.props.assetinfo.balanceRankCount = 0;
+        this.props.assetinfo.balanceRankList = [];
+        this.props.assetinfo.nep5TransList = [];
+        this.props.assetinfo.nep5TransCount =0;
+    }
     // 返回区块列表
     public onGoBack = () =>
     {

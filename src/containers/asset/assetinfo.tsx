@@ -43,6 +43,11 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         this.props.assetinfo.getBalanceRankCount(params["assetid"]);
         this.getBalanceRankList(params["assetid"]);
     }
+    public componentWillUnmount()
+    {
+        this.props.assetinfo.balanceRankCount = 0;
+        this.props.assetinfo.balanceRankList = [];
+    }
     // 返回区块列表
     public onGoBack = () => {
         this.props.history.push('/assets/');

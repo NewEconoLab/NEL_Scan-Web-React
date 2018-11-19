@@ -63,57 +63,75 @@ class TableData extends React.Component<IHomeProps, any>
     agency: require('@/img/agency.png')
   }
   // 初始
-  public componentDidMount() {
+  public componentDidMount()
+  {
     this.props.home.getBlockList(10, 1);
     this.props.home.getTransList(10, 1, '');
   }
+  public componentWillUnmount()
+  {
+    this.props.home.blockList = [];
+    this.props.home.transList = [];
+  }
   // 区块列表特殊处理
-  public renderBlock = (value, key) => {
-    if (key === 'index') {
+  public renderBlock = (value, key) =>
+  {
+    if (key === 'index')
+    {
       // const href = this.props.history.location.pathname =  '/block/' + value;
       return <span className="img-text"><img src={require('@/img/height.png')} alt="" /><a onClick={this.toBlockInfo.bind(this, value)} href="javascript:;">{toThousands(value.toString())}</a></span>
     }
 
-    if (key === 'time') {
+    if (key === 'time')
+    {
       value = formatTime.format('yyyy/MM/dd | hh:mm:ss', value.toString(), this.props.intl.locale)
       return <span className="small-font">{value}</span>
     }
     return null;
   }
   // 交易列表特殊处理
-  public renderTran = (value, key) => {
-    if (key === 'type') {
+  public renderTran = (value, key) =>
+  {
+    if (key === 'type')
+    {
       value = value.replace('Transaction', '')
       return <span className="img-text"><img src={this.imgs[value.toLowerCase()]} alt="" />{value}</span>
     }
 
-    if (key === 'txid') {
+    if (key === 'txid')
+    {
       const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
       return <span><a href="javascript:;" onClick={this.toTransInfo.bind(this, value)}>{txid}</a></span>
     }
-    if (key === 'size') {
+    if (key === 'size')
+    {
       return <span>{value} bytes</span>
     }
     return null;
   }
   // 跳转到区块列表页
-  public onViewBlock = () => {
+  public onViewBlock = () =>
+  {
     this.props.history.push('/blocks/');
   }
   // 跳转到交易列表页
-  public onViewTran = () => {
+  public onViewTran = () =>
+  {
     this.props.history.push('/transactions/');
   }
   // 跳转到区块详情页
-  public toBlockInfo = (index: string) => {
+  public toBlockInfo = (index: string) =>
+  {
     this.props.history.push('/block/' + index)
   }
   // 跳转到交易详情页
-  public toTransInfo = (txid: string) => {
+  public toTransInfo = (txid: string) =>
+  {
     this.props.history.push('/transaction/' + txid)
   }
 
-  public render() {
+  public render()
+  {
     return (
       <div className="tabledata-page">
         <div className="block-table">
