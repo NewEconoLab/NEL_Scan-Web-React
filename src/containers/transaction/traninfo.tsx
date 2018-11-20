@@ -114,7 +114,7 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
 
         if (key === 'asset') {
 
-            return <span><a href="javascript:;" onClick={this.goNep5Info.bind(this, value.asset)}>{value.symbol}</a></span>
+            return <span><a href="javascript:;" onClick={this.goNep5Info.bind(this, value.assetid)}>{value.symbol}</a></span>
         }
         if (key === 'from') {
             return <span className="addr-text">{value}</span>
