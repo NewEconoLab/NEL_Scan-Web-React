@@ -157,7 +157,17 @@
 }
 // 适配768以下
 @media (max-width:768px){
-    .footer-group{
-        display: none;
+    .footer-group{    
+        min-width: 3.75rem;  
+        height: 48px;
+        min-height: 48px;
+        background:@footer-color;
+        color: @text-fff;
+        .footer-wrap{
+            display: none;
+        } 
+        .footer-version{
+            padding-top: 3px;
+        }       
     }
 }

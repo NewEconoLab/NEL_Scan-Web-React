@@ -368,7 +368,7 @@ module.exports = {
       parallel: true,
       // Enable file caching
       cache: true,
-      sourceMap: shouldUseSourceMap,
+      // sourceMap: shouldUseSourceMap,
     }), // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,
