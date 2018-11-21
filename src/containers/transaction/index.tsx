@@ -116,10 +116,10 @@ class Transactions extends React.Component<ITransactionsProps, {}>
     {
       return <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, value)}>{toThousands(value.toString())}</a></span>
     }
-    if (key === 'size')
-    {
-      return <span>{value} bytes</span>
-    }
+    // if (key === 'size')
+    // {
+    //   return <span>{value}</span>
+    // }
     return null;
   }
   // 区块详情链接

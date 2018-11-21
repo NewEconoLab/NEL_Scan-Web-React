@@ -105,9 +105,9 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
             const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
             return <span><a onClick={this.goTransInfo.bind(this, value)}>{txid}</a></span>
         }
-        if (key === 'size') {
-            return <span>{value} bytes</span>
-        }
+        // if (key === 'size') {
+        //     return <span>{value}</span>
+        // }
         return null;
     }
     // 交易详情链接
@@ -153,7 +153,7 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
                             </li>
                             <li>
                                 <span className="type-name">{this.intrl.block.size}</span>
-                                <span className="type-content">{this.props.block.blockInfo && this.props.block.blockInfo.size}</span>
+                                <span className="type-content">{this.props.block.blockInfo && this.props.block.blockInfo.size} bytes</span>
                             </li>
                             <li>
                                 <span className="type-name">{this.intrl.block.previous}</span>

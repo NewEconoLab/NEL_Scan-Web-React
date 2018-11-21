@@ -28,7 +28,7 @@ export default {
   },
   tableTh: {
     height: "Height",
-    size: "Size",
+    size: "Size(bytes)",
     create: "Created on",
     transaction: "Transactions",
     type: "Type",

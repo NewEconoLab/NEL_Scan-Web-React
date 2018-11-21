@@ -28,7 +28,7 @@ export default {
   },
   tableTh: {
     height: "高度",
-    size: "大小",
+    size: "大小(bytes)",
     create: "创建时间",
     transaction: "交易数量",
     type: "类型",

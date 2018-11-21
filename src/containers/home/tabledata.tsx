@@ -103,10 +103,10 @@ class TableData extends React.Component<IHomeProps, any>
       const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
       return <span><a href="javascript:;" onClick={this.toTransInfo.bind(this, value)}>{txid}</a></span>
     }
-    if (key === 'size')
-    {
-      return <span>{value} bytes</span>
-    }
+    // if (key === 'size')
+    // {
+    //   return <span>{value} bytes</span>
+    // }
     return null;
   }
   // 跳转到区块列表页
