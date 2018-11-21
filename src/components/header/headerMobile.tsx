@@ -116,28 +116,37 @@ export default class HeaderMobile extends React.Component<any, IState> {
     search = search.trim();
     if (search)
     {
-      if (search.length === 34) {
-        if (Neotool.verifyPublicKey(search)) { // 是否是地址
-          window.location.href ='/address/' + search;
+      if (search.length === 34)
+      {
+        if (Neotool.verifyPublicKey(search))
+        { // 是否是地址
+          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address' + search : '/address/' + search;
           // this.props.history.push('/address/' + search);
-        } else {
+        } else
+        {
           return false;
         }
         return;
-      } else {
+      } else
+      {
         search = search.replace('0x', '');
-        if (search.length === 64) {
-          window.location.href ='/transaction/0x' + search;
+        if (search.length === 64)
+        {
+          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/transaction/0x' + search : '/transaction/0x' + search;
         }
-        else if (search.length === 40) {
-          window.location.href ='/nep5/0x' + search;
+        else if (search.length === 40)
+        {
+          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/nep5/0x' + search;
         }
-        else if (!isNaN(Number(search))) {
-          window.location.href ='/block/' + search;
+        else if (!isNaN(Number(search)))
+        {
+          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/block/' + search : '/block/' + search;
         }
-        else if (search.length > 64) {
-          window.location.href ='/asset/0x' + search;
-        } else {
+        else if (search.length > 64)
+        {
+          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/0x' + search : '/asset/0x' + search;
+        } else
+        {
           return false;
         }
       }
@@ -151,11 +160,11 @@ export default class HeaderMobile extends React.Component<any, IState> {
     })
     return;
   }
- 
+
   public onClickTochangeLanguage = () =>
   {
     if (this.state.languageText === "中")
-    {      
+    {
       store['common'].language = 'zh';
       this.setState({
         languageText: "中"
