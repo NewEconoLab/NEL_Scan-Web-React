@@ -7,7 +7,7 @@ import Footer from '@/components/footer'
 import { zh_CN, en_US } from '@/language';
 import store from '@/store/common';
 import HomeStore from '@/containers/home/store/home.store';
-
+import ScrollToTop from '@/components/scrolltotop';
 import './index.less';
 
 export default class LayoutIndex extends React.Component<any, any> {
@@ -20,7 +20,8 @@ export default class LayoutIndex extends React.Component<any, any> {
     }).isRequired
   }
 
-  public componentDidMount() {
+  public componentDidMount()
+  {
     // const titles = store.language === 'en' ? en_US.title : zh_CN.title;
     // const titleKeys = Object.keys(titles);
 
@@ -37,15 +38,18 @@ export default class LayoutIndex extends React.Component<any, any> {
     // });
   }
 
-  public render() {
+  public render()
+  {
     return (
       <div className="layout-container">
-        <Header home={HomeStore} history={this.context.router.history} locale={store.language === 'en' ? en_US.header : zh_CN.header} btn={store.language === 'en' ? en_US.btn : zh_CN.btn} />
-        <HeaderMobile home={HomeStore} history={this.context.router.history} locale={store.language === 'en' ? en_US.header : zh_CN.header} />
-        <div className="layout-main">
-          {this.props.children}
-        </div>
-        <Footer locale={store.language === 'en' ? en_US.footer : zh_CN.footer} />
+        <ScrollToTop>
+          <Header home={HomeStore} history={this.context.router.history} locale={store.language === 'en' ? en_US.header : zh_CN.header} btn={store.language === 'en' ? en_US.btn : zh_CN.btn} />
+          <HeaderMobile home={HomeStore} history={this.context.router.history} locale={store.language === 'en' ? en_US.header : zh_CN.header} />
+          <div className="layout-main">
+            {this.props.children}
+          </div>
+          <Footer locale={store.language === 'en' ? en_US.footer : zh_CN.footer} />
+        </ScrollToTop>
       </div>
     );
   }
