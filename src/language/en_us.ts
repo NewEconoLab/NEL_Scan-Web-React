@@ -146,7 +146,7 @@ export default {
     yourWallet: "your wallet and start an auction!",
     startTime: "Auction start time",
     endTime: "Estimated end time",
-    tips:"( This end time is uncertain. Please bid early to avoid missing domain names. )",
+    tips:" ( This end time is uncertain. Please bid early to avoid missing domain names. ) ",
     highestbid: "Highest bid",
     highestbidder: "Highest Bidder",
     stage: "Stage",

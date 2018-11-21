@@ -63,7 +63,7 @@ export default {
   },
   page: {
     page: "第",
-    total1: "，共 ",
+    total1: "页，共 ",
     total2: " 页"
   },
   home: {
@@ -146,7 +146,7 @@ export default {
     yourWallet: "您的钱包来竞拍此域名!",
     startTime: "竞拍开始时间",
     endTime: "预计结束时间",
-    tips:"( 结束时间并不是确定的，为了避免您错失想要的域名，请尽早出价。 )",
+    tips:" ( 结束时间并不是确定的，为了避免您错失想要的域名，请尽早出价。 ) ",
     highestbid: "当前最高价",
     highestbidder: "竞标人",
     stage: "状态",
