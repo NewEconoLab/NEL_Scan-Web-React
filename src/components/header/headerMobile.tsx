@@ -120,7 +120,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
       {
         if (Neotool.verifyPublicKey(search))
         { // 是否是地址
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address' + search : '/address/' + search;
+          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address/' + search : '/address/' + search;
           // this.props.history.push('/address/' + search);
         } else
         {
