@@ -7,10 +7,13 @@ export interface INNSInfoStore
     domainBidRankList :IDomainBidRankList[],
     domainBidInfoCount:number,
     domainBidInfoList :IDomainBidInfoList[],
+    domainTransCount:number,
+    domainTransList:IDomainTransList[],
     getAuctionInfo: (domain:string) => Promise<boolean>,
     getAuctionBidRank: (domainid:string,size: number, page: number) => Promise<boolean>,
     getAuctionBidInfoTx: (domainid:string,size: number, page: number) => Promise<boolean>,
     getAuctionedInfo: (domain:string) => Promise<boolean>,
+    getDomainTrans:(domain:string,size:number,page:number) => Promise<boolean>
 }
 export interface INNSInfoProps extends RouteComponentProps
 {
@@ -36,18 +39,10 @@ export interface IAuctionedInfo{
     auctionId:string,
     fulldomain:string,
     owner:string,
-    ttl:string
+    ttl:string,
+    price:string,
+    auctionState:string,
 }
-// export interface IDomainPriceRank
-// {
-//     count: number,
-//     list: IDomainRankList[]
-// }
-// export interface IDomainInfoHistory
-// {
-//     count: number,
-//     list: IDomainHistoryList[]
-// }
 export interface IDomainBidRankList
 {
     address: string,
@@ -61,4 +56,10 @@ export interface IDomainBidInfoList
     time: number,
     txid: string,
     type: string,
+}
+export interface IDomainTransList
+{
+    seller:string,
+    price:string,
+    time:number
 }

@@ -1,4 +1,4 @@
-import { INNSInfoStore, IAuctionInfo, IAuctionedInfo, IDomainBidRankList, IDomainBidInfoList } from "../interface/nnsinfo.interface";
+import { INNSInfoStore, IAuctionInfo, IAuctionedInfo, IDomainBidRankList, IDomainBidInfoList, IDomainTransList } from "../interface/nnsinfo.interface";
 import * as Api from '../api/nnsinfo.api';
 import * as NNSApi from '../api/nns.api';
 import { observable, action } from "mobx";
@@ -10,6 +10,8 @@ class NNSInfo implements INNSInfoStore {
     @observable public domainBidRankList: IDomainBidRankList[] = [];
     @observable public domainBidInfoCount: number = 0;
     @observable public domainBidInfoList: IDomainBidInfoList[] = [];
+    @observable public domainTransCount: number = 0;
+    @observable public domainTransList: IDomainTransList[] = [];
     /**
      * 获取域名信息
      * @param domain 域名 
@@ -35,6 +37,8 @@ class NNSInfo implements INNSInfoStore {
         try {
             result = await Api.getauctioninfoRank(domainid, page, size);
         } catch (error) {
+            this.domainBidRankCount = 0;
+            this.domainBidRankList = [];
             return false;
         }
         this.domainBidRankCount = result ? result[0].count :0;
@@ -52,6 +56,8 @@ class NNSInfo implements INNSInfoStore {
         try {
             result = await Api.getauctioninfoTx(domainid, page, size);
         } catch (error) {
+            this.domainBidInfoCount = 0;
+            this.domainBidInfoList = [];
             return false;
         }
         this.domainBidInfoCount = result ? result[0].count :0;
@@ -70,6 +76,25 @@ class NNSInfo implements INNSInfoStore {
             return false;
         }
         this.domainInfo = result ? result[0] : null;
+        return true;
+    }
+    /**
+     * 获取域名流转历史
+     * @param domain 
+     * @param page 
+     * @param size 
+     */
+    @action public async getDomainTrans(domain: string, page: number, size: number) {
+        let result: any = null;
+        try {
+            result = await Api.getTransinfo(domain, page, size);
+        } catch (error) {
+            this.domainTransCount = 0;
+            this.domainTransList = [];
+            return false;
+        }
+        this.domainTransCount = result ? result[0].count :0;
+        this.domainTransList = result? result[0].list:[];
         return true;
     }
 }

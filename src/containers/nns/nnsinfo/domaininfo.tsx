@@ -12,14 +12,16 @@ class DomainInfo extends React.Component<INNSInfoProps, {}>
 {
     public intrl = this.props.intl.messages;
     // 跳转到地址详情页
-    public toAddressInfo(address: string) {
+    public toAddressInfo(address: string)
+    {
         this.props.history.push('/address/' + address);
     }
     public render()
     {
         const domainInfo: IAuctionedInfo | null = this.props.nnsinfo.domainInfo ? this.props.nnsinfo.domainInfo : null;
 
-        if (!!!domainInfo) {
+        if (!!!domainInfo)
+        {
             return null;
         }
         return (
@@ -29,16 +31,24 @@ class DomainInfo extends React.Component<INNSInfoProps, {}>
                     <ul>
                         <li>
                             <span className="type-name">{this.intrl.nns.domainName}</span>
-                            <span className="type-content">{domainInfo.fulldomain}</span>
+                            <span className="type-content">{domainInfo.fulldomain}<span style={{"color":"#FB985F"}}>{domainInfo.auctionState === '0901'?this.intrl.nns.onsale:''}</span></span>
                         </li>
                         <li>
                             <span className="type-name">{this.intrl.nns.currentOwer}</span>
                             <span className="type-content"><a onClick={this.toAddressInfo.bind(this, domainInfo.owner)} href="javascript:;">{domainInfo.owner}</a></span>
                         </li>
+                        {
+                            domainInfo.auctionState === '0901' && (
+                                <li>
+                                    <span className="type-name">{this.intrl.nns.price}</span>
+                                    <span className="type-content">{domainInfo.price} NNC</span>
+                                </li>
+                            )
+                        }
                         <li>
                             <span className="type-name">{this.intrl.nns.expiration}</span>
                             <span className="type-content">
-                            {formatTime.format('yyyy/MM/dd | hh:mm:ss', domainInfo.ttl, this.props.intl.locale)}
+                                {formatTime.format('yyyy/MM/dd | hh:mm:ss', domainInfo.ttl, this.props.intl.locale)}
                             </span>
                         </li>
                     </ul>

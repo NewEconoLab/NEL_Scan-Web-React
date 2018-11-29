@@ -120,7 +120,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
       {
         if (Neotool.verifyPublicKey(search))
         { // 是否是地址
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address/' + search : '/address/' + search;
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'test/address/' + search : '/address/' + search);
           // this.props.history.push('/address/' + search);
         } else
         {
@@ -132,19 +132,19 @@ export default class HeaderMobile extends React.Component<any, IState> {
         search = search.replace('0x', '');
         if (search.length === 64)
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/transaction/0x' + search : '/transaction/0x' + search;
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'test/transaction/0x' + search : '/transaction/0x' + search);
         }
         else if (search.length === 40)
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/nep5/0x' + search;
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'test/nep5/0x' + search : '/nep5/0x' + search);
         }
         else if (!isNaN(Number(search)))
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/block/' + search : '/block/' + search;
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'test/block/' + search : '/block/' + search);
         }
         else if (search.length > 64)
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/0x' + search : '/asset/0x' + search;
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'test/asset/0x' + search : '/asset/0x' + search);
         } else
         {
           return false;

@@ -49,3 +49,20 @@ export const getauctioninfoTx = (id:string,page:number,size:number) => {
   }
   return request(opts);
 }
+/**
+ * 获取域名流转历史
+ * @param domain 当前域名
+ * @param page 当前页面
+ * @param size 每页条数
+ */
+export const getTransinfo = (domain:string,page:number,size:number) => {
+  const opts = {
+    method:'getDomainTransferHist',
+    params:[
+      domain,
+      page,
+      size
+    ]
+  }
+  return request(opts);
+}

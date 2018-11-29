@@ -152,7 +152,7 @@ class Search extends React.Component<INNSProps, any> {
                       <p><strong>{this.state.recordDomain}</strong>{this.intrl.nns.isAvailable}</p>
                       {
                         <p>{this.intrl.nns.youcan} {process.env.REACT_APP_SERVER_ENV === 'DEV' ? <a href="https://testwallet.nel.group/" target="_blank">{this.intrl.nns.login}</a> : <a href="https://wallet.nel.group/" target="_blank">{this.intrl.nns.login}</a>}{this.intrl.nns.yourWallet}</p>
-                      }                      
+                      }
                     </>
                   )
                 }
@@ -204,7 +204,12 @@ class Search extends React.Component<INNSProps, any> {
                 {
                   this.state.searchType === 3 && (
                     <>
-                      <p><strong>{this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.fulldomain}</strong>{this.intrl.nns.isAuctioned}</p>
+                      <p><strong>{this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.fulldomain}</strong>{(this.props.nns.searchEndAuction &&this.props.nns.searchEndAuction.auctionState === '0901')?this.intrl.nns.isOnSaleAuction:this.intrl.nns.isAuctioned}</p>
+                      {
+                        (this.props.nns.searchEndAuction &&this.props.nns.searchEndAuction.auctionState === '0901')&&(
+                          <p>{this.intrl.nns.youcan} {process.env.REACT_APP_SERVER_ENV === 'DEV' ? <a href="https://testwallet.nel.group/" target="_blank">{this.intrl.nns.login}</a> : <a href="https://wallet.nel.group/" target="_blank">{this.intrl.nns.login}</a>}{this.intrl.nns.yourWallet2}</p>
+                        )
+                      }
                       <ul className="seach-table">
                         <li>
                           <span className="type-name">{this.intrl.nns.domainName}</span>
@@ -214,22 +219,40 @@ class Search extends React.Component<INNSProps, any> {
                             </a>
                           </span>
                         </li>
-                        <li>
-                          <span className="type-name">Hash</span>
-                          <span className="type-content">
-                            <a onClick={this.toTransInfo.bind(this, this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionId)} href="javascript:;">
-                              {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionId}
-                            </a>
-                          </span>
-                        </li>
-                        <li>
-                          <span className="type-name">{this.intrl.nns.currentOwer}</span>
-                          <span className="type-content">
-                            <a onClick={this.toAddrInfo.bind(this, this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.owner)} href="javascript:;">
-                              {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.owner}
-                            </a>
-                          </span>
-                        </li>
+                        {
+                          (this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionState !== '0901') && (
+                            <>
+                              <li>
+                                <span className="type-name">Hash</span>
+                                <span className="type-content">
+                                  <a onClick={this.toTransInfo.bind(this, this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionId)} href="javascript:;">
+                                    {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionId}
+                                  </a>
+                                </span>
+                              </li>
+                              <li>
+                                <span className="type-name">{this.intrl.nns.currentOwer}</span>
+                                <span className="type-content">
+                                  <a onClick={this.toAddrInfo.bind(this, this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.owner)} href="javascript:;">
+                                    {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.owner}
+                                  </a>
+                                </span>
+                              </li>
+                            </>
+                          )
+                        }
+                        {
+                          (this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionState === '0901') && (
+                            <>
+                              <li>
+                                <span className="type-name">{this.intrl.nns.price}</span>
+                                <span className="type-content">
+                                  {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.price} NNC
+                                </span>
+                              </li>                              
+                            </>
+                          )
+                        }
                         <li>
                           <span className="type-name">{this.intrl.nns.expiration}</span>
                           <span className="type-content">
@@ -255,7 +278,7 @@ class Search extends React.Component<INNSProps, any> {
             onEnter={this.toSearchDomainInfo}
             style={{ width: "3rem", margin: "15px 0 20px 0", minWidth: "300px" }}
           />
-          <Button text={this.intrl.btn.search} onClick={this.toSearchDomainInfo} style={{"background": "@main-color"}} />
+          <Button text={this.intrl.btn.search} onClick={this.toSearchDomainInfo} style={{ "background": "@main-color" }} />
           {
             this.state.searchType !== 0 && (
               <div className="search-result-wrapper">

@@ -59,6 +59,7 @@ export default {
     time: "Time",
     transfer: "Transfer to",
     price: "Price",
+    transfertime:"Time",
     nodata:"There is no data."
   },
   page: {
@@ -141,12 +142,14 @@ export default {
     isAuctioned: " is already auctioned off.",
     isBeing: " is being auctioned.",
     isAvailable: " is available!",
+    isOnSaleAuction:" is on sale!",
     youcan: "You can",
     login: " login ",
     yourWallet: "your wallet and start an auction!",
+    yourWallet2: "your wallet and purchase it!",
     startTime: "Auction start time",
     endTime: "Estimated end time",
-    tips:" ( This end time is uncertain. Please bid early to avoid missing domain names. ) ",
+    tips:"( This end time is uncertain. Please bid early to avoid missing domain names. )",
     highestbid: "Highest bid",
     highestbidder: "Highest Bidder",
     stage: "Stage",
@@ -162,7 +165,9 @@ export default {
     raisebid:"Raise Bid",
     endof:"End of Auction",
     recover:"Recover CGAS",
-    getDomain:"Get Domain"
+    getDomain:"Get Domain",
+    price:"Price",
+    onsale:"（on sale）"
   },
   footer: {
     aboutUs:"About Us",

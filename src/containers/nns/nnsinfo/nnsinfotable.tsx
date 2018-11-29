@@ -119,7 +119,7 @@ class NNSInfoTable extends React.Component<INNSInfoProps, {}> {
         }
         if (key === 'time') {
             value = formatTime.format('yyyy/MM/dd | hh:mm:ss', value.toString(), this.props.intl.locale);
-            return <span>{value} CGAS</span>
+            return <span>{value}</span>
         }        
         return null;
     }

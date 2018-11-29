@@ -117,15 +117,16 @@ export default class Header extends React.Component<IProps, IState>{
   public toSearchInfo = () =>
   {
     let search: string = this.state.inputValue;
-    search = search.trim();
+    search = search.trim();    
+    console.log(process.env.REACT_APP_SERVER_ENV);
+    
     if (search)
     {
       if (search.length === 34)
       {
         if (Neotool.verifyPublicKey(search))
         { // 是否是地址
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address/' + search : '/address/' + search;
-          // this.props.history.push('/address/' + search);
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address/' + search : '/address/' + search);
         } else
         {
           return false;
@@ -136,19 +137,19 @@ export default class Header extends React.Component<IProps, IState>{
         search = search.replace('0x', '');
         if (search.length === 64)
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/transaction/0x' + search : '/transaction/0x' + search;
+          window.location.href =location.origin + ( process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/transaction/0x' + search : '/transaction/0x' + search);
         }
         else if (search.length === 40)
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/nep5/0x' + search;
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/nep5/0x' + search);
         }
         else if (!isNaN(Number(search)))
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/block/' + search : '/block/' + search;
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/block/' + search : '/block/' + search);
         }
         else if (search.length > 64)
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/0x' + search : '/asset/0x' + search;
+          window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/0x' + search : '/asset/0x' + search);
         } else
         {
           return false;
@@ -169,10 +170,10 @@ export default class Header extends React.Component<IProps, IState>{
     // this.props.home.searchAssetList = [];
     if (assetid.length === 42)
     {
-      window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/' + assetid : '/nep5/' + assetid;
+      window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/' + assetid : '/nep5/' + assetid);
     } else
     {
-      window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/' + assetid : '/asset/' + assetid;
+      window.location.href = location.origin + (process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/' + assetid : '/asset/' + assetid);
     }
   }
   // 是否显示search

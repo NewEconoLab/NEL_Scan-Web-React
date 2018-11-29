@@ -57,8 +57,9 @@ export default {
     bidder: "竞标人",
     bidderPrice: "竞标价格",
     time: "时间",
-    transfer: "Transfer to",
+    transfer: "转让至",
     price: "价格",
+    transfertime:"转让时间",
     nodata:"没有数据"
   },
   page: {
@@ -141,12 +142,13 @@ export default {
     isAuctioned: " 已经成交了。",
     isBeing: " 正在竞拍中。",
     isAvailable: " 可以被竞拍!",
-    youcan: "您可以",
+    isOnSaleAuction:"正在出售！",    youcan: "您可以",
     login: " 登录 ",
     yourWallet: "您的钱包来竞拍此域名!",
+    yourWallet2: "您的钱包来购买此域名!",
     startTime: "竞拍开始时间",
     endTime: "预计结束时间",
-    tips:" ( 结束时间并不是确定的，为了避免您错失想要的域名，请尽早出价。 ) ",
+    tips:"( 结束时间并不是确定的，为了避免您错失想要的域名，请尽早出价。 )",
     highestbid: "当前最高价",
     highestbidder: "竞标人",
     stage: "状态",
@@ -162,7 +164,9 @@ export default {
     raisebid:"加价",
     endof:"竞拍结束",
     recover:"领回CGAS",
-    getDomain:"领取域名"
+    getDomain:"领取域名",
+    price:"出售价格",
+    onsale:"（出售中）"
   },
   footer: {
     aboutUs:"关于我们",
