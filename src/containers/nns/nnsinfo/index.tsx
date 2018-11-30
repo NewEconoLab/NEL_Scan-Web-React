@@ -131,7 +131,7 @@ class NNSInfo extends React.Component<INNSInfoProps, {}> {
         {
           (this.props.nnsinfo.domainTransList && this.props.nnsinfo.domainTransList.length !== 0) && (
             <>
-              <TitleText text="Transfer information" isInline={true} />
+              <TitleText text={this.intrl.nns.titleinfo3} isInline={true} />
               <div className="transinfo-table">
                 <Table
                   tableTh={this.transferTableTh}
