@@ -80,7 +80,7 @@ class AddressInfo implements IAddressInfoStore
             const list = arr.map((key) =>
             {
                 const newObject = {
-                    asset: key.symbol,
+                    asset: key.symbol+"("+key.assetid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')+")",
                     amount: key.balance.toString()
                 }
                 return newObject;
