@@ -60,7 +60,10 @@ export default {
     transfer: "Transfer to",
     price: "Price",
     transfertime:"Time",
-    nodata:"There is no data."
+    nodata:"There is no data.",
+    owner:"Owner",
+    listingtime:"Listing time",
+    expirationtime:"Expiration time"
   },
   page: {
     page: "Page",
@@ -167,7 +170,11 @@ export default {
     recover:"Recover CGAS",
     getDomain:"Get Domain",
     price:"Price",
-    onsale:"（on sale）"
+    onsale:"（on sale）",
+    saletitle:"Domains on sale",
+    listingtime:"Listing time",
+    heightprice:"Highest price",
+    lowprice:"Lowest price"
   },
   footer: {
     aboutUs:"About Us",

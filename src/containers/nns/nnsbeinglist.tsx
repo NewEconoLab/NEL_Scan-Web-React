@@ -53,6 +53,7 @@ class NNSBeing extends React.Component<INNSProps, {}> {
   public componentWillUnmount()
   {
     this.props.nns.nnsAuctingList = [];
+    this.props.nns.nnsAuctingCount = 0;
   }
   public onCallback = (item) => {
     this.props.nns.orderBy = item.id;

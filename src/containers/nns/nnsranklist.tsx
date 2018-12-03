@@ -51,6 +51,7 @@ class NNSRank extends React.Component<INNSProps, {}> {
   public componentWillUnmount()
   {
     this.props.nns.nnsAuctionedList = [];
+    this.props.nns.nnsAuctedCount = 0;
   }
   public getAuctionedList = () => {
     this.props.nns.getAuctedDomain(this.state.currentPage, this.state.pageSize);

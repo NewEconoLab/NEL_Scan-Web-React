@@ -1,4 +1,4 @@
-import { INNSStore, INNSTotal, INNSAuctingTable, INNSAuctionedTable, INNSAuctingList, INNSAuctionedList } from "../interface/nns.interface";
+import { INNSStore, INNSTotal, INNSAuctingTable, INNSAuctionedTable, INNSAuctingList, INNSAuctionedList, INNSSellingList } from "../interface/nns.interface";
 import { IAuctionInfo, IAuctionedInfo } from '@/containers/nns/interface/nnsinfo.interface';
 import { observable, action } from "mobx";
 import * as Api from '../api/nns.api';
@@ -13,6 +13,9 @@ class NNS implements INNSStore
     @observable public orderBy: string = '';
     @observable public searchCanAuction:IAuctionInfo|null = null;
     @observable public searchEndAuction:IAuctionedInfo|null = null;
+    @observable public listingOrderBy:string = '';
+    @observable public nnsSellingCount:number = 0;
+    @observable public nnsSellingList: INNSSellingList[];
     /**
      * 获取统计总数
      */
@@ -153,6 +156,23 @@ class NNS implements INNSStore
             this.searchCanAuction = null;
             this.searchEndAuction = null;
         }
+        return true;
+    }
+
+    @action public async getSellingDomain(order:string,type:string,page: number, size: number)
+    {
+        let result: any = null;
+        try
+        {
+            result = await Api.getsellingdomain(order,type,page, size);            
+        } catch (error)
+        {
+            this.nnsSellingList = [];
+            this.nnsSellingCount = 0;
+            return false;
+        }
+        this.nnsSellingList = result ? result[0].list : [];
+        this.nnsSellingCount = result ? result[0].count : 0;
         return true;
     }
 }

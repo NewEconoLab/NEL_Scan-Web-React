@@ -60,7 +60,10 @@ export default {
     transfer: "转让至",
     price: "价格",
     transfertime:"转让时间",
-    nodata:"没有数据"
+    nodata:"没有数据",
+    owner:"当前拥有者",
+    listingtime:"上架时间",
+    expirationtime:"域名过期时间"
   },
   page: {
     page: "第",
@@ -167,7 +170,11 @@ export default {
     recover:"领回CGAS",
     getDomain:"领取域名",
     price:"出售价格",
-    onsale:"（出售中）"
+    onsale:"（出售中）",
+    saletitle:"正在出售中的域名",
+    listingtime:"上架时间",
+    heightprice:"最高价",
+    lowprice:"最低价"
   },
   footer: {
     aboutUs:"关于我们",

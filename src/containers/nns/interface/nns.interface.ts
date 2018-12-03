@@ -10,11 +10,15 @@ export interface INNSStore
     orderBy: string,
     searchCanAuction:IAuctionInfo|null,
     searchEndAuction:IAuctionedInfo|null,
+    listingOrderBy:string,
+    nnsSellingCount:number,
+    nnsSellingList:INNSSellingList[],
     getStatistic: () => Promise<boolean>,
     getAuctingDomain: (page: number, size: number) => Promise<boolean>,
     getAuctingDomainbyPrice: (page: number, size: number) => Promise<boolean>,
     getAuctedDomain: (page: number, size: number) => Promise<boolean>,
-    searchDomainInfo:(domain:string) => Promise<boolean>
+    searchDomainInfo:(domain:string) => Promise<boolean>,
+    getSellingDomain:(order:string,type:string,page: number, size: number) => Promise<boolean>
 }
 export interface INNSProps extends RouteComponentProps
 {
@@ -78,4 +82,11 @@ export interface INNSAuctionedList
         blocktime: number
     },
     ttl: number
+}
+export interface INNSSellingList{
+    fullDomain:string,
+    launchTime:string,
+    owner:string,
+    ttl:number,
+    price:string
 }

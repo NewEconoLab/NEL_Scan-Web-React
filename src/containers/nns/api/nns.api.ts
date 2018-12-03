@@ -69,4 +69,23 @@ export const searchbydomain = (domain:string) => {
   }
   return request(opts);
 }
+/**
+ * 获取域名的出售列表
+ * @param order 排序条件time,price
+ * @param type 排序方式，high升序，low降序
+ * @param page 当前页码
+ * @param size 每页条数
+ */
+export const getsellingdomain = (order:string,type:string,page:number,size:number) => {
+  const opts = {
+    method:'getNNSFixedSellingList',
+    params:[
+      order,
+      type,
+      page,
+      size
+    ]
+  }
+  return request(opts);
+}
 
