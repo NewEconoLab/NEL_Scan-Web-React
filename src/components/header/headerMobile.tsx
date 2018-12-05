@@ -254,7 +254,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
                 <div className="search-box">
                   <input
                     type="text"
-                    placeholder="Block height/hash/address or transaction id"
+                    placeholder={this.props.input.placeholder}
                     value={this.state.inputValue}
                     onChange={this.onChange}
                     onKeyDown={this.onKeyDown}

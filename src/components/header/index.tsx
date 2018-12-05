@@ -35,6 +35,7 @@ interface IProps
   history: History,
   locale: any,
   btn: any,
+  input:any,
 }
 
 @observer
@@ -46,7 +47,7 @@ export default class Header extends React.Component<IProps, IState>{
     isShowBrowse: false,
     isShowEnv: false,
     isShowLanguage: false,
-    inputPlaceHolder: 'Search for block height/hash/address or transaction id',
+    inputPlaceHolder: this.props.input.placeholder,
     languageText: store['common'].language === 'en' ? "En" : "中",
     languageImg: store['common'].language === 'en' ? en : zh
   }
@@ -110,7 +111,7 @@ export default class Header extends React.Component<IProps, IState>{
   public onBlur = () =>
   {
     this.setState({
-      inputPlaceHolder: 'Search for block height/hash/address or transaction id'
+      inputPlaceHolder: this.props.input.placeholder
     })
   }
   // 搜索功能

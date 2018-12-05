@@ -7,12 +7,14 @@ import './index.less'
 import * as Neotool from '@/utils/neotool';
 import { IHomeProps } from './interface/home.interface';
 import { observer } from 'mobx-react';
+import { injectIntl } from 'react-intl';
 
 @observer
 class Search extends React.Component<IHomeProps, any> {
+  public intrl = this.props.intl.messages;
   public state = {
     inputValue: '',
-    inputPlaceHolder: 'Search for block height/hash/address or transaction id'
+    inputPlaceHolder: this.intrl.input.placeholder
   }
   public onChange = (value: string) => {
     this.setState({
@@ -31,7 +33,7 @@ class Search extends React.Component<IHomeProps, any> {
   }
   public onBlur = () => {
     this.setState({
-      inputPlaceHolder: 'Search for block height/hash/address or transaction id'
+      inputPlaceHolder: this.intrl.input.placeholder
     })
   }
   // 搜索功能
@@ -119,4 +121,4 @@ class Search extends React.Component<IHomeProps, any> {
   }
 }
 
-export default Search;
+export default injectIntl(Search);

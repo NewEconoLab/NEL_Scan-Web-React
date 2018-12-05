@@ -43,8 +43,19 @@ export default class LayoutIndex extends React.Component<any, any> {
     return (
       <div className="layout-container">
         <ScrollToTop>
-          <Header home={HomeStore} history={this.context.router.history} locale={store.language === 'en' ? en_US.header : zh_CN.header} btn={store.language === 'en' ? en_US.btn : zh_CN.btn} />
-          <HeaderMobile home={HomeStore} history={this.context.router.history} locale={store.language === 'en' ? en_US.header : zh_CN.header} />
+          <Header 
+            home={HomeStore} 
+            history={this.context.router.history} 
+            locale={store.language === 'en' ? en_US.header : zh_CN.header} 
+            btn={store.language === 'en' ? en_US.btn : zh_CN.btn} 
+            input={store.language === 'en' ? en_US.input : zh_CN.input}
+          />
+          <HeaderMobile 
+            home={HomeStore} 
+            history={this.context.router.history} 
+            locale={store.language === 'en' ? en_US.header : zh_CN.header} 
+            input={store.language === 'en' ? en_US.input : zh_CN.input}
+          />
           <div className="layout-main">
             {this.props.children}
           </div>
