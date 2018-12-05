@@ -17,7 +17,7 @@ export default {
     type3:"此次出价触发竞拍结束，出价失败。"
   },
   input: {
-    placeholder: "Search for block height/hash/address or transaction id",
+    placeholder: "请输入您想查询的区块/Hash/地址或交易ID",
     domain: "请输入您想查询的域名"
   },
   btn: {
