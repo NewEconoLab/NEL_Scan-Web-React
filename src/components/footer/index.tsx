@@ -159,7 +159,7 @@ export default class Footer extends React.Component<IProps, IState>
                     </div>
                 </div>
                 <div className="footer-version">
-                    <p>cli version: v2.9.0</p>
+                    <p>cli version: v2.9.2</p>
                     <p>© 2018 NewEconoLabs</p>
                 </div>
             </div>
