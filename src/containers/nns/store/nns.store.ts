@@ -149,10 +149,15 @@ class NNS implements INNSStore
         if(result &&( result[0].auctionState === '0201' || result[0].auctionState === '0301')){
             this.searchCanAuction = result[0];
             this.searchEndAuction = null;
-        }else if(result && result[0].owner) {
+        }
+        else if(result && result[0].owner) {
             this.searchCanAuction = null;
             this.searchEndAuction = result[0];
-        }else{
+        }else if (result &&( result[0].auctionState === '0401')){
+            this.searchCanAuction = result[0];
+            this.searchEndAuction = null;
+        }
+        else{
             this.searchCanAuction = null;
             this.searchEndAuction = null;
         }

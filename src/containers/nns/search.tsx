@@ -17,7 +17,7 @@ class Search extends React.Component<INNSProps, any> {
   public state = {
     inputValue: '',
     inputPlaceHolder: this.intrl.input.domain,
-    searchType: 0, // 0为默认无，1为可竞拍，2为竞拍中，3为竞拍结束，4为售卖中,5为输入错误
+    searchType: 0, // 0为默认无，1为可竞拍，2为竞拍中，3为竞拍结束，4为售卖中,5为输入错误,6为结束竞拍未领取
     recordDomain: ''
   }
   public onChange = (value: string) =>
@@ -78,9 +78,17 @@ class Search extends React.Component<INNSProps, any> {
       await this.props.nns.searchDomainInfo(this.state.inputValue);
       if (this.props.nns.searchCanAuction)
       {
-        this.setState({
-          searchType: 2
-        })
+        if (this.props.nns.searchCanAuction.auctionState === '0401')
+        {
+          this.setState({
+            searchType: 6
+          })
+        } else
+        {
+          this.setState({
+            searchType: 2
+          })
+        }
       } else if (this.props.nns.searchEndAuction)
       {
         this.setState({
@@ -116,6 +124,7 @@ class Search extends React.Component<INNSProps, any> {
   public render()
   {
     const ttl = (this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.ttl) ? this.props.nns.searchEndAuction.ttl : 0;
+    const notClaimTtl = (this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.ttl) ? this.props.nns.searchCanAuction.ttl : 0;
     const stageClassName = classNames('type-content',
       {
         'nns-peirod': (this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.auctionState === '0201') ? true : false,
@@ -204,9 +213,9 @@ class Search extends React.Component<INNSProps, any> {
                 {
                   this.state.searchType === 3 && (
                     <>
-                      <p><strong>{this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.fulldomain}</strong>{(this.props.nns.searchEndAuction &&this.props.nns.searchEndAuction.auctionState === '0901')?this.intrl.nns.isOnSaleAuction:this.intrl.nns.isAuctioned}</p>
+                      <p><strong>{this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.fulldomain}</strong>{(this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionState === '0901') ? this.intrl.nns.isOnSaleAuction : this.intrl.nns.isAuctioned}</p>
                       {
-                        (this.props.nns.searchEndAuction &&this.props.nns.searchEndAuction.auctionState === '0901')&&(
+                        (this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionState === '0901') && (
                           <p>{this.intrl.nns.youcan} {process.env.REACT_APP_SERVER_ENV === 'DEV' ? <a href="https://testwallet.nel.group/" target="_blank">{this.intrl.nns.login}</a> : <a href="https://wallet.nel.group/" target="_blank">{this.intrl.nns.login}</a>}{this.intrl.nns.yourWallet2}</p>
                         )
                       }
@@ -249,7 +258,7 @@ class Search extends React.Component<INNSProps, any> {
                                 <span className="type-content">
                                   {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.price} NNC
                                 </span>
-                              </li>                              
+                              </li>
                             </>
                           )
                         }
@@ -257,6 +266,37 @@ class Search extends React.Component<INNSProps, any> {
                           <span className="type-name">{this.intrl.nns.expiration}</span>
                           <span className="type-content">
                             {formatTime.format('yyyy/MM/dd | hh:mm:ss', ttl.toString(), this.props.intl.locale)}
+                          </span>
+                        </li>
+                      </ul>
+                    </>
+                  )
+                }
+                {
+                  this.state.searchType === 6 && (
+                    <>
+                      <p><strong>{this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.fulldomain}</strong>{this.intrl.nns.isAuctioned}</p>
+                      <ul className="seach-table">
+                        <li>
+                          <span className="type-name">{this.intrl.nns.domainName}</span>
+                          <span className="type-content">
+                            <a onClick={this.toNNSInfo.bind(this, this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.fulldomain)} href="javascript:;">
+                              {this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.fulldomain}
+                            </a>
+                          </span>
+                        </li>
+                        <li>
+                          <span className="type-name">Hash</span>
+                          <span className="type-content">
+                            <a onClick={this.toTransInfo.bind(this, this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.auctionId)} href="javascript:;">
+                              {this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.auctionId}
+                            </a>
+                          </span>
+                        </li>
+                        <li>
+                          <span className="type-name">{this.intrl.nns.expiration}</span>
+                          <span className="type-content">
+                            {formatTime.format('yyyy/MM/dd | hh:mm:ss', notClaimTtl.toString(), this.props.intl.locale)}
                           </span>
                         </li>
                       </ul>
@@ -343,7 +383,12 @@ class Search extends React.Component<INNSProps, any> {
                 {
                   this.state.searchType === 3 && (
                     <>
-                      <p><strong>{this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.fulldomain}</strong>{this.intrl.nns.isAuctioned}</p>
+                      <p><strong>{this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.fulldomain}</strong>{(this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionState === '0901') ? this.intrl.nns.isOnSaleAuction : this.intrl.nns.isAuctioned}</p>
+                      {/* {
+                        (this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionState === '0901') && (
+                          <p>{this.intrl.nns.youcan} {process.env.REACT_APP_SERVER_ENV === 'DEV' ? <a href="https://testwallet.nel.group/" target="_blank">{this.intrl.nns.login}</a> : <a href="https://wallet.nel.group/" target="_blank">{this.intrl.nns.login}</a>}{this.intrl.nns.yourWallet2}</p>
+                        )
+                      } */}
                       <ul className="seach-table">
                         <li>
                           <span className="type-name">{this.intrl.nns.domainName}</span>
@@ -353,26 +398,75 @@ class Search extends React.Component<INNSProps, any> {
                             </a>
                           </span>
                         </li>
+                        {
+                          (this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionState !== '0901') && (
+                            <>
+                              <li>
+                                <span className="type-name">Hash</span>
+                                <span className="type-content">
+                                  <a onClick={this.toTransInfo.bind(this, this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionId)} href="javascript:;">
+                                    {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionId.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
+                                  </a>
+                                </span>
+                              </li>
+                              <li>
+                                <span className="type-name">{this.intrl.nns.currentOwer}</span>
+                                <span className="type-content">
+                                  <a onClick={this.toAddrInfo.bind(this, this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.owner)} href="javascript:;">
+                                    {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.owner.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
+                                  </a>
+                                </span>
+                              </li>
+                            </>
+                          )
+                        }
+                        {
+                          (this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionState === '0901') && (
+                            <>
+                              <li>
+                                <span className="type-name">{this.intrl.nns.price}</span>
+                                <span className="type-content">
+                                  {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.price} NNC
+                                </span>
+                              </li>
+                            </>
+                          )
+                        }
                         <li>
-                          <span className="type-name">Hash</span>
+                          <span className="type-name">{this.intrl.nns.expiration}</span>
                           <span className="type-content">
-                            <a onClick={this.toTransInfo.bind(this, this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionId)} href="javascript:;">
-                              {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.auctionId.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
+                            {formatTime.format('yyyy/MM/dd | hh:mm:ss', ttl.toString(), this.props.intl.locale)}
+                          </span>
+                        </li>
+                      </ul>
+                    </>
+                  )
+                }
+                {
+                  this.state.searchType === 6 && (
+                    <>
+                      <p><strong>{this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.fulldomain}</strong>{this.intrl.nns.isAuctioned}</p>
+                      <ul className="seach-table">
+                        <li>
+                          <span className="type-name">{this.intrl.nns.domainName}</span>
+                          <span className="type-content">
+                            <a onClick={this.toNNSInfo.bind(this, this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.fulldomain)} href="javascript:;">
+                              {this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.fulldomain}
                             </a>
                           </span>
                         </li>
                         <li>
-                          <span className="type-name">{this.intrl.nns.currentOwer}</span>
+                          <span className="type-name">Hash</span>
                           <span className="type-content">
-                            <a onClick={this.toAddrInfo.bind(this, this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.owner)} href="javascript:;">
-                              {this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.owner.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
+                            <a onClick={this.toTransInfo.bind(this, this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.auctionId)} href="javascript:;">
+                            {this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.auctionId.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
                             </a>
                           </span>
                         </li>
                         <li>
                           <span className="type-name">{this.intrl.nns.expiration}</span>
                           <span className="type-content">
-                            {formatTime.format('yyyy/MM/dd | hh:mm:ss', ttl.toString(), this.props.intl.locale)}
+                            {formatTime.format('yyyy/MM/dd | hh:mm:ss', notClaimTtl.toString(), this.props.intl.locale)}
                           </span>
                         </li>
                       </ul>
