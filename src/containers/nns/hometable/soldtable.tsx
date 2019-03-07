@@ -35,11 +35,11 @@ class SoldTable extends React.Component<INNSProps, {}> {
       key: 'fullDomain'
     },
     {
-      name: this.intrl.tableTh.price,
+      name: this.intrl.tableTh.price2,
       key: 'price'
     },
     {
-      name: this.intrl.tableTh.buyer,
+      name: this.intrl.tableTh.buyer2,
       key: 'owner'
     },
     {

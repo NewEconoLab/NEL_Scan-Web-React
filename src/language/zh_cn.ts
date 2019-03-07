@@ -64,7 +64,9 @@ export default {
     owner:"当前拥有者",
     listingtime:"上架时间",
     expirationtime:"域名过期时间",
-    tradetime:"成交时间"
+    tradetime:"成交时间",
+    buyer2: "购买人",
+    price2: "成交价格",
   },
   page: {
     page: "第",

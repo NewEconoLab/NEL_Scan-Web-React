@@ -64,7 +64,9 @@ export default {
     owner:"Owner",
     listingtime:"Listing time",
     expirationtime:"Expiration time",
-    tradetime:"Trade time"
+    tradetime:"Trade time",
+    buyer2: "Buyer",
+    price2: "Price",
   },
   page: {
     page: "Page",
