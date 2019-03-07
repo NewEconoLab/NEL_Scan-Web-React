@@ -75,6 +75,15 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         })
     }
     public render() {
+        if (!this.props.assetinfo.assetInfo)
+        {
+            return (
+                <div className="nodata-wrap">
+                    <img src={require('@/img/nodata.png')} alt="" />
+                    <p>{this.intrl.nodata.msg}</p>
+                </div>
+            )
+        }
         return (
             <div className="assetinfo-page">
                 <div className="goback-wrapper">

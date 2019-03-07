@@ -76,7 +76,7 @@ class NNSInfo extends React.Component<INNSInfoProps, {}> {
       return <span><a onClick={this.toAddrInfo.bind(this, value)} href="javascript:;">{value}</a></span>
     }
     if (key === 'price')
-    {      
+    {
       return <span>{value} NNC</span>
     }
     if (key === 'time')
@@ -116,6 +116,15 @@ class NNSInfo extends React.Component<INNSInfoProps, {}> {
   }
   public render()
   {
+    if (!this.props.nnsinfo.nnsInfo)
+    {
+      return (
+        <div className="nodata-wrap">
+          <img src={require('@/img/nodata.png')} alt="" />
+          <p>{this.intrl.nodata.msg}</p>
+        </div>
+      )
+    }
     return (
       <div className="nnsinfo-page">
         <div className="goback-wrapper">

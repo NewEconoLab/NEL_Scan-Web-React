@@ -192,5 +192,8 @@ export default {
     wechat:"WeChat Subscription",
     qq:"QQ Group",
     nel:"NEL Official Website"
+  },
+  nodata:{
+    msg:"This is no result!"
   }
 }

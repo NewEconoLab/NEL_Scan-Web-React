@@ -4,9 +4,9 @@ import { ITransactionsStore, ITransInfo, ITransaction, INep5Trans } from '../int
 import { INep5Asset } from '@/containers/asset/interface/asset.interface';
 
 class Transaction implements ITransactionsStore {
-    @observable public transList: ITransaction[];
-    @observable public transListCount:number;
-    @observable public tranInfo: ITransInfo;
+    @observable public transList: ITransaction[] = [];
+    @observable public transListCount:number = 0;
+    @observable public tranInfo: ITransInfo|null =null;
     @observable public nep5Trans: INep5Trans[] = [];
     @observable public nep5Info: INep5Asset | null = null;
     /**
@@ -21,6 +21,7 @@ class Transaction implements ITransactionsStore {
             result = await Api.gettransactionlist(page, size, type);
         } catch (error) {
             this.transListCount = 0;
+            this.transList = [];
             return false;
         }
         this.transListCount = result[0].count || 0;
@@ -36,6 +37,7 @@ class Transaction implements ITransactionsStore {
         try {
             result = await Api.gettraninfo(txid);
         } catch (error) {
+            this.tranInfo = null;
             return false;
         }
         this.tranInfo = result[0] || [];
@@ -50,6 +52,7 @@ class Transaction implements ITransactionsStore {
         try {
             result = await Api.getnep5transferbytxid(txid);
         } catch (error) {
+            this.nep5Trans = [];
             return false;
         }
         const trans: INep5Trans[] = result || null;
@@ -69,7 +72,7 @@ class Transaction implements ITransactionsStore {
         try {
             result = await Api.getnep5asset(nep5);
         } catch (error) {
-            return false;
+            return null;
         }
         return result[0] || null;
     }

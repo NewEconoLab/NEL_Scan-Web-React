@@ -3,7 +3,7 @@ import { INep5Asset } from '@/containers/asset/interface/asset.interface';
 export interface ITransactionsStore {
     transList: ITransaction[],
     transListCount:number,
-    tranInfo:ITransInfo,
+    tranInfo:ITransInfo|null,
     nep5Trans:INep5Trans[],
     nep5Info:INep5Asset|null,
     getTransList: ( page: number,size: number, type: string) => Promise<boolean>,

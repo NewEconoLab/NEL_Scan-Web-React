@@ -46,34 +46,41 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
             key: 'value'
         }
     ]
-    public async componentDidMount() {
+    public async componentDidMount()
+    {
         const params = this.props.match.params;
         await this.getTransactionInfo(params["txid"]);
         this.doVinVoutList();
         await this.props.transaction.getNep5Transbytxid(params["txid"]);
     }
     public componentWillUnmount()
-  {
-    this.props.transaction.transList = [];
-    this.props.transaction.transListCount = 0;
-  }
+    {
+        this.props.transaction.tranInfo = null;
+    }
     // 请求数据
-    public getTransactionInfo = (txid: string) => {
+    public getTransactionInfo = (txid: string) =>
+    {
         return this.props.transaction.getTransInfo(txid);
     }
     // 返回交易列表
-    public onGoBack = () => {
+    public onGoBack = () =>
+    {
         this.props.history.push('/transactions/');
     }
     // 区块详情链接
-    public goBlockInfo = (index: string) => {
+    public goBlockInfo = (index: string) =>
+    {
         this.props.history.push('/block/' + index)
     }
     // 拼接vin vout 
-    public doVinVoutList = () => {
-        if (this.props.transaction.tranInfo) {
-            if (this.props.transaction.tranInfo.vin.length !== 0) {
-                const vinlist = this.props.transaction.tranInfo.vin.map((key) => {
+    public doVinVoutList = () =>
+    {
+        if (this.props.transaction.tranInfo)
+        {
+            if (this.props.transaction.tranInfo.vin.length !== 0)
+            {
+                const vinlist = this.props.transaction.tranInfo.vin.map((key) =>
+                {
                     const newObj = {
                         address: key.address,
                         value: key.value + ' ' + key.asset
@@ -84,8 +91,10 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                     vinList: vinlist
                 })
             }
-            if (this.props.transaction.tranInfo.vout.length !== 0) {
-                const voutlist = this.props.transaction.tranInfo.vout.map((key) => {
+            if (this.props.transaction.tranInfo.vout.length !== 0)
+            {
+                const voutlist = this.props.transaction.tranInfo.vout.map((key) =>
+                {
                     const newObj = {
                         address: key.address,
                         value: key.value + ' ' + key.asset
@@ -95,43 +104,58 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                 this.setState({
                     outList: voutlist
                 })
-            }            
+            }
         }
     }
-    public getNep5Name = async (asset) => {
+    public getNep5Name = async (asset) =>
+    {
         await this.props.transaction.getNep5Info(asset);
         return this.props.transaction.nep5Info ? this.props.transaction.nep5Info.symbol : ""
     }
     // 列表特殊处理
-    public renderVinVout = (value, key) => {
-        if (key === 'address') {
+    public renderVinVout = (value, key) =>
+    {
+        if (key === 'address')
+        {
             return <span className="addr-text">{value}</span>
         }
         return null;
     }
     // 列表特殊处理
-    public renderNep5Trans = (value, key) => {
+    public renderNep5Trans = (value, key) =>
+    {
 
-        if (key === 'asset') {
+        if (key === 'asset')
+        {
 
             return <span><a href="javascript:;" onClick={this.goNep5Info.bind(this, value.assetid)}>{value.symbol}</a></span>
         }
-        if (key === 'from') {
+        if (key === 'from')
+        {
             return <span className="addr-text">{value}</span>
         }
-        if (key === 'to') {
+        if (key === 'to')
+        {
             return <span className="addr-text">{value}</span>
         }
         return null;
     }
     // 跳转资产详情页
-    public goNep5Info = (asset: string) => {
+    public goNep5Info = (asset: string) =>
+    {
         this.props.history.push('/nep5/' + asset)
     }
 
-    public render() {
-        if (!this.props.transaction.tranInfo) {
-            return null
+    public render()
+    {
+        if (!this.props.transaction.tranInfo)
+        {
+            return (
+                <div className="nodata-wrap">
+                    <img src={require('@/img/nodata.png')} alt="" />
+                    <p>{this.intrl.nodata.msg}</p>
+                </div>
+            )
         }
         return (
             <div className="transactioninfo-page">
@@ -183,10 +207,10 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                 <div className="transactioninfo-input-output">
                     <div className="input-wrapper">
                         <TitleText text={this.intrl.transaction.input} />
-                        <Table tableTh={this.transVTableTh} tableData={this.state.vinList} /> 
+                        <Table tableTh={this.transVTableTh} tableData={this.state.vinList} />
                     </div>
                     <div className="output-wrapper">
-                        <TitleText text={this.intrl.transaction.output} />                        
+                        <TitleText text={this.intrl.transaction.output} />
                         <Table tableTh={this.transVTableTh} tableData={this.state.outList} />
                     </div>
                 </div>

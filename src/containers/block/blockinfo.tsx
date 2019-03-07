@@ -127,6 +127,15 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
         return list.slice(startNum, startNum + this.state.pageSize);
     }
     public render() {
+        if (!this.props.block.blockInfo)
+        {
+            return (
+                <div className="nodata-wrap">
+                    <img src={require('@/img/nodata.png')} alt="" />
+                    <p>{this.intrl.nodata.msg}</p>
+                </div>
+            )
+        }
         const totalCount = (this.props.block.blockInfo && this.props.block.blockInfo.tx) ? this.props.block.blockInfo.tx.length : 0
         return (
             <div className="blockinfo-page">

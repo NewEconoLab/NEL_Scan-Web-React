@@ -192,5 +192,8 @@ export default {
     wechat:"微信群",
     qq:"QQ群",
     nel:"NEL官网"
+  },
+  nodata:{
+    msg:"没有搜索结果哦"
   }
 }
