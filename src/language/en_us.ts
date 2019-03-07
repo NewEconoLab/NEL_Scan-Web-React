@@ -63,7 +63,8 @@ export default {
     nodata:"There is no data.",
     owner:"Owner",
     listingtime:"Listing time",
-    expirationtime:"Expiration time"
+    expirationtime:"Expiration time",
+    tradetime:"Trade time"
   },
   page: {
     page: "Page",
@@ -174,7 +175,9 @@ export default {
     saletitle:"Domains on sale",
     listingtime:"Listing time",
     heightprice:"Highest price",
-    lowprice:"Lowest price"
+    lowprice:"Lowest price",
+    soldtitle:"Domains sold",
+    tradetime:"Trade time"
   },
   footer: {
     aboutUs:"About Us",

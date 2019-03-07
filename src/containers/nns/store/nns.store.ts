@@ -16,6 +16,9 @@ class NNS implements INNSStore
     @observable public listingOrderBy:string = '';
     @observable public nnsSellingCount:number = 0;
     @observable public nnsSellingList: INNSSellingList[];
+    @observable public SoldOrderBy:string = '';
+    @observable public nnsSoldCount:number = 0;
+    @observable public nnsSoldList: INNSSellingList[];
     /**
      * 获取统计总数
      */
@@ -163,13 +166,20 @@ class NNS implements INNSStore
         }
         return true;
     }
-
+    /**
+     * 获取出售列表
+     * @param order 排序条件time,price
+     * @param type 排序方式，high升序，low降序
+     * @param page 当前页码
+     * @param size 每页条数
+     * @param table 查询不同表格，默认为已上架，'nid1'为已上架，'nid2为已成交，'nid3'为已下架
+     */
     @action public async getSellingDomain(order:string,type:string,page: number, size: number)
     {
         let result: any = null;
         try
         {
-            result = await Api.getsellingdomain(order,type,page, size);            
+            result = await Api.getsellingdomain(order,type,page, size,"nid1");            
         } catch (error)
         {
             this.nnsSellingList = [];
@@ -178,6 +188,30 @@ class NNS implements INNSStore
         }
         this.nnsSellingList = result ? result[0].list : [];
         this.nnsSellingCount = result ? result[0].count : 0;
+        return true;
+    }
+    /**
+     * 获取域名的成交列表
+     * @param order 排序条件time,price
+     * @param type 排序方式，high升序，low降序
+     * @param page 当前页码
+     * @param size 每页条数
+     * @param table 查询不同表格，默认为已上架，'nid1'为已上架，'nid2为已成交，'nid3'为已下架
+     */
+    @action public async getSoldDomain(order:string,type:string,page: number, size: number)
+    {
+        let result: any = null;
+        try
+        {
+            result = await Api.getsellingdomain(order,type,page, size,'nid2');            
+        } catch (error)
+        {
+            this.nnsSoldList = [];
+            this.nnsSoldCount = 0;
+            return false;
+        }
+        this.nnsSoldList = result ? result[0].list : [];
+        this.nnsSoldCount = result ? result[0].count : 0;
         return true;
     }
 }

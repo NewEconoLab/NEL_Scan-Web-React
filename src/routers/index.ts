@@ -3,15 +3,19 @@ import asyncComponent from '@/components/asyncComponent';
 
 export default [
   {
-    component: asyncComponent(() => import('../containers/nns/nnslisting')),
+    component: asyncComponent(() => import('../containers/nns/soldpage')),
+    path: '/nnssold',
+  },
+  {
+    component: asyncComponent(() => import('../containers/nns/listpage')),
     path: '/nnsselling',
   },
   {
-    component: asyncComponent(() => import('../containers/nns/nnsbeinglist')),
+    component: asyncComponent(() => import('../containers/nns/beingpage')),
     path: '/nnsbeing',
   },
   {
-    component: asyncComponent(() => import('../containers/nns/nnsranklist')),
+    component: asyncComponent(() => import('../containers/nns/rankpage')),
     path: '/nnsrank',
   },
   {

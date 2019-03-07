@@ -70,20 +70,22 @@ export const searchbydomain = (domain:string) => {
   return request(opts);
 }
 /**
- * 获取域名的出售列表
+ * 获取域名的出售或成交列表
  * @param order 排序条件time,price
  * @param type 排序方式，high升序，low降序
  * @param page 当前页码
  * @param size 每页条数
+ * @param table 查询不同表格，默认为已上架，'nid1'为已上架，'nid2为已成交，'nid3'为已下架
  */
-export const getsellingdomain = (order:string,type:string,page:number,size:number) => {
+export const getsellingdomain = (order:string,type:string,page:number,size:number,table?:string) => {
   const opts = {
     method:'getNNSFixedSellingList',
     params:[
       order,
       type,
       page,
-      size
+      size,
+      table
     ]
   }
   return request(opts);

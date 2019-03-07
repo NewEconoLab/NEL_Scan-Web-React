@@ -63,7 +63,8 @@ export default {
     nodata:"没有数据",
     owner:"当前拥有者",
     listingtime:"上架时间",
-    expirationtime:"域名过期时间"
+    expirationtime:"域名过期时间",
+    tradetime:"成交时间"
   },
   page: {
     page: "第",
@@ -174,7 +175,9 @@ export default {
     saletitle:"正在出售中的域名",
     listingtime:"上架时间",
     heightprice:"最高价",
-    lowprice:"最低价"
+    lowprice:"最低价",
+    soldtitle:"已出售的域名",
+    tradetime:"成交时间"
   },
   footer: {
     aboutUs:"关于我们",

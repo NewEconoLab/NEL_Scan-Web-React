@@ -13,12 +13,16 @@ export interface INNSStore
     listingOrderBy:string,
     nnsSellingCount:number,
     nnsSellingList:INNSSellingList[],
+    SoldOrderBy:string,
+    nnsSoldCount:number,
+    nnsSoldList:INNSSellingList[],
     getStatistic: () => Promise<boolean>,
     getAuctingDomain: (page: number, size: number) => Promise<boolean>,
     getAuctingDomainbyPrice: (page: number, size: number) => Promise<boolean>,
     getAuctedDomain: (page: number, size: number) => Promise<boolean>,
     searchDomainInfo:(domain:string) => Promise<boolean>,
-    getSellingDomain:(order:string,type:string,page: number, size: number) => Promise<boolean>
+    getSellingDomain:(order:string,type:string,page: number, size: number) => Promise<boolean>,
+    getSoldDomain:(order:string,type:string,page: number, size: number) => Promise<boolean>
 }
 export interface INNSProps extends RouteComponentProps
 {
