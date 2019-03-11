@@ -68,7 +68,7 @@ class AssetInfo implements IAssetInfoStore {
             return false;
         }
         const list: IBalanceRankList[] = result || [];
-        let rank = (page - 1) * 10 + 1;
+        let rank = (page - 1) * size + 1;
         if (list.length !== 0) {
             this.balanceRankList = list.map((key) => {
                 const newObj = {
