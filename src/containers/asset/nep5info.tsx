@@ -48,7 +48,9 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
     public state = {
         assetid: '',
         currentPage: 1,
-        pageSize: 15
+        pageSize: 15,
+        tranCurrentPage:1,
+        tranPageSize:15
     }
     // 初始化数据
     public componentDidMount()
@@ -61,7 +63,7 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         this.props.assetinfo.getBalanceRankCount(params["nep5id"]);
         this.getBalanceRankList(params["nep5id"]);
         this.props.assetinfo.getNep5TransCount("asset", params["nep5id"]);
-        this.props.assetinfo.getNep5Transaction(params["nep5id"], this.state.pageSize, this.state.currentPage);
+        this.props.assetinfo.getNep5Transaction(params["nep5id"], this.state.tranPageSize, this.state.tranCurrentPage);
     }
     public componentWillUnmount()
     {
@@ -202,8 +204,8 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
                         />
                         <Page
                             totalCount={this.props.assetinfo.nep5TransCount}
-                            pageSize={this.state.pageSize}
-                            currentPage={this.state.currentPage}
+                            pageSize={this.state.tranPageSize}
+                            currentPage={this.state.tranCurrentPage}
                             onChange={this.onBalancePage}
                         />
                     </div>
