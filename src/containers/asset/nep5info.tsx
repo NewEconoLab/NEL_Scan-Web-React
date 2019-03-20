@@ -63,7 +63,7 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         this.props.assetinfo.getBalanceRankCount(params["nep5id"]);
         this.getBalanceRankList(params["nep5id"]);
         this.props.assetinfo.getNep5TransCount("asset", params["nep5id"]);
-        this.props.assetinfo.getNep5Transaction(params["nep5id"], this.state.tranPageSize, this.state.tranCurrentPage);
+        this.getTranList(params["nep5id"])
     }
     public componentWillUnmount()
     {
@@ -81,6 +81,11 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
     public getBalanceRankList = (asset: string) =>
     {
         return this.props.assetinfo.getBalanceRankList(asset, this.state.pageSize, this.state.currentPage);
+    }
+    // 请求数据
+    public getTranList = (asset: string) =>
+    {
+        return this.props.assetinfo.getNep5Transaction(asset, this.state.tranPageSize, this.state.tranCurrentPage);
     }
     // 列表特殊处理
     public renderBalance = (value, key) =>
@@ -129,6 +134,16 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         }, () =>
             {
                 this.getBalanceRankList(this.state.assetid);
+            })
+    }
+    // 翻页功能
+    public onTranPage = (index: number) =>
+    {
+        this.setState({
+            tranCurrentPage: index
+        }, () =>
+            {
+                this.getTranList(this.state.assetid);
             })
     }
     public render()
@@ -206,7 +221,7 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
                             totalCount={this.props.assetinfo.nep5TransCount}
                             pageSize={this.state.tranPageSize}
                             currentPage={this.state.tranCurrentPage}
-                            onChange={this.onBalancePage}
+                            onChange={this.onTranPage}
                         />
                     </div>
                 </div>
