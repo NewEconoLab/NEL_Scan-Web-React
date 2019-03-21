@@ -49,9 +49,10 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
     public async componentDidMount()
     {
         const params = this.props.match.params;
-        await this.getTransactionInfo(params["txid"]);
+        const txid ='0x'+ params["txid"].replace('0x','');
+        await this.getTransactionInfo(txid);
         this.doVinVoutList();
-        await this.props.transaction.getNep5Transbytxid(params["txid"]);
+        await this.props.transaction.getNep5Transbytxid(txid);
     }
     public componentWillUnmount()
     {
