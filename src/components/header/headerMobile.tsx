@@ -116,6 +116,11 @@ export default class HeaderMobile extends React.Component<any, IState> {
     search = search.trim();
     if (search)
     {
+      const isDomain = this.checkDomainname(search);// 判断是否为域名
+      if (isDomain)
+      {
+        window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nnsinfo/' + search : '/nnsinfo/' + search;
+      }
       if (search.length === 34)
       {
         if (Neotool.verifyPublicKey(search))
@@ -160,34 +165,76 @@ export default class HeaderMobile extends React.Component<any, IState> {
     })
     return;
   }
-
+  // 检测输入域名是否合法
+  public checkDomainname(domainname: string)
+  {
+    let domain = domainname;
+    if (/\.neo$/.test(domainname))
+    {
+      domain = domain.substring(0, domain.length - 4);
+    }
+    else if (/\.test$/.test(domainname))
+    {
+      domain = domain.substring(0, domain.length - 5);
+    }
+    else
+    {
+      return false;
+    }
+    if (domain.length >= 2 && domain.length <= 32)
+    {
+      return true;
+    } else
+    {
+      return false;
+    }
+  }
+  // 移动版切换语言
   public onClickTochangeLanguage = () =>
   {
-    if (this.state.languageText === "中")
+    if (this.state.languageText === "En")
     {
-      store['common'].language = 'zh';
+      store['common'].setLanguage('zh');
       this.setState({
         languageText: "中"
       })
       sessionStorage.setItem('language', 'zh');
-      setTimeout(() =>
-      {
-        window.location.reload();
-      })
     } else
     {
-      store['common'].language = 'en';
+      store['common'].setLanguage('en');
       this.setState({
         languageText: "En"
       })
       sessionStorage.setItem('language', 'en');
-      setTimeout(() =>
-      {
-        window.location.reload();
-      })
     }
-
   }
+  // public onClickTochangeLanguage = () =>
+  // {
+  //   if (this.state.languageText === "中")
+  //   {
+  //     store['common'].language = 'zh';
+  //     this.setState({
+  //       languageText: "中"
+  //     })
+  //     sessionStorage.setItem('language', 'zh');
+  //     setTimeout(() =>
+  //     {
+  //       window.location.reload();
+  //     })
+  //   } else
+  //   {
+  //     store['common'].language = 'en';
+  //     this.setState({
+  //       languageText: "En"
+  //     })
+  //     sessionStorage.setItem('language', 'en');
+  //     setTimeout(() =>
+  //     {
+  //       window.location.reload();
+  //     })
+  //   }
+
+  // }
   public render()
   {
     return (

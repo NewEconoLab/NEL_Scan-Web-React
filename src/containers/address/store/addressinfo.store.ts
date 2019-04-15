@@ -10,6 +10,7 @@ class AddressInfo implements IAddressInfoStore
     @observable public addrTransList: IAddrTrans[];
     @observable public addrUtxoList: IUtxobyAddresslist[] = [];
     @observable public addrUtxoListCount:number;
+    @observable public bindDomainName:string = '';
 
     /**
      * 获取该地址详情
@@ -26,6 +27,19 @@ class AddressInfo implements IAddressInfoStore
             return false;
         }
         this.addrInfo = result ? result[0] : [];
+        return true;
+    }
+    @action public async getBindDomain(address:string)
+    {
+        let result: any = null;
+        try
+        {
+            result = await Api.getBindDomain(address);
+        } catch (error)
+        {
+            return false;
+        }
+        this.bindDomainName = result ? result[0].fulldomain : '';
         return true;
     }
     /**

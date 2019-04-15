@@ -32,7 +32,22 @@ export const gettransactionlist = (page: number, size: number, type: string) =>
   }
   return request(opts);
 }
-
+/**
+ * 获取nep5交易类型的列表
+ * @param page 当前页码
+ * @param size 每页显示条数
+ */
+export const getnep5txlist = (page: number, size: number) =>
+{
+  const opts = {
+    method: 'getNep5Txlist',
+    params: [
+      page,
+      size
+    ]
+  }
+  return request(opts);
+}
 /**
  * 获取交易详情
  * @param txid 交易id

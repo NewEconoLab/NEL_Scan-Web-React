@@ -2,197 +2,74 @@
  * 交易列表页
  */
 import * as React from 'react';
-import TitleText from '@/components/titletext/index';
-import Table from '@/components/Table/Table';
-import Select from '@/components/select';
-import { toThousands } from '@/utils/numberTool';
 import './index.less'
 import { ITransactionsProps } from './interface/transaction.interface';
 import { observer, inject } from 'mobx-react';
 import { injectIntl } from 'react-intl';
-import Page from '@/components/Page';
-import Spinner from '@/components/spinner'
+import Alltx from './alltx';
+import Nep5tx from './nep5tx';
 
 @inject('transaction')
 @observer
 class Transactions extends React.Component<ITransactionsProps, {}>
 {
   public intrl = this.props.intl.messages;
-  public options = [
-    {
-      id: 'all',
-      name: "All",
-    },
-    {
-      id: 'ContractTransaction',
-      name: "Contract",
-    },
-    {
-      id: 'ClaimTransaction',
-      name: "Claim",
-    },
-    {
-      id: 'InvocationTransaction',
-      name: "Invocation",
-    },
-    {
-      id: 'MinerTransaction',
-      name: "Miner",
-    },
-    {
-      id: 'IssueTransaction',
-      name: "Issue"
-    },
-    {
-      id: 'RegisterTransaction',
-      name: "Register",
-    },
-    {
-      id: 'PublishTransaction',
-      name: "Publish",
-    },
-    {
-      id: 'EnrollmentTransaction',
-      name: "Enrollment",
-    },
-    {
-      id: 'AgencyTransaction',
-      name: "Agency",
-    }
-  ]
-  public transTableTh = [
-    {
-      name: this.intrl.tableTh.type,
-      key: 'type',
-    },
-    {
-      name: this.intrl.tableTh.txid,
-      key: 'txid'
-    }, {
-      name: this.intrl.tableTh.height,
-      key: 'blockindex'
-    }, {
-      name: this.intrl.tableTh.size,
-      key: 'size'
-    }
-  ]
-  public imgs = {
-    contract: require('@/img/contract.png'),
-    claim: require('@/img/claim.png'),
-    invocation: require('@/img/invocation.png'),
-    miner: require('@/img/miner.png'),
-    issue: require('@/img/issue.png'),
-    register: require('@/img/register.png'),
-    publish: require('@/img/publish.png'),
-    enrollment: require('@/img/enrollment.png'),
-    agency: require('@/img/agency.png')
-  }
   public state = {
-    currentPage: 1,
-    pageSize: 15,
-    type: "all",
-    isLoading: true
+    showTranType: false,// 显示表格列表选择
+    showTable:0 // 交易表格的切换，0为默认所有交易，1为nep5的交易
   }
-
-  public componentWillUnmount()
-  {
-    this.props.transaction.transList = [];
-  }
-  // 列表特殊处理
-  public renderTran = (value, key) =>
-  {
-    if (key === 'type')
-    {
-      value = value.replace('Transaction', '');
-      return <span className="img-text-bg"><img src={this.imgs[value.toLowerCase()]} alt="" />{value}</span>
-    }
-
-    if (key === 'txid')
-    {
-      const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
-      return <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, value)}>{txid}</a></span>
-    }
-    if (key === 'blockindex')
-    {
-      return <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, value)}>{toThousands(value.toString())}</a></span>
-    }
-    // if (key === 'size')
-    // {
-    //   return <span>{value}</span>
-    // }
-    return null;
-  }
-  // 区块详情链接
-  public goBlockInfo = (index: string) =>
-  {
-    this.props.history.push('/block/' + index)
-  }
-  // 交易详情链接
-  public goTransInfo = (txid: string) =>
-  {
-    this.props.history.push('/transaction/' + txid)
-  }
-  // 下拉选择功能
-  public onCallback = (item) =>
-  {
+  // 显示标题下拉
+  public onShowType = () => {
     this.setState({
-      currentPage: 1,
-      type: item.id,
-      isLoading: true
-    }, async () =>
-      {
-        await this.props.transaction.getTransList(this.state.currentPage, this.state.pageSize, this.state.type);
-        this.setState({
-          isLoading: false
-        })
-      })
+      showTranType:!this.state.showTranType
+    })
   }
-  // 翻页功能
-  public onGoPage = (index: number) =>
-  {
-    this.setState({
-      currentPage: index,
-      isLoading: true
-    }, async () =>
-      {
-        await this.props.transaction.getTransList(this.state.currentPage, this.state.pageSize, this.state.type);
-        this.setState({
-          isLoading: false
-        })
+  // 点击选择标题
+  public onClickType = (type:number) => {
+    console.log(type)
+    if(type === 0){
+      this.setState({
+        showTable:0
       })
+    }
+    else if(type === 1){
+      this.setState({
+        showTable:1
+      })
+    }
   }
   public render()
   {
 
     return (
       <div className="transaction-page">
-        <TitleText text={this.intrl.transaction.title1} img={require('@/img/transactions.png')} isInline={true}>
-          <Select options={this.options} text="Type" onCallback={this.onCallback} />
-        </TitleText>
+        <div className="tran-title-wrapper" onClick={this.onShowType}>
+          <img src={require('@/img/transactions.png')} alt="" />
+          <h3 className="tran-title">{this.state.showTable === 0 ? 'All TX': 'Nep5 TX'}</h3>
+          <div className="select-trantype">
+            <span className="triangle" />
+            {
+              this.state.showTranType && (
+                <div className="trantype-list">
+                  <div className="qipao-wrapper">
+                    <div className="arrow" />
+                  </div>
+                  <ul className="type-list">
+                    <li onClick={this.onClickType.bind(this,0)}>All TX</li>
+                    <li onClick={this.onClickType.bind(this,1)}>Nep5 TX</li>
+                  </ul>
+                </div>
+              )
+            }
+          </div>
+        </div>
         {
-          this.state.isLoading && (
-            <div className="loading-wrapper">
-              <Spinner />
-            </div>
-          )
+          this.state.showTable === 0 && (<Alltx {...this.props} />)
         }
         {
-          !this.state.isLoading && (
-            <div className="transaction-table">
-              <Table
-                tableTh={this.transTableTh}
-                tableData={this.props.transaction.transList && this.props.transaction.transList}
-                render={this.renderTran}
-              />
-              <Page
-                totalCount={this.props.transaction.transListCount && this.props.transaction.transListCount}
-                pageSize={this.state.pageSize}
-                currentPage={this.state.currentPage}
-                onChange={this.onGoPage}
-              />
-            </div>
-          )
+          this.state.showTable === 1 && (<Nep5tx {...this.props} />)
         }
+        
       </div>
     );
   }

@@ -1,14 +1,16 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/transcation.api'
-import { ITransactionsStore, ITransInfo, ITransaction, INep5Trans } from '../interface/transaction.interface';
+import { ITransactionsStore,INep5List, ITransInfo, ITransaction, INep5Trans } from '../interface/transaction.interface';
 import { INep5Asset } from '@/containers/asset/interface/asset.interface';
 
 class Transaction implements ITransactionsStore {
-    @observable public transList: ITransaction[] = [];
-    @observable public transListCount:number = 0;
-    @observable public tranInfo: ITransInfo|null =null;
-    @observable public nep5Trans: INep5Trans[] = [];
-    @observable public nep5Info: INep5Asset | null = null;
+    @observable public transList: ITransaction[] = []; // 所有交易列表
+    @observable public transListCount:number = 0; // 所有交易总数
+    @observable public tranInfo: ITransInfo|null =null; // 交易详情
+    @observable public nep5Trans: INep5Trans[] = []; // nep5的交易
+    @observable public nep5Info: INep5Asset | null = null; // nep5的交易详情
+    @observable public nep5TxList: INep5List[] = [];  // nep5的交易列表
+    @observable public nep5TxListCount:number = 0;
     /**
      * 根据交易类型获取交易列表（默认获取所有交易）
      * @param page 当前页码
@@ -26,6 +28,19 @@ class Transaction implements ITransactionsStore {
         }
         this.transListCount = result[0].count || 0;
         this.transList = result ? result[0].list : [];
+        return true;
+    }
+    @action public async getNep5List(page: number, size: number) {
+        let result: any = null;
+        try {
+            result = await Api.getnep5txlist(page, size);
+        } catch (error) {
+            this.transListCount = 0;
+            this.transList = [];
+            return false;
+        }
+        this.nep5TxListCount = result[0].count || 0;
+        this.nep5TxList = result ? result[0].list : [];
         return true;
     }
     /**

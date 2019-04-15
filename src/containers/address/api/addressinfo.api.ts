@@ -83,3 +83,17 @@ export const getaddrutxolist = (addr: string, page: number, size: number) =>
     }
     return request(opts);
 }
+/**
+ * 获取绑定的域名
+ * @param addr 当前地址
+ */
+export const getBindDomain = (addr: string) =>
+{
+    const opts = {
+        method: 'getMappingDomain',
+        params: [
+            addr,
+        ]
+    }
+    return request(opts);
+}

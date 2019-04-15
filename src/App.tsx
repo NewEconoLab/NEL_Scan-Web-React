@@ -8,7 +8,7 @@ import en from 'react-intl/locale-data/en';
 import Layout from './containers/layout/index';
 import routes from './routers';
 import store from "./store";
-import { en_US, zh_CN } from '@/language';
+// import { en_US, zh_CN } from '@/language';
 addLocaleData([...en, ...zh]);
 
 // setTimeout(() => {
@@ -20,26 +20,25 @@ addLocaleData([...en, ...zh]);
 // }, 6000)
 
 // 初始化请求
+store['common'].initLanguage();
+// const sessionLanguage = sessionStorage.getItem('language');
 
-const sessionLanguage = sessionStorage.getItem('language');
-
-if (sessionLanguage) {
-  store['common'].language = sessionLanguage;
-}
+// if (sessionLanguage) {
+//   store['common'].language = sessionLanguage;
+// }
 
 const ObserverRender = observer(() => {
-  let messages = en_US;
   let locale = 'en';
 
   if (store['common'].language === 'zh') {
-    messages = zh_CN;
     locale = 'zh';
   }
 
   return (
     <IntlProvider
+      key={locale}
       locale={locale}
-      messages={messages}
+      messages={store['common'].message}
     >
       {
         renderRoutes(routes)

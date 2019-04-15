@@ -17,7 +17,7 @@ export default {
     type3:"此次出价触发竞拍结束，出价失败。"
   },
   input: {
-    placeholder: "请输入您想查询的区块/Hash/地址或交易ID",
+    placeholder: "请输入您想查询的区块/Hash/地址/交易ID/域名",
     domain: "请输入您想查询的域名"
   },
   btn: {
@@ -113,7 +113,8 @@ export default {
     titleinfo4: "UTXO",
     address: "地址",
     create: "创建时间",
-    transaction: "交易总数"
+    transaction: "交易总数",
+    binddomain:"绑定的域名"
   },
   asset: {
     title1: "资产",

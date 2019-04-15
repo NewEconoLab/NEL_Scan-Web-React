@@ -7,11 +7,13 @@ export interface IAddressInfoStore
     addrTransList:IAddrTrans[],        // 地址交易列表
     addrUtxoList: IUtxobyAddresslist[],      // 地址utxo列表
     addrUtxoListCount:number,               // 交易总数
+    bindDomainName:string, // 绑定的域名
     getAddressInfo:(address:string) => Promise<boolean>,
     getAddrUtxoList:(address:string,size:number,page:number) => Promise<boolean>,
     getAddressBalance:(address:string) => Promise<boolean>,
     getAddressNep5Asset:(address:string) => Promise<boolean>,
-    getAddressTrans:(address:string,size:number,page:number) => Promise<boolean>
+    getAddressTrans:(address:string,size:number,page:number) => Promise<boolean>,
+    getBindDomain:(address:string) => Promise<boolean>,
 }
 export interface IAddressInfoProps extends RouteComponentProps {
     addressinfo:IAddressInfoStore,

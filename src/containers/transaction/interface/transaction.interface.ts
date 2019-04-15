@@ -6,14 +6,26 @@ export interface ITransactionsStore {
     tranInfo:ITransInfo|null,
     nep5Trans:INep5Trans[],
     nep5Info:INep5Asset|null,
+    nep5TxList:INep5List[],
+    nep5TxListCount:number,
     getTransList: ( page: number,size: number, type: string) => Promise<boolean>,
     getTransInfo:(txid:string) => Promise<boolean>,
     getNep5Transbytxid:(txid:string) => Promise<boolean>,
-    getNep5Info:(nep5:string) => Promise<boolean>
+    getNep5Info:(nep5:string) => Promise<boolean>,
+    getNep5List:( page: number,size: number) => Promise<boolean>,
 }
 export interface ITransactionsProps extends RouteComponentProps {
     intl: any,
     transaction: ITransactionsStore
+}
+
+export interface INep5List{
+    txid:string,
+    from:string,
+    to:string,
+    value:string,
+    blocktime:number,
+    assetName:string
 }
 
 export interface ITransactionList {

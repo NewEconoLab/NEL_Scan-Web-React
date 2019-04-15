@@ -17,7 +17,7 @@ export default {
     type3:"This bid triggered the closing of the domain auction and was not successful."
   },
   input: {
-    placeholder: "Search for block height/hash/address or transaction id",
+    placeholder: "Search for block height/hash/address/transaction id or domainname",
     domain: "Search for domain name"
   },
   btn: {
@@ -113,7 +113,8 @@ export default {
     titleinfo4: "UTXO",
     address: "Address",
     create: "Created on",
-    transaction: "Transactions"
+    transaction: "Transactions",
+    binddomain:"Bound domain"
   },
   asset: {
     title1: "Assets",

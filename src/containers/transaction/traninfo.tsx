@@ -153,7 +153,7 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
         {
             return (
                 <div className="nodata-wrap">
-                    <img src={require('@/img/nodata.png')} alt="" />
+                    <img src={require('@/img/tran-nodata.png')} alt="" />
                     <p>{this.intrl.nodata.msg}</p>
                 </div>
             )

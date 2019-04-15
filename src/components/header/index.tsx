@@ -35,7 +35,7 @@ interface IProps
   history: History,
   locale: any,
   btn: any,
-  input:any,
+  input: any,
 }
 
 @observer
@@ -121,6 +121,10 @@ export default class Header extends React.Component<IProps, IState>{
     search = search.trim();
     if (search)
     {
+      const isDomain = this.checkDomainname(search);// 判断是否为域名
+      if(isDomain){
+        window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nnsinfo/' + search : '/nnsinfo/' + search;
+      }
       if (search.length === 34)
       {
         if (Neotool.verifyPublicKey(search))
@@ -164,6 +168,30 @@ export default class Header extends React.Component<IProps, IState>{
     })
     return;
   }
+  // 检测输入域名是否合法
+  public checkDomainname(domainname: string)
+  {
+    let domain = domainname;
+    if (/\.neo$/.test(domainname))
+    {
+      domain = domain.substring(0, domain.length - 4);
+    }
+    else if (/\.test$/.test(domainname))
+    {
+      domain = domain.substring(0, domain.length - 5);
+    }
+    else
+    {
+      return false;
+    }
+    if (domain.length >= 2 && domain.length <= 32)
+    {
+      return true;
+    } else
+    {
+      return false;
+    }
+  }
   // 点击跳转到资产详情
   public goAssetInfo = (assetid) =>
   {
@@ -183,12 +211,12 @@ export default class Header extends React.Component<IProps, IState>{
       isShowSearch: !this.state.isShowSearch,
       inputValue: ''
     }, () =>
-    {
-      if (!this.state.inputValue)
       {
-        this.props.home.searchAssetList = [];
-      }
-    })
+        if (!this.state.inputValue)
+        {
+          this.props.home.searchAssetList = [];
+        }
+      })
 
   }
   // 是否显示版本
@@ -244,32 +272,53 @@ export default class Header extends React.Component<IProps, IState>{
 
     window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`
   }
+  // public onClickEnglish = () =>
+  // {
+  //   store['common'].language = 'en';
+  //   this.setState({
+  //     languageText: "En",
+  //     languageImg: en
+  //   })
+  //   sessionStorage.setItem('language', 'en');
+  //   setTimeout(() =>
+  //   {
+  //     window.location.reload();
+  //   })
+  // }
+  // public onClickChinese = () =>
+  // {
+  //   store['common'].language = 'zh';
+  //   this.setState({
+  //     languageText: "中",
+  //     languageImg: zh
+  //   })
+  //   sessionStorage.setItem('language', 'zh');
+  //   setTimeout(() =>
+  //   {
+  //     window.location.reload();
+  //   })
+  // }
+  // 切换英文
   public onClickEnglish = () =>
   {
-    store['common'].language = 'en';
+    store['common'].setLanguage('en');
     this.setState({
       languageText: "En",
       languageImg: en
     })
     sessionStorage.setItem('language', 'en');
-    setTimeout(() =>
-    {
-      window.location.reload();
-    })
   }
+  // 切换中文
   public onClickChinese = () =>
   {
-    store['common'].language = 'zh';
+    store['common'].setLanguage('zh');
     this.setState({
       languageText: "中",
       languageImg: zh
     })
     sessionStorage.setItem('language', 'zh');
-    setTimeout(() =>
-    {
-      window.location.reload();
-    })
   }
+  
   public mapRouterUnderline = (path) =>
   {
     if (path instanceof Array)

@@ -41,6 +41,10 @@ class Search extends React.Component<IHomeProps, any> {
     let search: string = this.state.inputValue;
     search = search.trim();
     if (search) {
+      const isDomain = this.checkDomainname(search);// 判断是否为域名
+      if(isDomain){
+        this.props.history.push('/nnsinfo/' + search);
+      }
       if (search.length === 34) {
         if (Neotool.verifyPublicKey(search)) { // 是否是地址
           this.props.history.push('/address/' + search);
@@ -66,7 +70,7 @@ class Search extends React.Component<IHomeProps, any> {
 
           // }
           this.props.history.push('/asset/0x' + search);
-        } else {
+        } else {          
           return false;
         }
       }
@@ -75,6 +79,30 @@ class Search extends React.Component<IHomeProps, any> {
     }
     return;
   }
+   // 检测输入域名是否合法
+   public checkDomainname(domainname: string)
+   {
+     let domain = domainname;
+     if (/\.neo$/.test(domainname))
+     {
+       domain = domain.substring(0, domain.length - 4);
+     }
+     else if (/\.test$/.test(domainname))
+     {
+       domain = domain.substring(0, domain.length - 5);
+     }
+     else
+     {
+       return false;
+     }
+     if (domain.length >= 2 && domain.length <= 32)
+     {
+       return true;
+     } else
+     {
+       return false;
+     }
+   }
   public goAssetInfo = (assetid) => {
     this.props.home.searchAssetList = [];
     if (assetid.length === 42) {

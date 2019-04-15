@@ -33,17 +33,127 @@
         }
     }
 }
-
    
 .transaction-page{
+    .tran-title-wrapper {
+        margin-bottom: 20px;
+        display: inline-block;
+        cursor: pointer;
+        position: relative;
+        img{
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+        }
+        h3{
+          font-size: 20px;
+          display: inline-block;
+          font-weight: 500;
+          font-family: NotoSansHans-Medium;
+          margin-right:30px;
+          user-select:none;
+        }    
+        .select-trantype{
+            .triangle{
+                width: 0;
+                height: 0;
+                border: 6px solid transparent;
+                border-top: 8px solid @text-color;
+                border-radius: 2px;position: absolute;
+                right: 5px;
+                top: 7px;
+            }
+            .trantype-list{
+                position: absolute;
+                top: 30px;
+                right: -49px;
+                z-index: 2;
+                background: #FFFFFF;
+                box-shadow: 0 2px 4px 0 rgba(192,192,192,0.50);
+                border-radius: 3px;
+                width: 120px;
+                line-height: 30px;
+                text-align: center;
+                .qipao-wrapper {
+                    width: 20px;
+                    height: 20px;
+                    position: absolute;
+                    top: -10px;
+                    left: 50%;
+                    margin-left: -10px;
+                    clip: rect(0,20px,10px,0);
+                    .arrow {
+                        width:10px;
+                        height:10px;
+                        transform: rotate(-45deg);
+                        background: #fff;
+                        box-shadow: -2px 0 10px 0 rgba(185, 185, 185, 0.5);
+                        margin-left:5px;
+                        margin-top:5px;
+                    }
+                }
+                .type-list{
+                    li{
+                        border-bottom: 1px solid #E5E5E5;
+                        &:last-child{
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+        }
+    }    
     .loading-wrapper{
-        text-align: center;
-        
+        text-align: center;        
     }
     .transaction-table{
         background:@text-fff;
         box-shadow: 0 2px 10px 0 rgba(185,185,185,0.50);
         border-radius: 3px;
+        line-height: 24px;
+        .choose-type-trans{
+            display: inline-block;
+            .select-wrapper{            
+                .select-type{
+                    line-height: 24px;
+                }
+                .selected-text{
+                    height: 24px;
+                    line-height: 24px;
+                    .triangle{
+                        position: absolute;
+                        top: 10px;
+                    }                
+                }
+                .select-box{
+                    position: absolute;
+                    top: 25px;
+    
+                    ul{
+                        display: block;
+                        padding: 0;
+                        li{
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+        .mobile-table-content{
+            position: relative;
+            .select-wrapper{
+                position: absolute;
+                top: -45px;
+                right: 0;
+            }
+        }
+        .refresh-img{
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-left: 10px;
+            cursor: pointer;
+        }
     }
 }
 

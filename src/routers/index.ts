@@ -52,7 +52,7 @@ export default [
   },
   {
     component: asyncComponent(() => import('../containers/transaction')),
-    path: '/transactions',
+    path: '/transactions/',
   },
   {
     component: asyncComponent(() => import('../containers/block/blockinfo')),

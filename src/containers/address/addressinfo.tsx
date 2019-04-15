@@ -20,6 +20,8 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     utxoSize: 15,
     transPage: 1,
     transSize: 15,
+    showTranType: false,// 显示表格列表选择
+    showTable: 0 // 交易表格的切换，0为默认所有交易，1为nep5的交易
   }
   public intrl = this.props.intl.messages;
   // 资产
@@ -86,6 +88,7 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
       address: params["address"]
     });
     this.props.addressinfo.getAddressInfo(params["address"]);
+    this.props.addressinfo.getBindDomain(params["address"]);
     this.props.addressinfo.getAddressBalance(params["address"]);
     this.props.addressinfo.getAddressNep5Asset(params["address"]);
     this.props.addressinfo.getAddressTrans(params["address"], this.state.transSize, this.state.transPage);
@@ -97,6 +100,30 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     this.props.addressinfo.addrTransList = [];
     this.props.addressinfo.addrUtxoList = [];
     this.props.addressinfo.addrUtxoListCount = 0;
+  }
+  // 显示标题下拉
+  public onShowType = () =>
+  {
+    this.setState({
+      showTranType: !this.state.showTranType
+    })
+  }
+  // 点击选择标题
+  public onClickType = (type: number) =>
+  {
+    console.log(type)
+    if (type === 0)
+    {
+      this.setState({
+        showTable: 0
+      })
+    }
+    else if (type === 1)
+    {
+      this.setState({
+        showTable: 1
+      })
+    }
   }
   // 获取utxo列表
   public getUtxoList = (address: string) =>
@@ -162,9 +189,9 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     this.setState({
       transPage: index
     }, () =>
-    {
-      this.props.addressinfo.getAddressTrans(this.state.address, this.state.transSize, this.state.transPage);
-    })
+      {
+        this.props.addressinfo.getAddressTrans(this.state.address, this.state.transSize, this.state.transPage);
+      })
   }
   // utxo翻页功能
   public onUtxoPage = (index: number) =>
@@ -172,9 +199,9 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     this.setState({
       utxoPage: index
     }, () =>
-    {
-      this.getUtxoList(this.state.address);
-    })
+      {
+        this.getUtxoList(this.state.address);
+      })
   }
   public render()
   {
@@ -200,6 +227,14 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
                 <span className="type-name">{this.intrl.address.address}</span>
                 <span className="type-content">{this.state.address}</span>
               </li>
+              {
+                this.props.addressinfo.bindDomainName !== '' && (
+                  <li>
+                    <span className="type-name">{this.intrl.address.binddomain}</span>
+                    <span className="type-content">{this.props.addressinfo.bindDomainName}</span>
+                  </li>
+                )
+              }
               <li>
                 <span className="type-name">{this.intrl.address.create}</span>
                 <span className="type-content">
@@ -223,7 +258,26 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
           </div>
         </div>
         <div className="addressinfo-tran-wrapper">
-          <TitleText text={this.intrl.address.titleinfo3} />
+          {/* <TitleText text={this.intrl.address.titleinfo3} /> */}
+          <div className="tran-title-wrapper" onClick={this.onShowType}>
+            <h3 className="tran-title">{this.state.showTable === 0 ? 'All TX': 'Nep5 TX'}}</h3>
+            <div className="select-trantype">
+              <span className="triangle" />
+              {
+                this.state.showTranType && (
+                  <div className="trantype-list">
+                    <div className="qipao-wrapper">
+                      <div className="arrow" />
+                    </div>
+                    <ul className="type-list">
+                      <li onClick={this.onClickType.bind(this, 0)}>All TX</li>
+                      <li onClick={this.onClickType.bind(this, 1)}>Nep5 TX</li>
+                    </ul>
+                  </div>
+                )
+              }
+            </div>
+          </div>
           <div className="address-trans-table">
             <Table
               tableTh={this.transTableTh}
