@@ -20,6 +20,9 @@ export default class LayoutIndex extends React.Component<any, any> {
     }).isRequired
   }
 
+  public state = {
+    lang:store.language === 'en'?'en':'zh' // zh为中，en为英
+  }
   public componentDidMount()
   {
     // const titles = store.language === 'en' ? en_US.title : zh_CN.title;
@@ -37,7 +40,25 @@ export default class LayoutIndex extends React.Component<any, any> {
     //   store.title = titles[arr2[arr2.length - 1]];
     // });
   }
-
+  // 切换语言
+  public onChangeLanguage = (lang:string) =>
+  {
+    if (lang === "zh")
+    {
+      store.setLanguage('zh');      
+      sessionStorage.setItem('language', 'zh');
+      this.setState({
+        lang:'zh'
+      })
+    } else
+    {
+      store.setLanguage('en');      
+      sessionStorage.setItem('language', 'en');
+      this.setState({
+        lang:'en'
+      })
+    }
+  }
   public render()
   {
     return (
@@ -46,20 +67,22 @@ export default class LayoutIndex extends React.Component<any, any> {
           <Header 
             home={HomeStore} 
             history={this.context.router.history} 
-            locale={store.language === 'en' ? en_US.header : zh_CN.header} 
-            btn={store.language === 'en' ? en_US.btn : zh_CN.btn} 
-            input={store.language === 'en' ? en_US.input : zh_CN.input}
+            locale={this.state.lang === 'en' ? en_US.header : zh_CN.header} 
+            btn={this.state.lang === 'en' ? en_US.btn : zh_CN.btn} 
+            input={this.state.lang === 'en' ? en_US.input : zh_CN.input}
+            onChangeLanguage={this.onChangeLanguage}
           />
           <HeaderMobile 
             home={HomeStore} 
             history={this.context.router.history} 
-            locale={store.language === 'en' ? en_US.header : zh_CN.header} 
-            input={store.language === 'en' ? en_US.input : zh_CN.input}
+            onChangeLanguage={this.onChangeLanguage}
+            locale={this.state.lang === 'en' ? en_US.header : zh_CN.header} 
+            input={this.state.lang === 'en' ? en_US.input : zh_CN.input}
           />
           <div className="layout-main">
             {this.props.children}
           </div>
-          <Footer locale={store.language === 'en' ? en_US.footer : zh_CN.footer} />
+          <Footer locale={ this.state.lang === 'en'? en_US.footer : zh_CN.footer} />
         </ScrollToTop>
       </div>
     );

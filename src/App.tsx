@@ -21,6 +21,7 @@ addLocaleData([...en, ...zh]);
 
 // 初始化请求
 store['common'].initLanguage();
+store['common'].socketInit();
 // const sessionLanguage = sessionStorage.getItem('language');
 
 // if (sessionLanguage) {

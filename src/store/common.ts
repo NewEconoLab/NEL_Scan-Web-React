@@ -1,16 +1,30 @@
 // 存储全局变量
 
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { en_US, zh_CN } from '@/language';
+import homeStore from '@/containers/home/store/home.store';
 let lang = navigator.language;
 lang = lang.substr(0, 2);
 
 
-class Common {
+class Common
+{
   @observable public language: string = lang;  // 当前语言
   @observable public network: string = 'testnet';  // 当前网络
   @observable public message: any | null = null;// 当前显示内容
-
+  @observable public socket: any; // websoket
+  
+  @computed get webSocketURL()
+  {
+    if (this.network === 'mainnet')
+    {
+      return 'wss://testws.nel.group/ws/mainnet'
+    }
+    else
+    {
+      return 'wss://testws.nel.group/ws/testnet'
+    }
+  }
   // 初始化语言
   @action public initLanguage = () =>
   {
@@ -37,6 +51,45 @@ class Common {
     {
       this.message = en_US;
       this.language = 'en'
+    }
+  }
+  @action public socketInit = () =>
+  {
+    if (this.socket)
+    {
+      this.socket.close()
+    }
+
+    this.socket = new WebSocket(this.webSocketURL);
+
+    this.socket.onclose = (event: any) =>
+    {
+      console.log(event);
+      // notification.warning({ message: 'websocket', description: 'close' })
+    };
+    this.socket.onerror = (event: any) =>
+    {
+      console.log(event);
+      // notification.error({ message: 'websocket', description: 'error' })
+    };
+    this.socket.onopen = (event: any) =>
+    {
+      console.log(event);
+      this.socket.send('Hello Server!');
+      // notification.success({ message: 'websocket', description: 'open on ' + this.webSocketURL })
+    }
+    this.socket.onmessage = (event: any) =>
+    {
+      console.log(event.data);
+      // 更新首页
+      if (window.location.pathname === '/' || window.location.pathname === '/test/')
+      {
+        homeStore.getBlockHeight();
+        homeStore.getTxCount('');
+        homeStore.getAddrCount();
+        homeStore.getBlockList(10, 1);
+        homeStore.getTransList(10, 1, '');
+      }
     }
   }
 

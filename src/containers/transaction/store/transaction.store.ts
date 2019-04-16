@@ -30,13 +30,18 @@ class Transaction implements ITransactionsStore {
         this.transList = result ? result[0].list : [];
         return true;
     }
+    /**
+     * 获取Nep5交易列表（默认获取所有交易）
+     * @param page 当前页码
+     * @param size 每页条数
+     */
     @action public async getNep5List(page: number, size: number) {
         let result: any = null;
         try {
             result = await Api.getnep5txlist(page, size);
         } catch (error) {
-            this.transListCount = 0;
-            this.transList = [];
+            this.nep5TxListCount = 0;
+            this.nep5TxList = [];
             return false;
         }
         this.nep5TxListCount = result[0].count || 0;

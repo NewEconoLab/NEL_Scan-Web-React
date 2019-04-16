@@ -97,3 +97,21 @@ export const getBindDomain = (addr: string) =>
     }
     return request(opts);
 }
+/**
+ * 根据地址获取nep5交易列表
+ * @param addr 当前地址
+ * @param size 每页条数
+ * @param page 当前页码
+ */
+export const getaddrnep5txlist = (addr: string, size: number, page: number) =>
+{
+    const opts = {
+        method: 'getNep5TxlistByAddress',
+        params: [
+            addr,
+            size,
+            page
+        ]
+    }
+    return request(opts);
+}

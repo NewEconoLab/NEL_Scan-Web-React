@@ -95,37 +95,11 @@ class Transactions extends React.Component<ITransactionsProps, {}>
     type: "all",
     isLoading: true
   }
-  // private tableThKeys = this.transTableTh.map(v => {
-  //   return {key:v.key,name:v.name}
-  // })
   public componentWillUnmount()
   {
     this.props.transaction.transList = [];
   }
-  // 列表特殊处理
-  // public renderTran = (value, key) =>
-  // {
-  //   if (key === 'type')
-  //   {
-  //     value = value.replace('Transaction', '');
-  //     return <span className="img-text-bg"><img src={this.imgs[value.toLowerCase()]} alt="" />{value}</span>
-  //   }
-
-  //   if (key === 'txid')
-  //   {
-  //     const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
-  //     return <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, value)}>{txid}</a></span>
-  //   }
-  //   if (key === 'blockindex')
-  //   {
-  //     return <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, value)}>{toThousands(value.toString())}</a></span>
-  //   }
-  //   // if (key === 'size')
-  //   // {
-  //   //   return <span>{value}</span>
-  //   // }
-  //   return null;
-  // }
+  
   // 区块详情链接
   public goBlockInfo = (index: string) =>
   {

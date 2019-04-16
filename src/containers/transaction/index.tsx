@@ -26,7 +26,6 @@ class Transactions extends React.Component<ITransactionsProps, {}>
   }
   // 点击选择标题
   public onClickType = (type:number) => {
-    console.log(type)
     if(type === 0){
       this.setState({
         showTable:0
@@ -45,7 +44,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
       <div className="transaction-page">
         <div className="tran-title-wrapper" onClick={this.onShowType}>
           <img src={require('@/img/transactions.png')} alt="" />
-          <h3 className="tran-title">{this.state.showTable === 0 ? 'All TX': 'Nep5 TX'}</h3>
+          <h3 className="tran-title">{this.state.showTable === 0 ? this.intrl.transaction.alltx: this.intrl.transaction.nep5tx}</h3>
           <div className="select-trantype">
             <span className="triangle" />
             {
@@ -55,8 +54,8 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                     <div className="arrow" />
                   </div>
                   <ul className="type-list">
-                    <li onClick={this.onClickType.bind(this,0)}>All TX</li>
-                    <li onClick={this.onClickType.bind(this,1)}>Nep5 TX</li>
+                    <li onClick={this.onClickType.bind(this,0)}>{this.intrl.transaction.alltx}</li>
+                    <li onClick={this.onClickType.bind(this,1)}>{this.intrl.transaction.nep5tx}</li>
                   </ul>
                 </div>
               )

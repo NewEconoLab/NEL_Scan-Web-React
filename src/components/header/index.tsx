@@ -26,7 +26,7 @@ interface IState
   isShowEnv: boolean,            // 是否显示版本下拉框
   isShowLanguage: boolean        // 是否显示语言下拉框
   languageText: string,
-  languageImg: ImageData
+  languageImg: ImageData,
 }
 
 interface IProps
@@ -36,6 +36,7 @@ interface IProps
   locale: any,
   btn: any,
   input: any,
+  onChangeLanguage:(lang:string)=>void;
 }
 
 @observer
@@ -49,7 +50,7 @@ export default class Header extends React.Component<IProps, IState>{
     isShowLanguage: false,
     inputPlaceHolder: this.props.input.placeholder,
     languageText: store['common'].language === 'en' ? "En" : "中",
-    languageImg: store['common'].language === 'en' ? en : zh
+    languageImg: store['common'].language === 'en' ? en : zh,    
   }
   public componentDidMount()
   {
@@ -104,14 +105,14 @@ export default class Header extends React.Component<IProps, IState>{
   public onFocus = () =>
   {
     this.setState({
-      inputPlaceHolder: ''
+      inputPlaceHolder: '',
     })
   }
   // 失去焦点
   public onBlur = () =>
   {
     this.setState({
-      inputPlaceHolder: this.props.input.placeholder
+      inputPlaceHolder: this.props.input.placeholder,
     })
   }
   // 搜索功能
@@ -122,7 +123,8 @@ export default class Header extends React.Component<IProps, IState>{
     if (search)
     {
       const isDomain = this.checkDomainname(search);// 判断是否为域名
-      if(isDomain){
+      if (isDomain)
+      {
         window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nnsinfo/' + search : '/nnsinfo/' + search;
       }
       if (search.length === 34)
@@ -272,53 +274,28 @@ export default class Header extends React.Component<IProps, IState>{
 
     window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`
   }
-  // public onClickEnglish = () =>
-  // {
-  //   store['common'].language = 'en';
-  //   this.setState({
-  //     languageText: "En",
-  //     languageImg: en
-  //   })
-  //   sessionStorage.setItem('language', 'en');
-  //   setTimeout(() =>
-  //   {
-  //     window.location.reload();
-  //   })
-  // }
-  // public onClickChinese = () =>
-  // {
-  //   store['common'].language = 'zh';
-  //   this.setState({
-  //     languageText: "中",
-  //     languageImg: zh
-  //   })
-  //   sessionStorage.setItem('language', 'zh');
-  //   setTimeout(() =>
-  //   {
-  //     window.location.reload();
-  //   })
-  // }
+  
   // 切换英文
   public onClickEnglish = () =>
   {
-    store['common'].setLanguage('en');
     this.setState({
       languageText: "En",
-      languageImg: en
+      languageImg: en,
+      inputPlaceHolder: this.props.input.placeholder,
     })
-    sessionStorage.setItem('language', 'en');
+    this.props.onChangeLanguage('en');
   }
   // 切换中文
   public onClickChinese = () =>
   {
-    store['common'].setLanguage('zh');
     this.setState({
       languageText: "中",
-      languageImg: zh
+      languageImg: zh,
+      inputPlaceHolder: this.props.input.placeholder,
     })
-    sessionStorage.setItem('language', 'zh');
+    this.props.onChangeLanguage('zh');
   }
-  
+
   public mapRouterUnderline = (path) =>
   {
     if (path instanceof Array)

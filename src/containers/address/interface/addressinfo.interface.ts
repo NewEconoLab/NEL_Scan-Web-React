@@ -8,12 +8,23 @@ export interface IAddressInfoStore
     addrUtxoList: IUtxobyAddresslist[],      // 地址utxo列表
     addrUtxoListCount:number,               // 交易总数
     bindDomainName:string, // 绑定的域名
+    addrNep5List:IAddrNep5Tx[], // 地址的nep5交易列表
+    addrNep5Count:number, // nep5交易总数
     getAddressInfo:(address:string) => Promise<boolean>,
     getAddrUtxoList:(address:string,size:number,page:number) => Promise<boolean>,
     getAddressBalance:(address:string) => Promise<boolean>,
     getAddressNep5Asset:(address:string) => Promise<boolean>,
     getAddressTrans:(address:string,size:number,page:number) => Promise<boolean>,
     getBindDomain:(address:string) => Promise<boolean>,
+    getNep5Trans:(address:string,size:number,page:number) => Promise<boolean>,
+}
+export interface IAddrNep5Tx{
+    txid:string,
+    from:string,
+    to:string,
+    value:string,
+    blocktime:number,
+    assetName:string
 }
 export interface IAddressInfoProps extends RouteComponentProps {
     addressinfo:IAddressInfoStore,

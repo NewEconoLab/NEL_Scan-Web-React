@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/addressinfo.api';
-import { IAddressInfoStore, IAddrBalance, IAddrTrans, IBanlance, INep5OfAddress, ITransOfAddress, IUtxobyAddresslist } from '../interface/addressinfo.interface';
+import { IAddressInfoStore, IAddrBalance, IAddrTrans, IBanlance, IAddrNep5Tx, INep5OfAddress, ITransOfAddress, IUtxobyAddresslist } from '../interface/addressinfo.interface';
 import { IAddress } from '../interface/address.interface';
 import * as CoinTool from '@/utils/cointool';
 class AddressInfo implements IAddressInfoStore
@@ -11,6 +11,8 @@ class AddressInfo implements IAddressInfoStore
     @observable public addrUtxoList: IUtxobyAddresslist[] = [];
     @observable public addrUtxoListCount:number;
     @observable public bindDomainName:string = '';
+    @observable public addrNep5List:IAddrNep5Tx[] = [];
+    @observable public addrNep5Count:number = 0;
 
     /**
      * 获取该地址详情
@@ -158,6 +160,26 @@ class AddressInfo implements IAddressInfoStore
         }
         this.addrUtxoListCount = result ? result[0].count:0;
         this.addrUtxoList = result ? result[0].list : null;
+        return true;
+    }
+    /**
+     * 根据地址获取Nep5交易列表
+     * @param address 当前地址
+     * @param page 当前页码
+     * @param size 每页条数
+     */
+    @action public async getNep5Trans(address: string, page: number, size: number)
+    {
+        let result: any = null;
+        try
+        {
+            result = await Api.getaddrnep5txlist(address, page, size);
+        } catch (error)
+        {
+            return false;
+        }
+        this.addrNep5Count = result ? result[0].count:0;
+        this.addrNep5List = result ? result[0].list : [];
         return true;
     }
 }

@@ -104,7 +104,7 @@ export const computeTime = function (time: number, locale: string)
   if (days > 0)
   {
     if (locale === 'en'){
-      return days + 'days ago'
+      return days + ' days ago'
     }
     return days + '天前'
   }
@@ -114,7 +114,7 @@ export const computeTime = function (time: number, locale: string)
   if (hours > 0)
   {
     if (locale === 'en'){
-      return hours + 'hours ago'
+      return hours + ' hours ago'
     }
     return hours + '小时前'
   }
@@ -124,7 +124,7 @@ export const computeTime = function (time: number, locale: string)
   if (minutes > 0)
   {
     if (locale === 'en'){
-      return minutes + 'minutes ago'
+      return minutes + ' minutes ago'
     }
     return minutes + '分钟前'
   }
@@ -134,12 +134,13 @@ export const computeTime = function (time: number, locale: string)
   if (seconds > 0)
   {
     if (locale === 'en'){
-      return seconds + 'seconds ago'
+      return seconds + ' seconds ago'
     }
     return seconds + '秒前'
   }
-  return ''
-  // console.log(" 相差 " + days + "天 " + hours + "小时 " + minutes + " 分钟" + seconds + " 秒");
-
-  // return " 相差 " + days + "天 " + hours + "小时 " + minutes + " 分钟" + seconds + " 秒"
+  
+  if (locale === 'en'){
+    return 'Just now'
+  }
+  return '刚刚'
 }

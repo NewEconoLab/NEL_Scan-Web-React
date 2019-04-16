@@ -103,7 +103,9 @@ export default {
     time: "时间",
     input: "输入",
     output: "输出",
-    nep5: "Nep5"
+    nep5: "Nep5",
+    alltx:'所有交易',
+    nep5tx:'Nep5交易'
   },
   address: {
     title1: "地址列表",
@@ -114,7 +116,9 @@ export default {
     address: "地址",
     create: "创建时间",
     transaction: "交易总数",
-    binddomain:"绑定的域名"
+    binddomain:"绑定的域名",
+    alltx:'所有交易',
+    nep5tx:'Nep5交易'
   },
   asset: {
     title1: "资产",
@@ -195,6 +199,8 @@ export default {
     nel:"NEL官网"
   },
   nodata:{
-    msg:"没有搜索结果哦"
+    msg:"没有搜索结果哦",
+    waiting:"交易已发出，等待节点确认...",
+    waitcount:"（当前等待数量：50）"
   }
 }

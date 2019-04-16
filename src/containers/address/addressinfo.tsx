@@ -11,6 +11,7 @@ import * as formatTime from 'utils/formatTime';
 import { toThousands } from '@/utils/numberTool';
 import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
+import AddrNep5Tx from './nep5tx';
 @inject('addressinfo')
 @observer
 class AddressInfo extends React.Component<IAddressInfoProps, {}> {
@@ -111,7 +112,6 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
   // 点击选择标题
   public onClickType = (type: number) =>
   {
-    console.log(type)
     if (type === 0)
     {
       this.setState({
@@ -260,7 +260,7 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
         <div className="addressinfo-tran-wrapper">
           {/* <TitleText text={this.intrl.address.titleinfo3} /> */}
           <div className="tran-title-wrapper" onClick={this.onShowType}>
-            <h3 className="tran-title">{this.state.showTable === 0 ? 'All TX': 'Nep5 TX'}}</h3>
+            <h3 className="tran-title">{this.state.showTable === 0 ? this.intrl.transaction.alltx: this.intrl.transaction.nep5tx}</h3>
             <div className="select-trantype">
               <span className="triangle" />
               {
@@ -270,28 +270,34 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
                       <div className="arrow" />
                     </div>
                     <ul className="type-list">
-                      <li onClick={this.onClickType.bind(this, 0)}>All TX</li>
-                      <li onClick={this.onClickType.bind(this, 1)}>Nep5 TX</li>
+                      <li onClick={this.onClickType.bind(this, 0)}>{this.intrl.transaction.alltx}</li>
+                      <li onClick={this.onClickType.bind(this, 1)}>{this.intrl.transaction.nep5tx}</li>
                     </ul>
                   </div>
                 )
               }
             </div>
           </div>
-          <div className="address-trans-table">
-            <Table
-              tableTh={this.transTableTh}
-              tableData={this.props.addressinfo.addrTransList}
-              render={this.renderTran}
-            />
-            <Page
-              totalCount={this.props.addressinfo.addrInfo && this.props.addressinfo.addrInfo.txcount}
-              pageSize={this.state.transSize}
-              currentPage={this.state.transPage}
-              onChange={this.onTransPage}
-            />
-          </div>
-
+          {
+            this.state.showTable === 0 && (
+              <div className="address-trans-table">
+                <Table
+                  tableTh={this.transTableTh}
+                  tableData={this.props.addressinfo.addrTransList}
+                  render={this.renderTran}
+                />
+                <Page
+                  totalCount={this.props.addressinfo.addrInfo && this.props.addressinfo.addrInfo.txcount}
+                  pageSize={this.state.transSize}
+                  currentPage={this.state.transPage}
+                  onChange={this.onTransPage}
+                />
+              </div>
+            )
+          }
+          {
+            this.state.showTable === 1 && <AddrNep5Tx {...this.props} />
+          }
         </div>
         <div className="addressinfo-utxo-wrapper">
           <TitleText text={this.intrl.address.titleinfo4} />

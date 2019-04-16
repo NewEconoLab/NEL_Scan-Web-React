@@ -103,7 +103,9 @@ export default {
     time: "Time",
     input: "Input",
     output: "Output",
-    nep5: "Nep5"
+    nep5: "Nep5",
+    alltx:'All TX',
+    nep5tx:'Nep5 TX'
   },
   address: {
     title1: "Addresses",
@@ -114,7 +116,9 @@ export default {
     address: "Address",
     create: "Created on",
     transaction: "Transactions",
-    binddomain:"Bound domain"
+    binddomain:"Bound domain",
+    alltx:'All TX',
+    nep5tx:'Nep5 TX'
   },
   asset: {
     title1: "Assets",
@@ -195,6 +199,8 @@ export default {
     nel:"NEL Official Website"
   },
   nodata:{
-    msg:"This is no result!"
+    msg:"This is no result!",
+    waiting:"Transaction sent, pending confirmation...",
+    waitcount:"(transaction pending count: 50)"
   }
 }

@@ -3,6 +3,7 @@
 export interface ICommonStore {
   language: string,
   network: string,
+  socketInit:() => Promise<boolean>,
 }
 
 export interface ITransaction {

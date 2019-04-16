@@ -6,16 +6,17 @@ import './index.less';
 interface IState
 {
     isShowCode: boolean,
-    isShowqqCode:boolean
+    isShowqqCode: boolean
 }
-interface IProps {
-    locale:any
-  }
+interface IProps
+{
+    locale: any
+}
 export default class Footer extends React.Component<IProps, IState>
 {
     public state = {
         isShowCode: false,
-        isShowqqCode:false
+        isShowqqCode: false
     }
 
     public isShowWechat = () =>
@@ -124,7 +125,7 @@ export default class Footer extends React.Component<IProps, IState>
                                     }
                                     {
                                         store.language === 'en' && <a href="https://nel.group/index-En.html" target="_blank">{this.props.locale.nel}</a>
-                                    }                                    
+                                    }
                                 </li>
                                 <li>
                                     {
@@ -138,7 +139,7 @@ export default class Footer extends React.Component<IProps, IState>
                                     }
                                     {
                                         store.language === 'en' && <a href="https://neons.name/index_En.html" target="_blank">{this.props.locale.nns}</a>
-                                    }                                    
+                                    }
                                 </li>
                                 <li>
                                     {

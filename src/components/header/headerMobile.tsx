@@ -192,49 +192,20 @@ export default class HeaderMobile extends React.Component<any, IState> {
   // 移动版切换语言
   public onClickTochangeLanguage = () =>
   {
-    if (this.state.languageText === "En")
+    if (this.state.languageText === "中")
     {
-      store['common'].setLanguage('zh');
+      this.setState({
+        languageText: "En",       
+      })
+      this.props.onChangeLanguage('zh');
+    } else
+    {
       this.setState({
         languageText: "中"
       })
-      sessionStorage.setItem('language', 'zh');
-    } else
-    {
-      store['common'].setLanguage('en');
-      this.setState({
-        languageText: "En"
-      })
-      sessionStorage.setItem('language', 'en');
+      this.props.onChangeLanguage('en');
     }
   }
-  // public onClickTochangeLanguage = () =>
-  // {
-  //   if (this.state.languageText === "中")
-  //   {
-  //     store['common'].language = 'zh';
-  //     this.setState({
-  //       languageText: "中"
-  //     })
-  //     sessionStorage.setItem('language', 'zh');
-  //     setTimeout(() =>
-  //     {
-  //       window.location.reload();
-  //     })
-  //   } else
-  //   {
-  //     store['common'].language = 'en';
-  //     this.setState({
-  //       languageText: "En"
-  //     })
-  //     sessionStorage.setItem('language', 'en');
-  //     setTimeout(() =>
-  //     {
-  //       window.location.reload();
-  //     })
-  //   }
-
-  // }
   public render()
   {
     return (
