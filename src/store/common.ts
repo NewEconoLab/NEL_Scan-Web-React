@@ -10,7 +10,7 @@ lang = lang.substr(0, 2);
 class Common
 {
   @observable public language: string = lang;  // 当前语言
-  @observable public network: string = 'testnet';  // 当前网络
+  @observable public network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet';  // 当前网络
   @observable public message: any | null = null;// 当前显示内容
   @observable public socket: any; // websoket
   
@@ -59,7 +59,8 @@ class Common
     {
       this.socket.close()
     }
-
+    console.log(this.network)
+    console.log(this.webSocketURL)
     this.socket = new WebSocket(this.webSocketURL);
 
     this.socket.onclose = (event: any) =>
