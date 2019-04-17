@@ -154,8 +154,8 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
             return (
                 <div className="nodata-wrap">
                     <img src={require('@/img/tran-nodata.png')} alt="" />
-                    <p>{this.intrl.nodata.waiting}</p>
-                    <p>{this.intrl.nodata.waitcount}</p>
+                    <p>{this.intrl.nodata.msg}</p>
+                    {/* <p>{this.intrl.nodata.waitcount}</p> */}
                 </div>
             )
         }
