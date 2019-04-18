@@ -8,11 +8,11 @@ import { observer, inject } from 'mobx-react';
 import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
 import * as formatTime from 'utils/formatTime';
-import { IAddressInfoProps, IAddrNep5Tx } from './interface/addressinfo.interface';
+import { IAddrNep5Tx } from './interface/addressinfo.interface';
 
 @inject('transaction')
 @observer
-class AddrNep5Tx extends React.Component<IAddressInfoProps, {}>
+class AddrNep5Tx extends React.Component<any, {}>
 {
     public intrl = this.props.intl.messages;
 
@@ -63,7 +63,6 @@ class AddrNep5Tx extends React.Component<IAddressInfoProps, {}>
         address: '',
         currentPage: 1,
         pageSize: 15,
-        isLoading: true,
         showTimeChange: true, // 转换时间显示，true默认显示计时，false显示默认时间
     }
     public componentDidMount()
@@ -104,14 +103,20 @@ class AddrNep5Tx extends React.Component<IAddressInfoProps, {}>
     // 跳转到地址详情页
     public toAddressInfo = (address: string) =>
     {
-        this.props.history.push('/address/' + address)
+        this.props.history.push('/address/' + address);
+        this.props.refresh(address);        
+        this.setState({
+            address,
+            currentPage: 1,
+            pageSize: 15
+        });
+        this.getAddrNep5List(address);
     }
     // 翻页功能
     public onGoPage = (index: number) =>
     {
         this.setState({
-            currentPage: index,
-            isLoading: true
+            currentPage: index
         }, async () =>
             {
                 this.getAddrNep5List(this.state.address);

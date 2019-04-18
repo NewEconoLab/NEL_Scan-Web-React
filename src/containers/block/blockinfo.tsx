@@ -86,7 +86,7 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
             return false;
         }
         const index = this.props.block.blockInfo ? this.props.block.blockInfo.index + 1 : 0
-        this.props.history.push('/block/' + index)
+        this.props.history.push('/block/' + index);
         const result = await this.getInfos(index);
         const state = { isTop: false };
         if (!result) {

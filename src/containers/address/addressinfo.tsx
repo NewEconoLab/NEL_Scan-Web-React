@@ -88,12 +88,16 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     this.setState({
       address: params["address"]
     });
-    this.props.addressinfo.getAddressInfo(params["address"]);
-    this.props.addressinfo.getBindDomain(params["address"]);
-    this.props.addressinfo.getAddressBalance(params["address"]);
-    this.props.addressinfo.getAddressNep5Asset(params["address"]);
-    this.props.addressinfo.getAddressTrans(params["address"], this.state.transSize, this.state.transPage);
-    this.getUtxoList(params["address"]);
+    this.initAddress(params["address"]);
+  }
+  public initAddress = (address: string) =>
+  {
+    this.props.addressinfo.getAddressInfo(address);
+    this.props.addressinfo.getBindDomain(address);
+    this.props.addressinfo.getAddressBalance(address);
+    this.props.addressinfo.getAddressNep5Asset(address);
+    this.props.addressinfo.getAddressTrans(address, this.state.transSize, this.state.transPage);
+    this.getUtxoList(address);
   }
   public componentWillUnmount()
   {
@@ -124,6 +128,17 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
         showTable: 1
       })
     }
+  }
+  // 切换地址，刷新页面
+  public refreshAddress = (address:string) => {
+    this.props.addressinfo.addrBalanceList = [];
+    this.props.addressinfo.addrTransList = [];
+    this.props.addressinfo.addrUtxoList = [];
+    this.props.addressinfo.addrUtxoListCount = 0;
+    this.initAddress(address);
+    this.setState({
+      address:address
+    })
   }
   // 获取utxo列表
   public getUtxoList = (address: string) =>
@@ -260,7 +275,7 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
         <div className="addressinfo-tran-wrapper">
           {/* <TitleText text={this.intrl.address.titleinfo3} /> */}
           <div className="tran-title-wrapper" onClick={this.onShowType}>
-            <h3 className="tran-title">{this.state.showTable === 0 ? this.intrl.transaction.alltx: this.intrl.transaction.nep5tx}</h3>
+            <h3 className="tran-title">{this.state.showTable === 0 ? this.intrl.transaction.alltx : this.intrl.transaction.nep5tx}</h3>
             <div className="select-trantype">
               <span className="triangle" />
               {
@@ -296,7 +311,7 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
             )
           }
           {
-            this.state.showTable === 1 && <AddrNep5Tx {...this.props} />
+            this.state.showTable === 1 && <AddrNep5Tx {...this.props} refresh={this.refreshAddress} />
           }
         </div>
         <div className="addressinfo-utxo-wrapper">
