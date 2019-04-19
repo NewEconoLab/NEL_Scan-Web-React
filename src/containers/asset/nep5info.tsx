@@ -7,6 +7,7 @@ import { injectIntl } from 'react-intl';
 import TitleText from '@/components/titletext/index';
 import Table from '@/components/Table/Table';
 import Page from '@/components/Page';
+import * as formatTime from 'utils/formatTime';
 import { IAssetInfoProps } from './interface/assetinfo.interface';
 import './index.less'
 
@@ -41,8 +42,11 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
             key: 'to'
         },
         {
-            name: this.intrl.tableTh.height,
-            key: 'blockindex'
+            name: this.intrl.tableTh.amount,
+            key: 'value'
+        },{
+            name: this.intrl.tableTh.time,
+            key: 'blocktime'
         }
     ]
     public state = {
@@ -85,7 +89,7 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
     // 请求数据
     public getTranList = (asset: string) =>
     {
-        return this.props.assetinfo.getNep5Transaction(asset, this.state.tranPageSize, this.state.tranCurrentPage);
+        return this.props.assetinfo.getNep5Transaction(asset, this.state.tranCurrentPage, this.state.tranPageSize);
     }
     // 列表特殊处理
     public renderBalance = (value, key) =>
@@ -106,14 +110,24 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         }
         if (key === 'from')
         {
-            value = value === '' ? '-' : value;
-            return <span className="addr-text">{value}</span>
+            if(value === ''){
+                return <span>-</span>
+            }
+            // return <span className="addr-text">{value}</span>
+            return <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, value)}>{value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
         }
         if (key === 'to')
         {
-            value = value === '' ? '-' : value;
-            return <span className="addr-text">{value}</span>
+            if(value === ''){
+                return <span>-</span>
+            }
+            // return <span className="addr-text">{value}</span>
+            return <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, value)}>{value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
         }
+        if (key === 'blocktime') {
+            value = formatTime.format('yyyy/MM/dd | hh:mm:ss', value.toString(), this.props.intl.locale);
+            return <span>{value}</span>
+          }
         return null;
     }
     // 跳转地址详情页

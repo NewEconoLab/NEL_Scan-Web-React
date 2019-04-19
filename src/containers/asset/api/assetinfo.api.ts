@@ -86,14 +86,14 @@ export const getnep5count = (type:string,nep5id: string) =>
  * @param size 每页条数
  * @param page 当前页码
  */
-export const getnep5transfersbyasset = (nep5id: string, size:number,page:number) =>
+export const getnep5transfersbyasset = (nep5id: string, page:number,size:number,) =>
 {
     const opts = {
         method: 'getnep5transfersbyasset',
         params: [
-            nep5id,
+            nep5id,            
+            page,
             size,
-            page
         ],
         baseUrl: 'common'
     }

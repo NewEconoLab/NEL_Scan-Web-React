@@ -13,7 +13,7 @@ export interface IAssetInfoStore
     getBalanceRankCount: (assetid: string) => Promise<boolean>,
     getBalanceRankList: (assetid: string, size: number, page: number) => Promise<boolean>,
     getNep5TransCount:(typs:string,nep5id:string) => Promise<boolean>,
-    getNep5Transaction: (nep5id: string, size: number, page: number) => Promise<boolean>
+    getNep5Transaction: (nep5id: string,page: number,size: number,) => Promise<boolean>
 }
 export interface IAssetInfoProps extends RouteComponentProps
 {
@@ -39,5 +39,6 @@ export interface INep5TransList{
     // n:number,
     to:string,
     txid:string,
-    // value:string
+    value:string,
+    blocktime:number
 }

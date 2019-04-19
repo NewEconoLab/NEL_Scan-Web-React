@@ -104,14 +104,15 @@ class AssetInfo implements IAssetInfoStore {
      * @param size 每页条数
      * @param page 当前页码
      */
-    @action public async getNep5Transaction(nep5id: string, size: number, page: number) {
+    @action public async getNep5Transaction(nep5id: string, page: number,size: number,) {
         let result: any = null;
         try {
-            result = await Api.getnep5transfersbyasset(nep5id, size, page);
+            result = await Api.getnep5transfersbyasset(nep5id, page,size,);
         } catch (error) {
             return false;
         }
-        this.nep5TransList = result || [];
+        this.nep5TransCount = result ? result[0].count : 0;
+        this.nep5TransList = result[0].list || [];
         return true;
     }
 }
