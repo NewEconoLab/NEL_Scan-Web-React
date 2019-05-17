@@ -8,15 +8,22 @@ export interface ITransactionsStore {
     nep5Info:INep5Asset|null,
     nep5TxList:INep5List[],
     nep5TxListCount:number,
+    poolCheck:IPoolCheck|null,
     getTransList: ( page: number,size: number, type: string) => Promise<boolean>,
     getTransInfo:(txid:string) => Promise<boolean>,
     getNep5Transbytxid:(txid:string) => Promise<boolean>,
     getNep5Info:(nep5:string) => Promise<boolean>,
     getNep5List:( page: number,size: number) => Promise<boolean>,
+    getPoolTypeAndCount:(txid:string)=>Promise<boolean>
 }
 export interface ITransactionsProps extends RouteComponentProps {
     intl: any,
     transaction: ITransactionsStore
+}
+
+export interface IPoolCheck {
+    isExistPool:boolean,
+    memPoolCount:number
 }
 
 export interface INep5List{

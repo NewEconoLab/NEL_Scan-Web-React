@@ -90,3 +90,16 @@ export const getnep5asset = (nep5:string) => {
   }
   return request(opts);
 }
+/**
+ * 查询交易池的状态及总数
+ */
+export const getrawmempoolcount = (txid:string) => {
+  const opts = {
+    method:'getTxidFromMemPool',
+    params:[
+      txid
+    ],
+    baseUrl:'common'
+  }
+  return request(opts);
+}

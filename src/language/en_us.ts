@@ -201,6 +201,7 @@ export default {
   nodata:{
     msg:"This is no result!",
     waiting:"Transaction sent, pending confirmation...",
-    waitcount:"(transaction pending count: 50)"
+    waitcount:"(transaction pending count: ",
+    waitcount2:")"
   }
 }

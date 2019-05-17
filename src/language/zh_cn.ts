@@ -200,7 +200,8 @@ export default {
   },
   nodata:{
     msg:"没有搜索结果哦",
-    waiting:"交易已发出，等待节点确认...",
-    waitcount:"（当前等待数量：50）"
+    waiting:"交易已发出，等待共识确认...",
+    waitcount:"（当前等待数量：",
+    waitcount2:"）"
   }
 }

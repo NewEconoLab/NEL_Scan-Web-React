@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/transcation.api'
-import { ITransactionsStore,INep5List, ITransInfo, ITransaction, INep5Trans } from '../interface/transaction.interface';
+import { ITransactionsStore,INep5List, ITransInfo, ITransaction, INep5Trans, IPoolCheck } from '../interface/transaction.interface';
 import { INep5Asset } from '@/containers/asset/interface/asset.interface';
 
 class Transaction implements ITransactionsStore {
@@ -11,6 +11,8 @@ class Transaction implements ITransactionsStore {
     @observable public nep5Info: INep5Asset | null = null; // nep5的交易详情
     @observable public nep5TxList: INep5List[] = [];  // nep5的交易列表
     @observable public nep5TxListCount:number = 0;
+    @observable public poolCheck:IPoolCheck|null = null;
+
     /**
      * 根据交易类型获取交易列表（默认获取所有交易）
      * @param page 当前页码
@@ -95,6 +97,20 @@ class Transaction implements ITransactionsStore {
             return null;
         }
         return result[0] || null;
+    }
+    /**
+     * 查询交易池的状态及总数
+     * @param txid 
+     */
+    @action public async getPoolTypeAndCount(txid:string){
+        let result: any = null;
+        try{
+            result = await Api.getrawmempoolcount(txid);
+        } catch (error) {
+            return false;
+        }
+        this.poolCheck = result[0];
+        return true
     }
 }
 export default new Transaction();

@@ -15,7 +15,7 @@ import { injectIntl } from 'react-intl';
 class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoState> {
     public state = {
         vinList: [],
-        outList: []
+        outList: [],        
     }
     public intrl = this.props.intl.messages;
     public transVTableTh = [
@@ -49,10 +49,11 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
     public async componentDidMount()
     {
         const params = this.props.match.params;
-        const txid ='0x'+ params["txid"].replace('0x','');
+        const txid ='0x'+ params["txid"].replace('0x','');        
         await this.getTransactionInfo(txid);
         this.doVinVoutList();
-        await this.props.transaction.getNep5Transbytxid(txid);
+        this.props.transaction.getNep5Transbytxid(txid);
+        this.props.transaction.getPoolTypeAndCount(txid);
     }
     public componentWillUnmount()
     {
@@ -154,8 +155,10 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
             return (
                 <div className="nodata-wrap">
                     <img src={require('@/img/tran-nodata.png')} alt="" />
-                    <p>{this.intrl.nodata.msg}</p>
-                    {/* <p>{this.intrl.nodata.waitcount}</p> */}
+                    {
+                        this.props.transaction.poolCheck?<p>{this.intrl.nodata.waitcount+(this.props.transaction.poolCheck.memPoolCount)+this.intrl.nodata.waitcount2}</p>
+                        :<p>{this.intrl.nodata.msg}</p>
+                    }
                 </div>
             )
         }
