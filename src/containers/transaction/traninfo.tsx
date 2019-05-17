@@ -53,7 +53,9 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
         await this.getTransactionInfo(txid);
         this.doVinVoutList();
         this.props.transaction.getNep5Transbytxid(txid);
-        this.props.transaction.getPoolTypeAndCount(txid);
+        if (!this.props.transaction.tranInfo){
+            this.props.transaction.getPoolTypeAndCount(txid);
+        }        
     }
     public componentWillUnmount()
     {
