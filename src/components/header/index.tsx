@@ -91,6 +91,10 @@ export default class Header extends React.Component<IProps, IState>{
   // 输入变化
   public onChange = (value: string) =>
   {
+    // 禁止输入中文，以及其他特殊字符
+    if(/[^a-zA-Z\d\.]/g.test(value)){
+      return
+    }
     this.setState({
       inputValue: value
     })

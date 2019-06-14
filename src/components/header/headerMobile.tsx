@@ -98,6 +98,10 @@ export default class HeaderMobile extends React.Component<any, IState> {
   public onChange = (ev: any) =>
   {
     const value = ev.target.value;
+    // 禁止输入中文，以及其他特殊字符
+    if(/[^a-zA-Z\d\.]/g.test(value)){
+      return
+    }
     this.setState({
       inputValue: value
     })

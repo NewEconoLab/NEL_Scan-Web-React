@@ -17,6 +17,10 @@ class Search extends React.Component<IHomeProps, any> {
     inputPlaceHolder: this.intrl.input.placeholder
   }
   public onChange = (value: string) => {
+    // 禁止输入中文，以及其他特殊字符
+    if(/[^a-zA-Z\d\.]/g.test(value)){
+      return
+    }
     this.setState({
       inputValue: value
     })
