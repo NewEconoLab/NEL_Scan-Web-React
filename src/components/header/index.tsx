@@ -378,7 +378,7 @@ export default class Header extends React.Component<IProps, IState>{
           <div className="header-menu">
             <ul>
               <li className={this.mapRouterUnderline('/')}><Link to="/">{this.props.locale.explorer}</Link></li>
-              <li className={this.mapRouterUnderline(['/blocks', '/block', '/transactions', '/transaction', '/addresses', '/address'])}>
+              <li className={this.mapRouterUnderline(['/blocks', '/block', '/transactions', '/transaction', '/addresses', '/address','/contract'])}>
                 <div className="select-box">
                   <div className="select-content">
                     <label onClick={this.toggleBrowse}>

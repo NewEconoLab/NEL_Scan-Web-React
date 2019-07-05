@@ -68,6 +68,11 @@ export default {
     tradetime:"成交时间",
     buyer2: "购买人",
     price2: "成交价格",
+    from2:"发送方",
+    to2:"接收方",
+    value2:"价值",
+    fee:"交易费",
+    number:"数量"    
   },
   page: {
     page: "第",
@@ -204,5 +209,22 @@ export default {
     waiting:"交易已发出，等待共识确认...",
     waitcount:"（当前等待数量：",
     waitcount2:"）"
+  },
+  contract:{
+    title1:"合约信息",
+    title2:"合约资产",
+    title3:"调用交易",
+    title4:"Nep5交易",
+    name:"合约名称",
+    hash:"合约Hash",
+    author:"创建者",
+    createtime:"创建日期",
+    version:"版本",
+    des:"合约描述",
+    tx24:"24小时交易",
+    usr24:"24小时用户",
+    all:"全部",
+    contract:"合约",
+    copy:"复制成功"
   }
 }

@@ -29,13 +29,16 @@ class Transactions extends React.Component<ITransactionsProps, {}>
     {
       name: this.intrl.tableTh.time,
       key: 'blocktime'
-    }, {
+    },
+    {
       name: this.intrl.tableTh.from,
       key: 'from'
-    }, {
+    },
+    {
       name: '',
       key: 'img'
-    }, {
+    },
+    {
       name: this.intrl.tableTh.to,
       key: 'to'
     },
@@ -52,10 +55,12 @@ class Transactions extends React.Component<ITransactionsProps, {}>
     {
       name: this.intrl.tableTh.time,
       key: 'blocktime'
-    }, {
+    },
+    {
       name: this.intrl.tableTh.from,
       key: 'from'
-    }, {
+    },
+    {
       name: this.intrl.tableTh.to,
       key: 'to'
     },

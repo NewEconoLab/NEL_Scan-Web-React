@@ -9,8 +9,10 @@ interface IOpts {
 }
 
 const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet';
-const baseCommonUrl: string = "https://api.nel.group/api/" + network;
-const baseUrl: string = "https://apiscan.nel.group/api/" + network;
+// const baseCommonUrl: string = "https://api.nel.group/api/" + network;
+// const baseUrl: string = "https://apiscan.nel.group/api/" + network;
+const baseCommonUrl: string = "http://47.99.124.218:82/api/" + network;
+const baseUrl: string = "http://47.99.124.218:86/api/" + network;
 
 const makeRpcPostBody = (method: string, params: any): {} => {
 

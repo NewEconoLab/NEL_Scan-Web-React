@@ -68,6 +68,11 @@ export default {
     tradetime:"Trade time",
     buyer2: "Buyer",
     price2: "Price",
+    from2:"From",
+    to2:"To",
+    value2:"Value",
+    fee:"Fee",
+    number:"Value"
   },
   page: {
     page: "Page",
@@ -204,5 +209,22 @@ export default {
     waiting:"Transaction sent, pending confirmation...",
     waitcount:"(transaction pending count: ",
     waitcount2:")"
+  },
+  contract:{
+    title1:"Contract Details",
+    title2:"Contract Asset",
+    title3:"TX",
+    title4:"NEP5 TX",
+    name:"Name",
+    hash:"Contract Hash",
+    author:"Author",
+    createtime:"Deployed",
+    version:"Version",
+    des:"Description",
+    tx24:"TX in 24h",
+    usr24:"Users in 24h",
+    all:"All ",
+    contract:" Contract",
+    copy:"Copy"
   }
 }

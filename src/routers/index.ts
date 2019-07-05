@@ -3,6 +3,10 @@ import asyncComponent from '@/components/asyncComponent';
 
 export default [
   {
+    component: asyncComponent(() => import('../containers/contract')),
+    path: '/contract/:hash',
+  },
+  {
     component: asyncComponent(() => import('../containers/nns/soldpage')),
     path: '/nnssold',
   },
