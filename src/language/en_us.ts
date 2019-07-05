@@ -9,7 +9,8 @@ export default {
     nnsevent: "NNS Events",
     wallet: "Wallet",
     mainnet: "MainNet",
-    testnet: "TestNet"
+    testnet: "TestNet",
+    lang:"Language"
   },
   hint:{
     type1:"The auction period is the first stage of the auction and its duration is 3 days, during which all bids are valid. An overtime bidding of up to 2 days will be triggered when someone bids on the last day of the auction period. Otherwise the auction ends at the end of the auction period.",

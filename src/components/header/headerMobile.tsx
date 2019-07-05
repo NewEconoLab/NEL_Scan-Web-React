@@ -10,11 +10,13 @@ import * as Neotool from '@/utils/neotool';
 import store from "@/store";
 interface IState
 {
-  isShowMenu: boolean,
-  isShowBrowse: boolean,
-  isShowEnv: boolean,
+  isShowMenu: boolean, // 是否显示菜单
+  isShowBrowse: boolean, // 是否显示浏览器菜单
+  isShowEnv: boolean, // 是否显示网络菜单
   inputValue: string,
-  languageText: string,
+  languageText: string, // 
+  isShowLang: boolean,// 是否显示语言菜单
+  isShowSearch: boolean,// 是否显示搜索框
 }
 
 
@@ -26,6 +28,8 @@ export default class HeaderMobile extends React.Component<any, IState> {
     isShowEnv: false,
     inputValue: '',
     languageText: store['common'].language === 'en' ? "中" : "En",
+    isShowLang: false,
+    isShowSearch: false,
   }
   public toggleMenu = () =>
   {
@@ -39,6 +43,16 @@ export default class HeaderMobile extends React.Component<any, IState> {
     this.setState({
       isShowEnv: !this.state.isShowEnv,
       isShowBrowse: false,
+      isShowLang: false
+    })
+    e.stopPropagation();
+  }
+  public toggleLang = (e) =>
+  {
+    this.setState({
+      isShowEnv: false,
+      isShowBrowse: false,
+      isShowLang: !this.state.isShowLang,
     })
     e.stopPropagation();
   }
@@ -47,6 +61,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
     this.setState({
       isShowEnv: false,
       isShowBrowse: !this.state.isShowBrowse,
+      isShowLang: false,
     })
     e.stopPropagation();
   }
@@ -61,6 +76,12 @@ export default class HeaderMobile extends React.Component<any, IState> {
   public toggleEnv2 = (e) =>
   {
     this.toggleEnv(e);
+    this.toggleMenu();
+    e.stopPropagation();
+  }
+  public toggleLang2 = (e) =>
+  {
+    this.toggleLang(e);
     this.toggleMenu();
     e.stopPropagation();
   }
@@ -99,11 +120,27 @@ export default class HeaderMobile extends React.Component<any, IState> {
   {
     const value = ev.target.value;
     // 禁止输入中文，以及其他特殊字符
-    if(/[^a-zA-Z\d\.]/g.test(value)){
+    if (/[^a-zA-Z\d\.]/g.test(value))
+    {
       return
     }
     this.setState({
       inputValue: value
+    })
+  }
+  // 显示搜索框
+  public toShowSearch = () =>{
+    this.setState({
+      isShowSearch: true,
+      inputValue: ''
+    })
+  }
+  // 关闭搜索框
+  public toCloseSearch = () =>
+  {
+    this.setState({
+      isShowSearch: false,
+      inputValue: ''
     })
   }
   public onKeyDown = (ev: any) =>
@@ -199,7 +236,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
     if (this.state.languageText === "中")
     {
       this.setState({
-        languageText: "En",       
+        languageText: "En",
       })
       this.props.onChangeLanguage('zh');
     } else
@@ -210,17 +247,54 @@ export default class HeaderMobile extends React.Component<any, IState> {
       this.props.onChangeLanguage('en');
     }
   }
+  // 切换英文
+  public onClickEnglish = () =>
+  {
+    this.setState({
+      languageText: "En"
+    })
+    this.props.onChangeLanguage('en');
+  }
+  // 切换中文
+  public onClickChinese = () =>
+  {
+    this.setState({
+      languageText: "中"
+    })
+    this.props.onChangeLanguage('zh');
+  }
   public render()
   {
     return (
       <div className="header-mobile-container">
-        <div className="header-wrapper">
-          <img src={require('@/img/menu.png')} alt="" className="nav" onClick={this.toggleMenu} />
-          <div className="logo">
-            <img src={require('@/img/logo.png')} alt="" />
-          </div>
-          <div className="language" onClick={this.onClickTochangeLanguage}>{this.state.languageText}</div>
-        </div>
+        {/* <div className="language" onClick={this.onClickTochangeLanguage}>{this.state.languageText}</div> */}
+        {
+          !this.state.isShowSearch && (
+            <div className="header-wrapper">
+              <img src={require('@/img/menu.png')} alt="" className="nav" onClick={this.toggleMenu} />
+              <div className="logo">
+                <img src={require('@/img/logo.png')} alt="" />
+              </div>
+              <div className="search-wrapper">
+                <img src={require('@/img/search.png')} alt="" onClick={this.toShowSearch} />
+              </div>
+            </div>
+          )
+        }
+        {
+          this.state.isShowSearch && (
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder={this.props.input.placeholder}
+                value={this.state.inputValue}
+                onChange={this.onChange}
+                onKeyDown={this.onKeyDown}
+              />
+              <img src={require('@/img/close.png')} alt="" onClick={this.toCloseSearch} />
+            </div>
+          )
+        }
         {
           this.state.isShowMenu && (
             <div className="menu-wrapper">
@@ -271,17 +345,17 @@ export default class HeaderMobile extends React.Component<any, IState> {
                   <span>API</span>
                 </div>
               </div>
-
               <div className="list-box">
-                <div className="search-box">
-                  <input
-                    type="text"
-                    placeholder={this.props.input.placeholder}
-                    value={this.state.inputValue}
-                    onChange={this.onChange}
-                    onKeyDown={this.onKeyDown}
-                  />
-                  <img src={require('@/img/search.png')} alt="" onClick={this.toSearchInfo} />
+                <div className="list">
+                  <label onClick={this.toggleLang}><span>{this.props.locale.lang}<em /></span></label>
+                  {
+                    this.state.isShowLang && (
+                      <div className="child" onClick={this.toggleLang2}>
+                        <span><a onClick={this.onClickChinese}>中文</a></span>
+                        <span><a onClick={this.onClickEnglish}>English</a></span>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             </div>
