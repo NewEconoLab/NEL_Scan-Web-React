@@ -285,7 +285,7 @@ class AllTable extends React.Component<IContractProps> {
                                                                 </span>
                                                             </div>
                                                             <div className="table-line">
-                                                                <span className="line-title">{this.intrl.tableTh.asset}</span>
+                                                                <span className="line-title">{this.intrl.tableTh.number}</span>
                                                                 <span className="line-content">
                                                                     <span>{item.value}</span>
                                                                 </span>

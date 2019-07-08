@@ -77,7 +77,11 @@ class Search extends React.Component<IHomeProps, any> {
         }
         else if (search.length === 40)
         {
-          this.props.history.push('/nep5/0x' + search);
+          if(process.env.REACT_APP_SERVER_ENV === 'DEV'){
+            this.props.history.push('/nep5/0x' + search);
+          }else{
+            this.props.history.push('/contract/0x' + search);
+          }          
         }
         else if (!isNaN(Number(search)))
         {
@@ -92,10 +96,6 @@ class Search extends React.Component<IHomeProps, any> {
           // }
           this.props.history.push('/asset/0x' + search);
         }
-        // else if (search.length === 40)
-        // {
-        //   this.props.history.push('/contract/0x' + search);
-        // }
         else
         {
           return false;

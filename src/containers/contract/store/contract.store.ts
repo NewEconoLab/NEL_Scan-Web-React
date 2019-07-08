@@ -53,7 +53,7 @@ class Contract implements IContractStore
         let result: any = null;
         try
         {
-            result = await Api.getcontractnep5tx(this.contractHash, page, size);
+            result = await Api.getcontractnep5tx(this.contractAddr, page, size);
         } catch (error)
         {
             this.nep5TxList = [];
@@ -67,6 +67,7 @@ class Contract implements IContractStore
     @action public async getbalance()
     {
         let result: any = null;
+        this.balanceList = [];
         try
         {
             result = await Api.getBalance(this.contractAddr);
@@ -93,7 +94,7 @@ class Contract implements IContractStore
     @action public async getNep5Balance()
     {
         let result: any = null;
-        
+        this.nep5BalanceList = [];
         try
         {
             result = await Api.getnep5Balance(this.contractAddr);

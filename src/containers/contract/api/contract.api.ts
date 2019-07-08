@@ -61,7 +61,7 @@ export const getnep5Balance = (addr: string) =>
 {
     const opts = {
         method: 'getallnep5assetofaddress',
-        params: [addr],
+        params: [addr,1],
         baseUrl:'common'
     }
     return request(opts);

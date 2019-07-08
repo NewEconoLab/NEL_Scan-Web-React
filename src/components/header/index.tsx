@@ -151,7 +151,7 @@ export default class Header extends React.Component<IProps, IState>{
         }
         else if (search.length === 40)
         {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/nep5/0x' + search;
+          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/contract/0x' + search;
         }
         else if (!isNaN(Number(search)))
         {

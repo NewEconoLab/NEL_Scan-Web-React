@@ -106,7 +106,7 @@ class ContractInfo extends React.Component<IContractProps> {
         return (
             <div className="contractinfo-page">
                 <div className="goback-wrapper">
-                    <span className="goback-text" onClick={this.onGoBack}>&lt;&lt;  {this.intrl.btn.goback}</span>
+                    <span className="goback-text" onClick={this.onGoBack}>&lt;&lt;  {this.intrl.btn.goback2}</span>
                 </div>
                 <div className="info-content">
                     <TitleText text={this.intrl.contract.title1} isInfoTitle={true} />

@@ -120,7 +120,7 @@ class AllTable extends React.Component<IContractProps> {
                                                             <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
                                                             <span>{this.state.showTimeChange ? formatTime.computeTime(parseInt(item.time,10), this.props.intl.locale) : formatTime.format('yyyy/MM/dd | hh:mm:ss', item.time, this.props.intl.locale)}</span>
                                                             <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
-                                                            <span><img src={require('@/img/contract-test.png')} alt=""/>{item.to}</span>
+                                                            <span title={this.props.contract.conInfo ? this.props.contract.conInfo.name:'-'}><img src={require('@/img/contract-test.png')} alt=""/>{this.props.contract.conInfo ? this.props.contract.conInfo.name.replace(/^(.{10})(.*)(.{0})$/, '$1...$3') : '-'}</span>
                                                             <span>{item.value.toString()}</span>
                                                             <span>{item.net_fee}</span>
                                                         </li>
@@ -189,17 +189,17 @@ class AllTable extends React.Component<IContractProps> {
                                                             <div className="table-line">
                                                                 <span className="line-title">{this.intrl.tableTh.to}</span>
                                                                 <span className="line-content">
-                                                                    <span><img src={require('@/img/contract-test.png')} alt=""/>{item.to}</span>
+                                                                    <span><img src={require('@/img/contract-test.png')} alt=""/>{this.props.contract.conInfo ? this.props.contract.conInfo.name.replace(/^(.{10})(.*)(.{0})$/, '$1...$3') : '-'}</span>
                                                                 </span>
                                                             </div>
                                                             <div className="table-line">
-                                                                <span className="line-title">{this.intrl.tableTh.asset}</span>
+                                                                <span className="line-title">{this.intrl.tableTh.value2}</span>
                                                                 <span className="line-content">
                                                                     <span>{item.value}</span>
                                                                 </span>
                                                             </div>
                                                             <div className="table-line">
-                                                                <span className="line-title">{this.intrl.tableTh.asset}</span>
+                                                                <span className="line-title">{this.intrl.tableTh.fee}</span>
                                                                 <span className="line-content">
                                                                     <span>{item.net_fee}</span>
                                                                 </span>
