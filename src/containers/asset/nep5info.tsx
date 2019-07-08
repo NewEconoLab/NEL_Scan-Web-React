@@ -196,7 +196,6 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
                                     ? <span className="type-content">{this.props.assetinfo.nep5Info && this.props.assetinfo.nep5Info.assetid}</span>
                                     : <span className="type-content"><a href="javascript:;" onClick={this.goContractInfo.bind(this,this.props.assetinfo.nep5Info.assetid)}>{this.props.assetinfo.nep5Info && this.props.assetinfo.nep5Info.assetid}</a></span>
                                 }
-                                <span className="type-content"><a href="javascript:;" onClick={this.goContractInfo.bind(this,this.props.assetinfo.nep5Info.assetid)}>{this.props.assetinfo.nep5Info && this.props.assetinfo.nep5Info.assetid}</a></span>
                             </li>
                             <li>
                                 <span className="type-name">{this.intrl.asset.type}</span>
