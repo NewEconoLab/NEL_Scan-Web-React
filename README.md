@@ -37,7 +37,14 @@ location /test {
 
 ## 项目文档
 
-todo
+后端服务依赖
+https://api.nel.group/api/
+https://apiscan.nel.group/api/
+
+* 如需要更替自己的后端服务 
+NELBrowser-Web-React/src/store/api/request.ts
+baseCommonUrl 为公用api服务https://api.nel.group/api/
+baseUrl 为浏览器项目api服务https://apiscan.nel.group/api/
 
 ## 流程图
 
