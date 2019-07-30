@@ -59,8 +59,8 @@ const baseCommonUrl: string = "https://api.nel.group/api/" + network; // 公用a
 const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览器api服务
 ```
 * api项目地址：
-- [api.nel.group](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
-- [apiscan.nel.group](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
+- [api.nel.group（公用api）](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
+- [apiscan.nel.group（浏览器api）](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
 
 <a name="en">English</a>
 ## Technical selection
