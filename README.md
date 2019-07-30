@@ -1,5 +1,7 @@
 # NELBrowser
+[简体中文](#zh) |    [English](#en) 
 
+<a name="zh">简体中文</a>
 ## 技术选型
 1. React
 2. React-router
@@ -59,8 +61,7 @@ const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览�
 - [api.nel.group](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
 - [apiscan.nel.group](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
 
-# NELBrowser
-
+<a name="en">English</a>
 ## Technical selection
 React
 2. React-router
