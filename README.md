@@ -44,17 +44,16 @@ https://apiscan.nel.group/api/
 ```
 
 * 如需要更替自己的后端服务 
-```shell
-- [接口请求配置](https://github.com/NewEconoLab/NELBrowser-Web-React/src/store/api/request.ts)
 
+- [api请求配置文件](https://github.com/NewEconoLab/NELBrowser-Web-React/src/store/api/request.ts)
+```shell
 const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // 主网/测试网
 const baseCommonUrl: string = "https://api.nel.group/api/" + network; // 公用api服务
 const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览器api服务
-
-项目地址：
-- [baseCommonUrl](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
-- [baseUrl](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
 ```
+* api项目地址：
+- [api.nel.group](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
+- [apiscan.nel.group](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
 
 ## 流程图
 
