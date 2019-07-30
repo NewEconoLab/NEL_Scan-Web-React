@@ -77,7 +77,7 @@ npm run startpub
 ```shell
 npm run build
 ```
-* 如需要更替自己的后端服务请至- [api请求配置文件](https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)进行修改，修改后执行打包命令
+* 如需要更替自己的后端服务请至 [api请求配置文件](https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)进行修改，修改后执行打包命令
 ```shell
 const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // 主网/测试网
 const baseCommonUrl: string = "https://api.nel.group/api/" + network; // 公用api服务
