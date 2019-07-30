@@ -109,8 +109,7 @@ Https://apiscan.nel.group/api/
 ```
 
 * If you need to replace your own backend service
-
-- [api request configuration file] (https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)
+- [API request configuration](https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)
 ```shell
 Const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // main network/test network
 Const baseCommonUrl: string = "https://api.nel.group/api/" + network; // public api service
