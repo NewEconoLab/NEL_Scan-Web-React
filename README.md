@@ -35,6 +35,10 @@ location /test {
 }
 ```
 
+## 代码约束
+
+遵循 typescript-react 规范 以及 arbnb 规范
+
 ## 项目文档
 
 * 后端服务依赖
@@ -55,10 +59,63 @@ const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览�
 - [api.nel.group](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
 - [apiscan.nel.group](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
 
-## 流程图
+# NELBrowser
 
-todo
+## Technical selection
+React
+2. React-router
+3. Mobx
+4. Typescript
 
-## 代码约束
+## Startup (test network)
 
-遵循 typescript-react 规范 以及 arbnb 规范
+```shell
+Npm install / yarn add
+```
+
+```shell
+Npm start / yarn start
+```
+## Startup (Main Network)
+```shell
+Npm run startpub
+```
+## Package Release
+```shell
+Npm run build
+```
+
+## Nginx Configuration
+```shell
+Location / {
+  Try_files $uri /index.html;
+}
+
+Location /test {
+ Try_files $uri /test/index.html;
+}
+```
+
+## Code Constraint
+
+Follow the typescript-react specification and the arbnb specification
+
+## Project Documentation
+
+* Backend service dependencies
+```shell
+Https://api.nel.group/api/
+Https://apiscan.nel.group/api/
+```
+
+* If you need to replace your own backend service
+
+- [api request configuration file] (https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)
+```shell
+Const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // main network/test network
+Const baseCommonUrl: string = "https://api.nel.group/api/" + network; // public api service
+Const baseUrl: string = "https://apiscan.nel.group/api/" + network; // browser api service
+```
+* api project address:
+- [api.nel.group](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
+- [apiscan.nel.group](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
