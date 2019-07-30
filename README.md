@@ -4,11 +4,6 @@
 <a name="zh">简体中文</a>
 ## 概述 :
 本项目是 _[NEL浏览器](https://scan.nel.group/)_ 用于NEO区块链上的数据查询功能，包括交易信息，资产信息，NNS域名信息的搜索和显示。
-## 技术选型
-1. React
-2. React-router
-3. Mobx
-4. Typescript
 
 ## 部署
 安装nginx（如果已经安装则跳过） :
@@ -55,19 +50,14 @@ nginx -s reload
 ```
 
 ## 后端服务依赖
-```shell
-https://api.nel.group/api/
-https://apiscan.nel.group/api/
-```
+* https://api.nel.group/api/（公用api）_[项目文档](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/1IoeLt6k57)_
+* https://apiscan.nel.group/api/（浏览器api）_[项目文档](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/2veptPpn9o/edit)_
 
-* 如需要更替自己的后端服务请至- [api请求配置文件](https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)进行修改
-```shell
-const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // 主网/测试网
-const baseCommonUrl: string = "https://api.nel.group/api/" + network; // 公用api服务
-const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览器api服务
-```
-* api.nel.group（公用api）_[项目文档](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/1IoeLt6k57)_
-* apiscan.nel.group（浏览器api）_[项目文档](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/2veptPpn9o/edit)_
+## 技术选型
+1. React
+2. React-router
+3. Mobx
+4. Typescript
 
 ## 开发者调试
 
@@ -87,6 +77,12 @@ npm run startpub
 * 打包发布
 ```shell
 npm run build
+```
+* 如需要更替自己的后端服务请至- [api请求配置文件](https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)进行修改，修改后执行打包命令
+```shell
+const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // 主网/测试网
+const baseCommonUrl: string = "https://api.nel.group/api/" + network; // 公用api服务
+const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览器api服务
 ```
 
 ## 代码约束
