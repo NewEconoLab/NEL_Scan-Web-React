@@ -58,9 +58,8 @@ const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' :
 const baseCommonUrl: string = "https://api.nel.group/api/" + network; // 公用api服务
 const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览器api服务
 ```
-* api项目地址：
-api.nel.group（公用api）_[项目文档](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_  _[接口文档](http://www.xiaoyaoji.cn/doc/1IoeLt6k57)_
-apiscan.nel.group（浏览器api）_[项目文档](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ _[接口文档](http://www.xiaoyaoji.cn/doc/2veptPpn9o/edit)_
+* api.nel.group（公用api）_[项目文档](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_  _[接口文档](http://www.xiaoyaoji.cn/doc/1IoeLt6k57)_
+* apiscan.nel.group（浏览器api）_[项目文档](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ _[接口文档](http://www.xiaoyaoji.cn/doc/2veptPpn9o/edit)_
 
 <a name="en">English</a>
 ## Technical selection
