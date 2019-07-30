@@ -50,14 +50,8 @@ nginx -s reload
 ```
 
 ## 后端服务依赖
-* https://api.nel.group/api/（公用api）_[项目文档](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/1IoeLt6k57)_
-* https://apiscan.nel.group/api/（浏览器api）_[项目文档](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/2veptPpn9o/edit)_
-
-## 技术选型
-1. React
-2. React-router
-3. Mobx
-4. Typescript
+* api.nel.group/api（公用api）_[项目文档](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/1IoeLt6k57)_
+* apiscan.nel.group/api（浏览器api）_[项目文档](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/2veptPpn9o/edit)_
 
 ## 开发者调试
 
@@ -84,6 +78,12 @@ const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' :
 const baseCommonUrl: string = "https://api.nel.group/api/" + network; // 公用api服务
 const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览器api服务
 ```
+
+## 技术选型
+1. React
+2. React-router
+3. Mobx
+4. Typescript
 
 ## 代码约束
 
