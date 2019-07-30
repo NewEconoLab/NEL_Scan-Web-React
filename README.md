@@ -10,6 +10,55 @@
 3. Mobx
 4. Typescript
 
+## 部署
+安装nginx（如果已经安装则跳过） :
+```
+yum install nginx -y
+```
+
+安装git（如果已经安装则跳过） :
+```
+yum install git -y
+```
+通过git将本工程下载到服务器 :
+```
+git clone https://github.com/NewEconoLab/NELBrowser-Web-React.git
+```
+
+## 配置
+配置nginx
+```
+server{
+                listen 443 ssl;
+                server_name ***;
+
+                root ~/NELBrowser-Web-React/build;
+
+                ssl_certificate ***.pem;
+                ssl_certificate_key ***.key;
+
+                location /
+                {
+                        try_files $uri /index.html;
+                }
+                location /test
+                {
+                        try_files $uri /test/index.html;
+                }
+        }
+```
+
+## 启动
+重启nginx
+```
+nginx -s reload
+```
+
+
+## 开发者调试
+
+
+
 ## 启动（测试网）
 
 ```shell
