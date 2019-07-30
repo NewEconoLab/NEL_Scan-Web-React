@@ -2,6 +2,8 @@
 [简体中文](#zh) |    [English](#en) 
 
 <a name="zh">简体中文</a>
+## 概述 :
+本项目是 _[NEL浏览器](https://scan.nel.group/)_ 用于NEO区块链上的数据查询功能，包括交易信息，资产信息，NNS域名信息的搜索和显示。
 ## 技术选型
 1. React
 2. React-router
@@ -49,8 +51,7 @@ https://api.nel.group/api/
 https://apiscan.nel.group/api/
 ```
 
-* 如需要更替自己的后端服务 
-
+* 如需要更替自己的后端服务请至以下配置文件进行修改
 - [api请求配置文件](https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)
 ```shell
 const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // 主网/测试网
