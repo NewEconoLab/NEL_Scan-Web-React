@@ -50,8 +50,13 @@ nginx -s reload
 ```
 
 ## 后端服务依赖
-* api.nel.group/api（公用api）_[项目文档](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/1IoeLt6k57)_
-* apiscan.nel.group/api（浏览器api）_[项目文档](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/2veptPpn9o/edit)_
+
+```shell
+https://api.nel.group/api/ // 公用api
+https://apiscan.nel.group/api/ // 浏览器api
+```
+* api.nel.group（公用api）_[项目文档](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/1IoeLt6k57)_
+* apiscan.nel.group（浏览器api）_[项目文档](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ / _[接口文档](http://www.xiaoyaoji.cn/doc/2veptPpn9o/edit)_
 
 ## 开发者调试
 
