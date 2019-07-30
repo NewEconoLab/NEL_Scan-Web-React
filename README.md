@@ -45,9 +45,15 @@ https://apiscan.nel.group/api/
 
 * 如需要更替自己的后端服务 
 ```shell
-NELBrowser-Web-React/src/store/api/request.ts
-baseCommonUrl 为公用api服务https://api.nel.group/api/
-baseUrl 为浏览器项目api服务https://apiscan.nel.group/api/
+- [接口请求配置](https://github.com/NewEconoLab/NELBrowser-Web-React/src/store/api/request.ts)
+
+const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // 主网/测试网
+const baseCommonUrl: string = "https://api.nel.group/api/" + network; // 公用api服务
+const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览器api服务
+
+项目地址：
+- [baseCommonUrl](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
+- [baseUrl](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
 ```
 
 ## 流程图
