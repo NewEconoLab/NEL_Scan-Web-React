@@ -1,7 +1,7 @@
 # NELBrowser
 [简体中文](#zh) |    [English](#en) 
 
-<a name="zh">简体中文</a>
+### <a name="zh">简体中文</a>
 ## 概述 :
 本项目是 _[NEL浏览器](https://scan.nel.group/)_ 用于NEO区块链上的数据查询功能，包括交易信息，资产信息，NNS域名信息的搜索和显示。
 
@@ -94,10 +94,7 @@ const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览�
 
 遵循 typescript-react 规范 以及 arbnb 规范
 
-## 项目文档
-
-
-<a name="en">English</a>
+### <a name="en">English</a>
 ## Technical selection
 React
 2. React-router
