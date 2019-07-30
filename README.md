@@ -95,13 +95,65 @@ const baseUrl: string = "https://apiscan.nel.group/api/" + network;   // 浏览�
 遵循 typescript-react 规范 以及 arbnb 规范
 
 ### <a name="en">English</a>
-## Technical selection
-React
-2. React-router
-3. Mobx
-4. Typescript
+## Overview:
+This project is _[NEL Browser] (https://scan.nel.group/)_ used for data query function on NEO blockchain, including transaction information, asset information, NNS domain name information search and display.
 
-## Startup (test network)
+## Deployment
+Install nginx (skip if installed):
+```
+Yum install nginx -y
+```
+
+Install git (skip if installed):
+```
+Yum install git -y
+```
+Download the project to the server via git:
+```
+Git clone https://github.com/NewEconoLab/NELBrowser-Web-React.git
+```
+
+## Configuration
+Configuring nginx
+```
+Server{
+                Listen 443 ssl;
+                Server_name ***;
+
+                Root ~/NELBrowser-Web-React/build;
+
+                Ssl_certificate ***.pem;
+                Ssl_certificate_key ***.key;
+
+                Location /
+                {
+                        Try_files $uri /index.html;
+                }
+                Location /test
+                {
+                        Try_files $uri /test/index.html;
+                }
+        }
+```
+
+## start up
+Restart nginx
+```
+Nginx -s reload
+```
+
+## Backend service dependencies
+
+```shell
+Https://api.nel.group/api/ // public api
+Https://apiscan.nel.group/api/ // browser api
+```
+* api.nel.group(public api)_[project documentation](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)_ / _[interface documentation] (http://www. Xiaoyaoji.cn/doc/1IoeLt6k57)_
+* apiscan.nel.group (browser api)_[project documentation] (https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)_ / _[interface documentation] (http://www .xiaoyaoji.cn/doc/2veptPpn9o/edit)_
+
+## Developer debugging
+
+* Start (test network)
 
 ```shell
 Npm install / yarn add
@@ -110,45 +162,27 @@ Npm install / yarn add
 ```shell
 Npm start / yarn start
 ```
-## Startup (Main Network)
+* Start (main network)
 ```shell
 Npm run startpub
 ```
-## Package Release
+* Package release
 ```shell
 Npm run build
 ```
-
-## Nginx Configuration
-```shell
-Location / {
-  Try_files $uri /index.html;
-}
-
-Location /test {
- Try_files $uri /test/index.html;
-}
-```
-
-## Code Constraint
-
-Follow the typescript-react specification and the arbnb specification
-
-## Project Documentation
-
-* Backend service dependencies
-```shell
-Https://api.nel.group/api/
-Https://apiscan.nel.group/api/
-```
-
-* If you need to replace your own backend service
-- [API request configuration](https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts)
+* If you need to replace your own backend service, please go to [api request configuration file] (https://github.com/NewEconoLab/NELBrowser-Web-React/blob/master/src/utils/request.ts) to modify and modify Post-package command
 ```shell
 Const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet'; // main network/test network
 Const baseCommonUrl: string = "https://api.nel.group/api/" + network; // public api service
 Const baseUrl: string = "https://apiscan.nel.group/api/" + network; // browser api service
 ```
-* api project address:
-- [api.nel.group](https://github.com/NewEconoLab/NEO_Block_API/blob/master/README.md)
-- [apiscan.nel.group](https://github.com/NewEconoLab/NEL_Scan_API/blob/master/README.md)
+
+## Technical selection
+1. React
+2. React-router
+3. Mobx
+4. Typescript
+
+## Code Constraint
+
+Follow the typescript-react specification and the arbnb specification
