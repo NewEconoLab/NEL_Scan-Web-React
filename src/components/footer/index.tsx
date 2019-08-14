@@ -58,7 +58,7 @@ export default class Footer extends React.Component<IProps, IState>
                             <ul>
                                 <li>
                                     <img src={require('@/img/github.png')} alt="" />
-                                    <a href="https://github.com/NewEconoLab/NELBrowser-Web.git" target="_blank">Github</a>
+                                    <a href="https://github.com/NewEconoLab/Docs/tree/master/nel-scan" target="_blank">Github</a>
                                 </li>
                                 <li>
                                     <img src={require('@/img/twitter-circle.png')} alt="" />

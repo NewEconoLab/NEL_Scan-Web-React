@@ -5,14 +5,14 @@ import * as React from 'react';
 import './index.less';
 import classnames from 'classnames';
 
-interface Iprops {
+interface IProps {
   text:string;
   isTableTitle?:boolean;
   isInfoTitle?:boolean;
   img?:string;
   isInline?:boolean;
 }
-export default class TitleText extends React.Component<Iprops,any> {
+export default class TitleText extends React.Component<IProps,any> {
   public render () {
     const titleClassName = classnames('title-text-wrapper', { 'info-title': this.props.isInfoTitle ? this.props.isInfoTitle : false,'table-title': this.props.isTableTitle ? this.props.isTableTitle : false});
     return (
