@@ -59,9 +59,11 @@
   "scripts": {
     "start": "cross-env REACT_APP_SERVER_ENV=DEV node scripts/start.js",
     "startpub": "cross-env REACT_APP_SERVER_ENV=PUB node scripts/start.js",
+    "startneo3": "cross-env REACT_APP_SERVER_ENV=NEO3 node scripts/start.js",
     "test": "cross-env REACT_APP_SERVER_ENV=DEV node scripts/build.js",
     "pub": "cross-env REACT_APP_SERVER_ENV=PUB node scripts/build.js",
-    "build": "npm run pub && npm run test"
+    "neo3": "cross-env REACT_APP_SERVER_ENV=NEO3 node scripts/build.js",
+    "build": "npm run pub && npm run test && npm run neo3"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -168,7 +170,7 @@
     "hearder-line": "#B6C9FF",
     "footer-color": "#5F86FB",
     "goback": "#B3C7F7",
-    "nns-onsale":"#003E00"
+    "nns-onsale": "#003E00"
   },
   "testtheme": {
     "main-color": "#151A1E",
@@ -192,6 +194,6 @@
     "hearder-line": "#B6C9FF",
     "footer-color": "#282B2E",
     "goback": "#D5D7D7",
-    "nns-onsale":"#003E00"
+    "nns-onsale": "#003E00"
   }
 }

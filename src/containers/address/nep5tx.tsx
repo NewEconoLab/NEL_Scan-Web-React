@@ -65,21 +65,18 @@ class AddrNep5Tx extends React.Component<any, {}>
         pageSize: 15,
         showTimeChange: true, // 转换时间显示，true默认显示计时，false显示默认时间
     }
-    public componentDidMount()
-    {
+    public componentDidMount() {
         const params = this.props.match.params;
         this.setState({
-            address: params["address"]
+            address: params[ "address" ]
         });
-        this.getAddrNep5List(params["address"]);
+        this.getAddrNep5List(params[ "address" ]);
     }
-    public componentWillUnmount()
-    {
+    public componentWillUnmount() {
         this.props.addressinfo.addrNep5List = [];
         this.props.addressinfo.addrNep5Count = 0;
     }
-    public getAddrNep5List = async (addr: string) =>
-    {
+    public getAddrNep5List = async (addr: string) => {
         await this.props.addressinfo.getNep5Trans(addr, this.state.currentPage, this.state.pageSize);
         this.setState({
             isLoading: false
@@ -87,8 +84,7 @@ class AddrNep5Tx extends React.Component<any, {}>
     }
 
     // 刷新时间
-    public refreshTime = () =>
-    {
+    public refreshTime = () => {
         this.setState({
             showTimeChange: !this.state.showTimeChange
         })
@@ -96,15 +92,13 @@ class AddrNep5Tx extends React.Component<any, {}>
     }
 
     // 交易详情链接
-    public goTransInfo = (txid: string) =>
-    {
+    public goTransInfo = (txid: string) => {
         this.props.history.push('/transaction/' + txid)
     }
     // 跳转到地址详情页
-    public toAddressInfo = (address: string) =>
-    {
+    public toAddressInfo = (address: string) => {
         this.props.history.push('/address/' + address);
-        this.props.refresh(address);        
+        this.props.refresh(address);
         this.setState({
             address,
             currentPage: 1,
@@ -113,17 +107,14 @@ class AddrNep5Tx extends React.Component<any, {}>
         this.getAddrNep5List(address);
     }
     // 翻页功能
-    public onGoPage = (index: number) =>
-    {
+    public onGoPage = (index: number) => {
         this.setState({
             currentPage: index
-        }, async () =>
-            {
-                this.getAddrNep5List(this.state.address);
-            })
+        }, async () => {
+            this.getAddrNep5List(this.state.address);
+        })
     }
-    public render()
-    {
+    public render() {
 
         return (
             <div className="address-trans-table">
@@ -133,11 +124,9 @@ class AddrNep5Tx extends React.Component<any, {}>
                         <div className="table-th">
                             <ul>
                                 {
-                                    this.transTableTh.map((item, index) =>
-                                    {
-                                        if (index === 1)
-                                        {
-                                            return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require('@/img/refresh.png')} /></li>
+                                    this.transTableTh.map((item, index) => {
+                                        if (index === 1) {
+                                            return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require(process.env.REACT_APP_SERVER_ENV === "PUB" ? '@/img/refresh.png' : '@/img/refreshTest.png')} /></li>
                                         }
                                         return <li key={index}>{item.name}</li>
                                     })
@@ -156,8 +145,7 @@ class AddrNep5Tx extends React.Component<any, {}>
                                 <div className="table-body">
                                     <ul>
                                         {
-                                            this.props.addressinfo.addrNep5List.map((item: IAddrNep5Tx, index: number) =>
-                                            {
+                                            this.props.addressinfo.addrNep5List.map((item: IAddrNep5Tx, index: number) => {
                                                 return (
                                                     <li key={index}>
                                                         <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
@@ -172,16 +160,24 @@ class AddrNep5Tx extends React.Component<any, {}>
                                                             )
                                                         }
                                                         {
-                                                            this.state.address !== item.from && (
+                                                            this.state.address !== item.from && 'system' !== item.from && (
                                                                 <>
                                                                     <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
                                                                     <span className="green-in">IN</span>
                                                                 </>
                                                             )
                                                         }
+                                                        {
+                                                            'system' === item.from && (
+                                                                <>
+                                                                    <span>system</span>
+                                                                    <span className="green-in">IN</span>
+                                                                </>
+                                                            )
+                                                        }
                                                         <span>
                                                             {
-                                                                this.state.address === item.to ? item.to.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') : <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.to)}>{item.to.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a>
+                                                                (this.state.address === item.to) || (this.state.address === 'system') ? item.to.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') : <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.to)}>{item.to.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a>
                                                             }
                                                         </span>
                                                         <span>{item.value.toString() + ' ' + item.assetName}</span>
@@ -203,8 +199,7 @@ class AddrNep5Tx extends React.Component<any, {}>
                                     <ul>
                                         <li>
                                             {
-                                                this.mobileTransTableTh.map((item, index) =>
-                                                {
+                                                this.mobileTransTableTh.map((item, index) => {
                                                     return (
                                                         <div className="table-line" key={index}>
                                                             <span className="line-title" >{item.name}</span>
@@ -226,8 +221,7 @@ class AddrNep5Tx extends React.Component<any, {}>
                                 <div className="table-body">
                                     <ul>
                                         {
-                                            this.props.addressinfo.addrNep5List.map((item: IAddrNep5Tx, index: number) =>
-                                            {
+                                            this.props.addressinfo.addrNep5List.map((item: IAddrNep5Tx, index: number) => {
                                                 return (
                                                     <li key={index}>
                                                         <div className="table-line">

@@ -75,16 +75,13 @@ class Transactions extends React.Component<ITransactionsProps, {}>
     isLoading: true,
     showTimeChange: true, // 转换时间显示，true默认显示计时，false显示默认时间
   }
-  public componentDidMount()
-  {
+  public componentDidMount() {
     this.getNep5List();
   }
-  public componentWillUnmount()
-  {
+  public componentWillUnmount() {
     this.props.transaction.nep5TxList = [];
   }
-  public getNep5List = async () =>
-  {
+  public getNep5List = async () => {
     await this.props.transaction.getNep5List(this.state.currentPage, this.state.pageSize);
     this.setState({
       isLoading: false
@@ -92,35 +89,29 @@ class Transactions extends React.Component<ITransactionsProps, {}>
   }
 
   // 刷新时间
-  public refreshTime = () =>
-  {
+  public refreshTime = () => {
     this.setState({
       showTimeChange: !this.state.showTimeChange
     })
   }
   // 交易详情链接
-  public goTransInfo = (txid: string) =>
-  {
+  public goTransInfo = (txid: string) => {
     this.props.history.push('/transaction/' + txid)
   }
   // 跳转到地址详情页
-  public toAddressInfo = (address: string) =>
-  {
+  public toAddressInfo = (address: string) => {
     this.props.history.push('/address/' + address)
   }
   // 翻页功能
-  public onGoPage = (index: number) =>
-  {
+  public onGoPage = (index: number) => {
     this.setState({
       currentPage: index,
       isLoading: true
-    }, async () =>
-      {
-        this.getNep5List();
-      })
+    }, async () => {
+      this.getNep5List();
+    })
   }
-  public render()
-  {
+  public render() {
 
     return (
       <div className="nep5trans-page">
@@ -131,11 +122,9 @@ class Transactions extends React.Component<ITransactionsProps, {}>
               <div className="table-th">
                 <ul>
                   {
-                    this.transTableTh.map((item, index) =>
-                    {
-                      if (index === 1)
-                      {
-                        return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require('@/img/refresh.png')} /></li>
+                    this.transTableTh.map((item, index) => {
+                      if (index === 1) {
+                        return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require(process.env.REACT_APP_SERVER_ENV === "PUB" ? '@/img/refresh.png' : '@/img/refreshTest.png')} /></li>
                       }
                       return <li key={index}>{item.name}</li>
                     })
@@ -154,15 +143,25 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                   <div className="table-body">
                     <ul>
                       {
-                        this.props.transaction.nep5TxList.map((item: INep5List, index: number) =>
-                        {
+                        this.props.transaction.nep5TxList.map((item: INep5List, index: number) => {
                           return (
                             <li key={index}>
                               <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
                               <span>{this.state.showTimeChange ? formatTime.computeTime(item.blocktime, this.props.intl.locale) : formatTime.format('yyyy/MM/dd | hh:mm:ss', item.blocktime.toString(), this.props.intl.locale)}</span>
-                              <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                              <span>
+                                {
+                                  (item.from === "" || item.from === "system")
+                                    ? (process.env.REACT_APP_SERVER_ENV === "NEO3" ? "system" : "") :
+                                    <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a>
+                                }
+                              </span>
                               <span><img src={require("../../img/to.png")} alt="" /></span>
-                              <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.to)}>{item.to.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                              <span>
+                                {
+                                  (item.to === "" || item.to === "system")
+                                    ? (process.env.REACT_APP_SERVER_ENV === "NEO3" ? "system" : "") :
+                                    <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.to)}>{item.to.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a>
+                                }</span>
                               <span>{item.value.toString() + ' ' + item.assetName}</span>
                             </li>
                           )
@@ -182,8 +181,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                     <ul>
                       <li>
                         {
-                          this.mobileTransTableTh.map((item, index) =>
-                          {
+                          this.mobileTransTableTh.map((item, index) => {
                             return (
                               <div className="table-line" key={index}>
                                 <span className="line-title" >{item.name}</span>
@@ -205,8 +203,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                   <div className="table-body">
                     <ul>
                       {
-                        this.props.transaction.nep5TxList.map((item: INep5List, index: number) =>
-                        {
+                        this.props.transaction.nep5TxList.map((item: INep5List, index: number) => {
                           return (
                             <li key={index}>
                               <div className="table-line">
@@ -224,13 +221,25 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                               <div className="table-line">
                                 <span className="line-title">{this.intrl.tableTh.from}</span>
                                 <span className="line-content">
-                                  <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                                  <span>
+                                    {
+                                      (item.from === "" || item.from === "system")
+                                        ? (process.env.REACT_APP_SERVER_ENV === "NEO3" ? "system" : "") :
+                                        <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a>
+                                    }
+
+                                  </span>
                                 </span>
                               </div>
                               <div className="table-line">
                                 <span className="line-title">{this.intrl.tableTh.to}</span>
                                 <span className="line-content">
-                                  <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.to)}>{item.to.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                                  <span>
+                                    {
+                                      (item.to === "" || item.to === "system")
+                                        ? (process.env.REACT_APP_SERVER_ENV === "NEO3" ? "system" : "") :
+                                        <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.to)}>{item.to.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a>
+                                    }</span>
                                 </span>
                               </div>
                               <div className="table-line">

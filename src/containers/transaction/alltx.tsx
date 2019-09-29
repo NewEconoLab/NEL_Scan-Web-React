@@ -62,22 +62,40 @@ class Transactions extends React.Component<ITransactionsProps, {}>
       name: "Agency",
     }
   ]
-  public transTableTh = [
-    // {
-    //   name: this.intrl.tableTh.type,
-    //   key: 'type',
-    // },
-    {
-      name: this.intrl.tableTh.txid,
-      key: 'txid'
-    }, {
-      name: this.intrl.tableTh.height,
-      key: 'blockindex'
-    }, {
-      name: this.intrl.tableTh.size,
-      key: 'size'
-    }
-  ]
+  public transTableTh = process.env.REACT_APP_SERVER_ENV === "NEO3" ?
+    [
+      {
+        name: this.intrl.tableTh.txid,
+        key: 'txid'
+      },
+      {
+        name: this.intrl.tableTh.sender,
+        key: 'sender',
+      },
+      {
+        name: this.intrl.tableTh.height,
+        key: 'blockindex'
+      }, {
+        name: this.intrl.tableTh.size,
+        key: 'size'
+      }
+    ]
+    : [
+      // {
+      //   name: this.intrl.tableTh.type,
+      //   key: 'type',
+      // },
+      {
+        name: this.intrl.tableTh.txid,
+        key: 'txid'
+      }, {
+        name: this.intrl.tableTh.height,
+        key: 'blockindex'
+      }, {
+        name: this.intrl.tableTh.size,
+        key: 'size'
+      }
+    ]
   public imgs = {
     contract: require('@/img/contract.png'),
     claim: require('@/img/claim.png'),
@@ -95,54 +113,49 @@ class Transactions extends React.Component<ITransactionsProps, {}>
     type: "all",
     isLoading: true
   }
-  public componentWillUnmount()
-  {
+  public componentWillUnmount() {
     this.props.transaction.transList = [];
   }
-  
+
   // 区块详情链接
-  public goBlockInfo = (index: string) =>
-  {
+  public goBlockInfo = (index: string) => {
     this.props.history.push('/block/' + index)
   }
   // 交易详情链接
-  public goTransInfo = (txid: string) =>
-  {
+  public goTransInfo = (txid: string) => {
     this.props.history.push('/transaction/' + txid)
   }
+  // 交易详情链接
+  public goAddrInfo = (addr: string) => {
+    this.props.history.push('/address/' + addr)
+  }
   // 下拉选择功能
-  public onCallback = (item) =>
-  {
+  public onCallback = (item) => {
     this.setState({
       currentPage: 1,
       type: item.id,
       isLoading: true
-    }, async () =>
-      {
-        this.getTransactionList();
-      })
+    }, async () => {
+      this.getTransactionList();
+    })
   }
   // 翻页功能
-  public onGoPage = (index: number) =>
-  {
+  public onGoPage = (index: number) => {
     this.setState({
       currentPage: index,
       isLoading: true
-    }, async () =>
-      {
-        this.getTransactionList();
-      })
+    }, async () => {
+      this.getTransactionList();
+    })
   }
   // 获取数据
-  public getTransactionList = async () =>
-  {
+  public getTransactionList = async () => {
     await this.props.transaction.getTransList(this.state.currentPage, this.state.pageSize, this.state.type);
     this.setState({
       isLoading: false
     })
   }
-  public render()
-  {
+  public render() {
 
     return (
       <div className="alltrans-wrapper">
@@ -158,14 +171,16 @@ class Transactions extends React.Component<ITransactionsProps, {}>
             <div className="table-content">
               <div className="table-th">
                 <ul>
-                  <li>
-                    <div className="choose-type-trans">
-                      <Select options={this.options} text={this.intrl.tableTh.type} onCallback={this.onCallback} />
-                    </div>
-                  </li>
                   {
-                    this.transTableTh.map((item, index) =>
-                    {
+                    process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
+                    <li>
+                      <div className="choose-type-trans">
+                        <Select options={this.options} text={this.intrl.tableTh.type} onCallback={this.onCallback} />
+                      </div>
+                    </li>
+                  }
+                  {
+                    this.transTableTh.map((item, index) => {
                       return <li key={index}>{item.name}</li>
                     })
                   }
@@ -183,12 +198,21 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                   <div className="table-body">
                     <ul>
                       {
-                        this.props.transaction.transList.map((item: ITransaction, index: number) =>
-                        {
+                        this.props.transaction.transList.map((item: ITransaction, index: number) => {
                           return (
                             <li key={index}>
-                              <span className="img-text-bg"><img src={this.imgs[item.type.replace('Transaction', '').toLowerCase()]} alt="" />{item.type.replace('Transaction', '')}</span>
+                              {
+                                process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
+                                <span className="img-text-bg">
+                                  <img src={this.imgs[ item.type.replace('Transaction', '').toLowerCase() ]} alt="" />
+                                  {item.type.replace('Transaction', '')}
+                                </span>
+                              }
                               <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                              {
+                                process.env.REACT_APP_SERVER_ENV === "NEO3" &&
+                                <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, item.sender)}>{item.sender.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                              }
                               <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, item.blockindex)}>{toThousands(item.blockindex.toString())}</a></span>
                               <span>{item.size}</span>
                             </li>
@@ -210,8 +234,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                     <ul>
                       <li>
                         {
-                          this.transTableTh.map((item, index) =>
-                          {
+                          this.transTableTh.map((item, index) => {
                             return (
                               <div className="table-line" key={index}>
                                 <span className="line-title" >{item.name}</span>
@@ -233,16 +256,18 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                   <div className="table-body">
                     <ul>
                       {
-                        this.props.transaction.transList.map((item: ITransaction, index: number) =>
-                        {
+                        this.props.transaction.transList.map((item: ITransaction, index: number) => {
                           return (
                             <li key={index}>
-                              <div className="table-line">
-                                <span className="line-title">{this.intrl.tableTh.type}</span>
-                                <span className="line-content">
-                                  <span className="img-text-bg"><img src={this.imgs[item.type.replace('Transaction', '').toLowerCase()]} alt="" />{item.type.replace('Transaction', '')}</span>
-                                </span>
-                              </div>
+                              {
+                                process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
+                                <div className="table-line">
+                                  <span className="line-title">{this.intrl.tableTh.type}</span>
+                                  <span className="line-content">
+                                    <span className="img-text-bg"><img src={this.imgs[ item.type.replace('Transaction', '').toLowerCase() ]} alt="" />{item.type.replace('Transaction', '')}</span>
+                                  </span>
+                                </div>
+                              }
                               <div className="table-line">
                                 <span className="line-title">{this.intrl.tableTh.txid}</span>
                                 <span className="line-content">

@@ -10,6 +10,7 @@ import { IBlockProps, IBlockInfoState } from './interface/block.interface';
 import * as formatTime from 'utils/formatTime';
 import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
+// import { toNonExponential } from '@/utils/function';
 @inject('block')
 @observer
 class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
@@ -21,23 +22,43 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
         txList: new Array()
     }
     public intrl = this.props.intl.messages;
-    public blockTransTableTh = [
-        {
-            name: this.intrl.tableTh.type,
-            key: 'type',
-        },
-        {
-            name: this.intrl.tableTh.txid,
-            key: 'txid'
-        }, {
-            name: this.intrl.tableTh.version,
-            key: 'version'
-        },
-        {
-            name: this.intrl.tableTh.size,
-            key: 'size'
-        }
-    ]
+    public blockTransTableTh = process.env.REACT_APP_SERVER_ENV === "NEO3" ?
+        [
+            {
+                name: this.intrl.tableTh.txid,
+                key: 'hash'
+            },
+            {
+                name: this.intrl.tableTh.sender,
+                key: 'sender',
+            },
+            {
+                name: this.intrl.transaction.sysFee,
+                key: 'sys_fee'
+            },
+            {
+                name: this.intrl.transaction.netFee,
+                key: 'net_fee'
+            }
+        ]
+        :
+        [
+            {
+                name: this.intrl.tableTh.type,
+                key: 'type',
+            },
+            {
+                name: this.intrl.tableTh.txid,
+                key: 'txid'
+            }, {
+                name: this.intrl.tableTh.version,
+                key: 'version'
+            },
+            {
+                name: this.intrl.tableTh.size,
+                key: 'size'
+            }
+        ]
     public imgs = {
         contract: require('@/img/contract.png'),
         claim: require('@/img/claim.png'),
@@ -51,7 +72,7 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
     }
     public componentDidMount() {
         const params = this.props.match.params;
-        this.getInfos(params["index"]);
+        this.getInfos(params[ "index" ]);
     }
     public componentWillUnmount() {
         this.props.block.blockInfo = null;
@@ -74,7 +95,7 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
         const result = await this.getInfos(index);
         const state = { isBottom: false };
         if (!result) {
-            state['isTop'] = true;
+            state[ 'isTop' ] = true;
         }
         this.setState(state);
 
@@ -90,20 +111,31 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
         const result = await this.getInfos(index);
         const state = { isTop: false };
         if (!result) {
-            state['isBottom'] = true;
+            state[ 'isBottom' ] = true;
         }
         this.setState(state);
         return true;
     }
     // 列表特殊处理
     public renderTran = (value, key) => {
-        if (key === 'type') {
-            value = value.replace('Transaction', '')
-            return <span className="tran-img-text"><img src={this.imgs[value.toLowerCase()]} alt="" />{value}</span>
+        if (!value) {
+            return null;
         }
-        if (key === 'txid') {
+        if (key === 'type' && value) {
+            value = value.replace('Transaction', '')
+            return <span className="tran-img-text"><img src={this.imgs[ value.toLowerCase() ]} alt="" />{value}</span>
+        }
+        if (key === 'txid' || key === 'hash') {
             const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
             return <span><a onClick={this.goTransInfo.bind(this, value)}>{txid}</a></span>
+        }
+        if (key === 'sender' && value) {
+            const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
+            return <span><a onClick={this.goAddrInfo.bind(this, value)}>{txid}</a></span>
+        }
+        if (key === 'sys_fee' || key === 'net_fee') {
+            // return <span>{value ? (process.env.REACT_APP_SERVER_ENV === "NEO3" ? toNonExponential(parseFloat(value) / Math.pow(10, 8)) : value) : '0'} GAS</span>            
+            return <span>{value ? value : '0'} GAS</span>
         }
         // if (key === 'size') {
         //     return <span>{value}</span>
@@ -114,6 +146,10 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
     public goTransInfo = (txid: string) => {
         this.props.history.push('/transaction/' + txid)
     }
+    // 交易详情链接
+    public goAddrInfo = (addr: string) => {
+        this.props.history.push('/address/' + addr)
+    }
     // 翻页功能
     public onGoPage = (index: number) => {
         this.setState({
@@ -123,12 +159,11 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
     // 区块交易列表分页
     public blockTranListByPage = () => {
         const startNum = this.state.pageSize * (this.state.currentPage - 1);
-        const list = (this.props.block.blockInfo && this.props.block.blockInfo.tx) ? [...this.props.block.blockInfo.tx] : [];
+        const list = (this.props.block.blockInfo && this.props.block.blockInfo.tx) ? [ ...this.props.block.blockInfo.tx ] : [];
         return list.slice(startNum, startNum + this.state.pageSize);
     }
     public render() {
-        if (!this.props.block.blockInfo)
-        {
+        if (!this.props.block.blockInfo) {
             return (
                 <div className="nodata-wrap">
                     <img src={require('@/img/nodata.png')} alt="" />

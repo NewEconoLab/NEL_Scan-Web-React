@@ -3,18 +3,19 @@
 export interface ICommonStore {
   language: string,
   network: string,
-  socketInit:() => Promise<boolean>,
+  socketInit: () => Promise<boolean>,
 }
 
 export interface ITransaction {
   txid: string,
   type: string,
   net_fee: string,
-  sys_fee:string,
+  sys_fee: string,
   gas: string,
   size: number,
   blockindex: number,
   version: number,
+  sender: string,
   vin: IVin[],
   vout: IOut[],
 }

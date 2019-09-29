@@ -8,8 +8,7 @@ import EventHandler from 'utils/event';
 import { observer } from 'mobx-react';
 import * as Neotool from '@/utils/neotool';
 import store from "@/store";
-interface IState
-{
+interface IState {
   isShowMenu: boolean, // 是否显示菜单
   isShowBrowse: boolean, // 是否显示浏览器菜单
   isShowEnv: boolean, // 是否显示网络菜单
@@ -27,19 +26,17 @@ export default class HeaderMobile extends React.Component<any, IState> {
     isShowBrowse: false,
     isShowEnv: false,
     inputValue: '',
-    languageText: store['common'].language === 'en' ? "中" : "En",
+    languageText: store[ 'common' ].language === 'en' ? "中" : "En",
     isShowLang: false,
     isShowSearch: false,
   }
-  public toggleMenu = () =>
-  {
+  public toggleMenu = () => {
     this.setState({
       isShowMenu: !this.state.isShowMenu,
       inputValue: ''
     })
   }
-  public toggleEnv = (e) =>
-  {
+  public toggleEnv = (e) => {
     this.setState({
       isShowEnv: !this.state.isShowEnv,
       isShowBrowse: false,
@@ -47,8 +44,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
     })
     e.stopPropagation();
   }
-  public toggleLang = (e) =>
-  {
+  public toggleLang = (e) => {
     this.setState({
       isShowEnv: false,
       isShowBrowse: false,
@@ -56,8 +52,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
     })
     e.stopPropagation();
   }
-  public toggleBrowse = (e) =>
-  {
+  public toggleBrowse = (e) => {
     this.setState({
       isShowEnv: false,
       isShowBrowse: !this.state.isShowBrowse,
@@ -66,62 +61,52 @@ export default class HeaderMobile extends React.Component<any, IState> {
     e.stopPropagation();
   }
 
-  public toggleBrowse2 = (e) =>
-  {
+  public toggleBrowse2 = (e) => {
     this.toggleBrowse(e);
     this.toggleMenu();
     e.stopPropagation();
   }
 
-  public toggleEnv2 = (e) =>
-  {
+  public toggleEnv2 = (e) => {
     this.toggleEnv(e);
     this.toggleMenu();
     e.stopPropagation();
   }
-  public toggleLang2 = (e) =>
-  {
+  public toggleLang2 = (e) => {
     this.toggleLang(e);
     this.toggleMenu();
     e.stopPropagation();
   }
 
-  public componentDidMount()
-  {
+  public componentDidMount() {
     EventHandler.add(this.globalClick);
 
-    this.props.history.listen(() =>
-    {
+    this.props.history.listen(() => {
       this.setState({
         isShowMenu: false
       })
     })
   }
-  public componentWillUnmount()
-  {
+  public componentWillUnmount() {
     EventHandler.remove(this.globalClick);
   }
 
-  public globalClick = () =>
-  {
+  public globalClick = () => {
     this.setState({
       isShowEnv: false,
       isShowBrowse: false,
     })
   }
-  public getPath = (base) =>
-  {
+  public getPath = (base) => {
     const locations = this.props.history.location;
     window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`
   }
 
   // 输入变化
-  public onChange = (ev: any) =>
-  {
+  public onChange = (ev: any) => {
     const value = ev.target.value;
     // 禁止输入中文，以及其他特殊字符
-    if (/[^a-zA-Z\d\.]/g.test(value))
-    {
+    if (/[^a-zA-Z\d\.]/g.test(value)) {
       return
     }
     this.setState({
@@ -129,75 +114,59 @@ export default class HeaderMobile extends React.Component<any, IState> {
     })
   }
   // 显示搜索框
-  public toShowSearch = () =>{
+  public toShowSearch = () => {
     this.setState({
       isShowSearch: true,
       inputValue: ''
     })
   }
   // 关闭搜索框
-  public toCloseSearch = () =>
-  {
+  public toCloseSearch = () => {
     this.setState({
       isShowSearch: false,
       inputValue: ''
     })
   }
-  public onKeyDown = (ev: any) =>
-  {
-    if (ev.keyCode === 13)
-    {
+  public onKeyDown = (ev: any) => {
+    if (ev.keyCode === 13) {
       this.toSearchInfo();
     }
   }
   // 搜索功能
-  public toSearchInfo = () =>
-  {
+  public toSearchInfo = () => {
     let search: string = this.state.inputValue;
     search = search.trim();
-    if (search)
-    {
+    if (search) {
       const isDomain = this.checkDomainname(search);// 判断是否为域名
-      if (isDomain)
-      {
+      if (isDomain) {
         window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nnsinfo/' + search : '/nnsinfo/' + search;
       }
-      if (search.length === 34)
-      {
-        if (Neotool.verifyPublicKey(search))
-        { // 是否是地址
+      if (search.length === 34) {
+        if (Neotool.verifyPublicKey(search)) { // 是否是地址
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address/' + search : '/address/' + search;
           // this.props.history.push('/address/' + search);
-        } else
-        {
+        } else {
           return false;
         }
         return;
-      } else
-      {
+      } else {
         search = search.replace('0x', '');
-        if (search.length === 64)
-        {
+        if (search.length === 64) {
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/transaction/0x' + search : '/transaction/0x' + search;
         }
-        else if (search.length === 40)
-        {
+        else if (search.length === 40) {
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/contract/0x' + search;
         }
-        else if (!isNaN(Number(search)))
-        {
+        else if (!isNaN(Number(search))) {
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/block/' + search : '/block/' + search;
         }
-        else if (search.length > 64)
-        {
+        else if (search.length > 64) {
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/0x' + search : '/asset/0x' + search;
-        } else
-        {
+        } else {
           return false;
         }
       }
-    } else
-    {
+    } else {
       return false;
     }
     this.setState({
@@ -207,40 +176,31 @@ export default class HeaderMobile extends React.Component<any, IState> {
     return;
   }
   // 检测输入域名是否合法
-  public checkDomainname(domainname: string)
-  {
+  public checkDomainname(domainname: string) {
     let domain = domainname;
-    if (/\.neo$/.test(domainname))
-    {
+    if (/\.neo$/.test(domainname)) {
       domain = domain.substring(0, domain.length - 4);
     }
-    else if (/\.test$/.test(domainname))
-    {
+    else if (/\.test$/.test(domainname)) {
       domain = domain.substring(0, domain.length - 5);
     }
-    else
-    {
+    else {
       return false;
     }
-    if (domain.length >= 2 && domain.length <= 32)
-    {
+    if (domain.length >= 2 && domain.length <= 32) {
       return true;
-    } else
-    {
+    } else {
       return false;
     }
   }
   // 移动版切换语言
-  public onClickTochangeLanguage = () =>
-  {
-    if (this.state.languageText === "中")
-    {
+  public onClickTochangeLanguage = () => {
+    if (this.state.languageText === "中") {
       this.setState({
         languageText: "En",
       })
       this.props.onChangeLanguage('zh');
-    } else
-    {
+    } else {
       this.setState({
         languageText: "中"
       })
@@ -248,23 +208,20 @@ export default class HeaderMobile extends React.Component<any, IState> {
     }
   }
   // 切换英文
-  public onClickEnglish = () =>
-  {
+  public onClickEnglish = () => {
     this.setState({
       languageText: "En"
     })
     this.props.onChangeLanguage('en');
   }
   // 切换中文
-  public onClickChinese = () =>
-  {
+  public onClickChinese = () => {
     this.setState({
       languageText: "中"
     })
     this.props.onChangeLanguage('zh');
   }
-  public render()
-  {
+  public render() {
     return (
       <div className="header-mobile-container">
         {/* <div className="language" onClick={this.onClickTochangeLanguage}>{this.state.languageText}</div> */}
@@ -286,7 +243,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
             <div className="search-box">
               <input
                 type="text"
-                placeholder={this.props.input.placeholder}
+                placeholder={process.env.REACT_APP_SERVER_ENV === 'NEO3' ? this.props.input.placeholder1 : this.props.input.placeholder}
                 value={this.state.inputValue}
                 onChange={this.onChange}
                 onKeyDown={this.onKeyDown}
@@ -331,12 +288,18 @@ export default class HeaderMobile extends React.Component<any, IState> {
               </div>
               <div className="list-box">
                 <div className="list">
-                  <label onClick={this.toggleEnv}><span>{process.env.REACT_APP_SERVER_ENV === 'DEV' ? this.props.locale.testnet : this.props.locale.mainnet}<em /></span></label>
+                  <label onClick={this.toggleEnv}><span>
+                    {process.env.REACT_APP_SERVER_ENV === 'DEV' && this.props.locale.testnet}
+                    {process.env.REACT_APP_SERVER_ENV === 'PUB' && this.props.locale.mainnet}
+                    {process.env.REACT_APP_SERVER_ENV === 'NEO3' && this.props.locale.neo3test}
+                    <em />
+                  </span></label>
                   {
                     this.state.isShowEnv && (
                       <div className="child" onClick={this.toggleEnv2}>
                         <span><a onClick={this.getPath.bind(this, '')}>{this.props.locale.mainnet}</a></span>
                         <span><a onClick={this.getPath.bind(this, '/test')}>{this.props.locale.testnet}</a></span>
+                        <span><a onClick={this.getPath.bind(this, '/neo3')}>{this.props.locale.neo3test}</a></span>
                       </div>
                     )
                   }

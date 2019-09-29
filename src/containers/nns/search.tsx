@@ -20,10 +20,9 @@ class Search extends React.Component<INNSProps, any> {
     searchType: 0, // 0为默认无，1为可竞拍，2为竞拍中，3为竞拍结束，4为售卖中,5为输入错误,6为结束竞拍未领取
     recordDomain: ''
   }
-  public onChange = (value: string) =>
-  {
+  public onChange = (value: string) => {
     // 禁止输入中文，以及其他特殊字符
-    if(/[^a-zA-Z\d\.]/g.test(value)){
+    if (/[^a-zA-Z\d\.]/g.test(value)) {
       return
     }
     this.setState({
@@ -31,75 +30,59 @@ class Search extends React.Component<INNSProps, any> {
       searchType: 0
     })
   }
-  public onFocus = () =>
-  {
+  public onFocus = () => {
     this.setState({
       inputPlaceHolder: ''
     })
   }
-  public onBlur = () =>
-  {
+  public onBlur = () => {
     this.setState({
       inputPlaceHolder: this.intrl.input.domain
     })
   }
   // 检测输入域名是否合法
-  public checkDomainname(domainname: string)
-  {
+  public checkDomainname(domainname: string) {
     let domain = domainname;
-    if (/\.neo$/.test(domainname))
-    {
+    if (/\.neo$/.test(domainname)) {
       domain = domain.substring(0, domain.length - 4);
     }
-    else if (/\.test$/.test(domainname))
-    {
+    else if (/\.test$/.test(domainname)) {
       domain = domain.substring(0, domain.length - 5);
     }
-    else
-    {
+    else {
       return false;
     }
-    if (domain.length >= 2 && domain.length <= 32)
-    {
+    if (domain.length >= 2 && domain.length <= 32) {
       return true;
-    } else
-    {
+    } else {
       return false;
     }
   }
-  public toSearchDomainInfo = async () =>
-  {
-    if (this.state.inputValue)
-    {
+  public toSearchDomainInfo = async () => {
+    if (this.state.inputValue) {
       const checkResult = this.checkDomainname(this.state.inputValue);
-      if (!checkResult)
-      {
+      if (!checkResult) {
         this.setState({
           searchType: 5
         })
         return;
       }
       await this.props.nns.searchDomainInfo(this.state.inputValue);
-      if (this.props.nns.searchCanAuction)
-      {
-        if (this.props.nns.searchCanAuction.auctionState === '0401')
-        {
+      if (this.props.nns.searchCanAuction) {
+        if (this.props.nns.searchCanAuction.auctionState === '0401') {
           this.setState({
             searchType: 6
           })
-        } else
-        {
+        } else {
           this.setState({
             searchType: 2
           })
         }
-      } else if (this.props.nns.searchEndAuction)
-      {
+      } else if (this.props.nns.searchEndAuction) {
         this.setState({
           searchType: 3
         })
-      } else
-      {
+      } else {
         this.setState({
           searchType: 1,
           recordDomain: this.state.inputValue
@@ -111,22 +94,18 @@ class Search extends React.Component<INNSProps, any> {
     }
   }
   // 跳转到域名详情页
-  public toNNSInfo = (domain: string) =>
-  {
+  public toNNSInfo = (domain: string) => {
     this.props.history.push('/nnsinfo/' + domain)
   }
   // 跳转到交易详情页
-  public toTransInfo = (txid: string) =>
-  {
+  public toTransInfo = (txid: string) => {
     this.props.history.push('/transaction/' + txid)
   }
   // 跳转到地址详情页
-  public toAddrInfo = (addr: string) =>
-  {
+  public toAddrInfo = (addr: string) => {
     this.props.history.push('/address/' + addr)
   }
-  public render()
-  {
+  public render() {
     const ttl = (this.props.nns.searchEndAuction && this.props.nns.searchEndAuction.ttl) ? this.props.nns.searchEndAuction.ttl : 0;
     const notClaimTtl = (this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.ttl) ? this.props.nns.searchCanAuction.ttl : 0;
     const stageClassName = classNames('type-content',
@@ -148,10 +127,10 @@ class Search extends React.Component<INNSProps, any> {
             style={{ width: "9rem", margin: "15px 0 20px 0", minWidth: "900px" }}
           />
           {
-            process.env.REACT_APP_SERVER_ENV === 'DEV' && <img src={require('@/img/search-t.png')} alt="search.png" className="search-icon" onClick={this.toSearchDomainInfo} />
+            process.env.REACT_APP_SERVER_ENV !== 'PUB' && <img src={require('@/img/search-t.png')} alt="search.png" className="search-icon" onClick={this.toSearchDomainInfo} />
           }
           {
-            process.env.REACT_APP_SERVER_ENV !== 'DEV' && <img src={require('@/img/search-m.png')} alt="search.png" className="search-icon" onClick={this.toSearchDomainInfo} />
+            process.env.REACT_APP_SERVER_ENV === 'PUB' && <img src={require('@/img/search-m.png')} alt="search.png" className="search-icon" onClick={this.toSearchDomainInfo} />
           }
           {
             this.state.searchType !== 0 && (
@@ -463,7 +442,7 @@ class Search extends React.Component<INNSProps, any> {
                           <span className="type-name">Hash</span>
                           <span className="type-content">
                             <a onClick={this.toTransInfo.bind(this, this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.auctionId)} href="javascript:;">
-                            {this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.auctionId.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
+                              {this.props.nns.searchCanAuction && this.props.nns.searchCanAuction.auctionId.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
                             </a>
                           </span>
                         </li>

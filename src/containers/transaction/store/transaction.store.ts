@@ -1,17 +1,17 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/transcation.api'
-import { ITransactionsStore,INep5List, ITransInfo, ITransaction, INep5Trans, IPoolCheck } from '../interface/transaction.interface';
+import { ITransactionsStore, INep5List, ITransInfo, ITransaction, INep5Trans, IPoolCheck } from '../interface/transaction.interface';
 import { INep5Asset } from '@/containers/asset/interface/asset.interface';
 
 class Transaction implements ITransactionsStore {
     @observable public transList: ITransaction[] = []; // 所有交易列表
-    @observable public transListCount:number = 0; // 所有交易总数
-    @observable public tranInfo: ITransInfo|null =null; // 交易详情
+    @observable public transListCount: number = 0; // 所有交易总数
+    @observable public tranInfo: ITransInfo | null = null; // 交易详情
     @observable public nep5Trans: INep5Trans[] = []; // nep5的交易
     @observable public nep5Info: INep5Asset | null = null; // nep5的交易详情
     @observable public nep5TxList: INep5List[] = [];  // nep5的交易列表
-    @observable public nep5TxListCount:number = 0;
-    @observable public poolCheck:IPoolCheck|null = null;
+    @observable public nep5TxListCount: number = 0;
+    @observable public poolCheck: IPoolCheck | null = null;
 
     /**
      * 根据交易类型获取交易列表（默认获取所有交易）
@@ -28,8 +28,8 @@ class Transaction implements ITransactionsStore {
             this.transList = [];
             return false;
         }
-        this.transListCount = result[0].count || 0;
-        this.transList = result ? result[0].list : [];
+        this.transListCount = result[ 0 ].count || 0;
+        this.transList = result ? result[ 0 ].list : [];
         return true;
     }
     /**
@@ -46,8 +46,8 @@ class Transaction implements ITransactionsStore {
             this.nep5TxList = [];
             return false;
         }
-        this.nep5TxListCount = result[0].count || 0;
-        this.nep5TxList = result ? result[0].list : [];
+        this.nep5TxListCount = result[ 0 ].count || 0;
+        this.nep5TxList = result ? result[ 0 ].list : [];
         return true;
     }
     /**
@@ -57,12 +57,17 @@ class Transaction implements ITransactionsStore {
     @action public async getTransInfo(txid: string) {
         let result: any = null;
         try {
-            result = await Api.gettraninfo(txid);
+            if (process.env.REACT_APP_SERVER_ENV === "NEO3") {
+                result = await Api.getrawtransaction(txid);
+            }
+            else {
+                result = await Api.gettraninfo(txid);
+            }
         } catch (error) {
             this.tranInfo = null;
             return false;
         }
-        this.tranInfo = result[0] || [];
+        this.tranInfo = result[ 0 ] || [];
         return true;
     }
     /**
@@ -94,22 +99,22 @@ class Transaction implements ITransactionsStore {
         try {
             result = await Api.getnep5asset(nep5);
         } catch (error) {
-            return null;
+            return { assetid: "", symbol: "" };
         }
-        return result[0] || null;
+        return result[ 0 ] || { assetid: "", symbol: "" };
     }
     /**
      * 查询交易池的状态及总数
      * @param txid 
      */
-    @action public async getPoolTypeAndCount(txid:string){
+    @action public async getPoolTypeAndCount(txid: string) {
         let result: any = null;
-        try{
+        try {
             result = await Api.getrawmempoolcount(txid);
         } catch (error) {
             return false;
         }
-        this.poolCheck = result[0];
+        this.poolCheck = result[ 0 ];
         return true
     }
 }

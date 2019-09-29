@@ -171,7 +171,7 @@ module.exports = {
                   })]
                 })
               },
-            }, ],
+            },],
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -215,7 +215,7 @@ module.exports = {
               {
                 loader: require.resolve('less-loader'), // compiles Less to CSS
                 options: {
-                  modifyVars: process.env.REACT_APP_SERVER_ENV === 'DEV' ? packagejson.testtheme : packagejson.maintheme,
+                  modifyVars: process.env.REACT_APP_SERVER_ENV === 'PUB' ? packagejson.maintheme : packagejson.testtheme,
                   javascriptEnabled: true
                 }
               }

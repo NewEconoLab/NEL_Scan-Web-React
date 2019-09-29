@@ -1,7 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { ITransaction } from '@/store/interface/common.interface';
-export interface IBlockStore
-{
+export interface IBlockStore {
     blockHeight: string,
     blockList: IBlock[],
     blockInfo: IBlockInfo | null,
@@ -9,20 +8,17 @@ export interface IBlockStore
     getBlockList: (size: number, page: number) => Promise<boolean>,
     getBlockInfo: (index: number) => Promise<boolean>
 }
-export interface IBlockProps extends RouteComponentProps
-{
+export interface IBlockProps extends RouteComponentProps {
     intl: any,
-    block: IBlockStore
+    block: IBlockStore,
 }
-export interface IBlock
-{
+export interface IBlock {
     index: number,
     size: number,
     time: number,
     txcount: number
 }
-export interface IBlockInfo
-{
+export interface IBlockInfo {
     hash: string;
     size: number;
     version: number;
@@ -40,8 +36,7 @@ export interface IBlockInfo
 }
 
 
-export interface IBlockInfoState
-{
+export interface IBlockInfoState {
     isTop: boolean,
     isBottom: boolean,
     currentPage: number,

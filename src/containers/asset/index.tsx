@@ -26,60 +26,73 @@ class Assets extends React.Component<IAssetProps, {}>
             name: "Nep5",
         }
     ]
-    public AssetTableTh = [
-        {
-            name: this.intrl.tableTh.asset,
-            key: 'asset'
-        },
-        {
-            name: this.intrl.tableTh.id,
-            key: 'id'
-        },
-        {
-            name: this.intrl.tableTh.type,
-            key: 'type'
-        },
-        {
-            name: this.intrl.tableTh.available,
-            key: 'available'
-        },
-        {
-            name: this.intrl.tableTh.precision,
-            key: 'precision'
-        }
-    ]
+    public AssetTableTh = process.env.REACT_APP_SERVER_ENV === "NEO3" ?
+        [
+            {
+                name: this.intrl.tableTh.asset,
+                key: 'asset'
+            },
+            {
+                name: this.intrl.tableTh.id,
+                key: 'id'
+            },
+            {
+                name: this.intrl.tableTh.available,
+                key: 'available'
+            },
+            {
+                name: this.intrl.tableTh.precision,
+                key: 'precision'
+            }
+        ] :
+        [
+            {
+                name: this.intrl.tableTh.asset,
+                key: 'asset'
+            },
+            {
+                name: this.intrl.tableTh.id,
+                key: 'id'
+            },
+            {
+                name: this.intrl.tableTh.type,
+                key: 'type'
+            },
+            {
+                name: this.intrl.tableTh.available,
+                key: 'available'
+            },
+            {
+                name: this.intrl.tableTh.precision,
+                key: 'precision'
+            }
+        ]
     public state = {
         currentPageAsset: 1,
         pageSizeAsset: 15,
         currentPageNep5: 1,
         pageSizeNep5: 15,
-        type: "asset"
+        type: process.env.REACT_APP_SERVER_ENV === "NEO3" ? "nep5" : "asset"
     }
     // 初始化数据
-    public componentDidMount()
-    {
+    public componentDidMount() {
         this.props.asset.getAssetList();
         this.props.asset.getNep5List();
     }
-    public componentWillUnmount()
-    {
+    public componentWillUnmount() {
         this.props.asset.assetList = [];
         this.props.asset.nep5List = [];
     }
-    public onCallback = (item) =>
-    {
-        if (item.id === this.state.type)
-        {
+    public onCallback = (item) => {
+        if (item.id === this.state.type) {
             return;
         }
-        if (item.id === 'asset')
-        {
+        if (item.id === 'asset') {
             this.setState({
                 currentPageAsset: 1,
                 type: 'asset'
             })
-        } else
-        {
+        } else {
             this.setState({
                 currentPageNep5: 1,
                 type: 'nep5'
@@ -87,76 +100,63 @@ class Assets extends React.Component<IAssetProps, {}>
         }
     }
     // 特殊列表处理
-    public renderAsset = (value, key, item) =>
-    {
-        if (key === 'asset')
-        {
+    public renderAsset = (value, key, item) => {
+        if (key === 'asset') {
             return <span><a onClick={this.toAssetInfo.bind(this, item.id)} href="javascript:;">{value}</a></span>
         }
-        if (key === 'id')
-        {
+        if (key === 'id') {
             const assetid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
             return <span><a onClick={this.toAssetInfo.bind(this, value)} href="javascript:;">{assetid}</a></span>
         }
         return null;
     }
-    public renderNep5 = (value, key, item) =>
-    {
-        if (key === 'asset')
-        {
+    public renderNep5 = (value, key, item) => {
+        if (key === 'asset') {
             return <span><a onClick={this.toNep5Info.bind(this, item.id)} href="javascript:;">{value}</a></span>
         }
-        if (key === 'id')
-        {
+        if (key === 'id') {
             const assetid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
             return <span><a onClick={this.toNep5Info.bind(this, value)} href="javascript:;">{assetid}</a></span>
         }
         return null;
     }
     // 跳转到详情页
-    public toAssetInfo = (assetid: string) =>
-    {
+    public toAssetInfo = (assetid: string) => {
         this.props.history.push('/asset/' + assetid)
     }
     // 跳转到详情页
-    public toNep5Info = (assetid: string) =>
-    {
+    public toNep5Info = (assetid: string) => {
         this.props.history.push('/nep5/' + assetid)
     }
 
     // 翻页功能
-    public onAssetPage = (index: number) =>
-    {
+    public onAssetPage = (index: number) => {
         this.setState({
             currentPageAsset: index
         })
     }
     // 翻页功能
-    public onNep5Page = (index: number) =>
-    {
+    public onNep5Page = (index: number) => {
         this.setState({
             currentPageNep5: index
         })
     }
-    public assetListByPage = () =>
-    {
+    public assetListByPage = () => {
         const startNum = this.state.pageSizeAsset * (this.state.currentPageAsset - 1);
-        const list = [...this.props.asset.assetList];
+        const list = [ ...this.props.asset.assetList ];
         return list.slice(startNum, startNum + this.state.pageSizeAsset);
     }
 
-    public nep5ListByPage = () =>
-    {
+    public nep5ListByPage = () => {
         const startNum = this.state.pageSizeNep5 * (this.state.currentPageNep5 - 1);
-        const list = [...this.props.asset.nep5List];
+        const list = [ ...this.props.asset.nep5List ];
         return list.slice(startNum, startNum + this.state.pageSizeNep5);
     }
-    public render()
-    {
+    public render() {
         return (
             <div className="asset-page">
                 <TitleText text={this.intrl.asset.title1} img={require('@/img/assets.png')} isInline={true}>
-                    <Select options={this.options} text={this.intrl.asset.type} onCallback={this.onCallback} />
+                    {process.env.REACT_APP_SERVER_ENV !== "NEO3" && <Select options={this.options} text={this.intrl.asset.type} onCallback={this.onCallback} />}
                 </TitleText>
                 {
                     this.state.type === 'asset' &&

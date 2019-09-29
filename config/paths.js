@@ -41,7 +41,7 @@ function getServedPath(appPackageJson) {
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
-  appBuild: process.env.REACT_APP_SERVER_ENV === 'DEV' ? resolveApp('build/test') : resolveApp('build'),
+  appBuild: process.env.REACT_APP_SERVER_ENV === 'DEV' ? resolveApp('build/test') : (process.env.REACT_APP_SERVER_ENV === 'PUB' ? resolveApp('build') : resolveApp('build/neo3')),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.tsx'),

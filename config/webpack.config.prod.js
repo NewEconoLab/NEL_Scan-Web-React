@@ -70,12 +70,12 @@ module.exports = {
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
-    publicPath: process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/' : publicPath,
+    publicPath: process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/' : (process.env.REACT_APP_SERVER_ENV === 'PUB' ? publicPath : '/neo3/'),
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path
-      .relative(paths.appSrc, info.absoluteResourcePath)
-      .replace(/\\/g, '/'),
+        .relative(paths.appSrc, info.absoluteResourcePath)
+        .replace(/\\/g, '/'),
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -176,7 +176,7 @@ module.exports = {
                   })]
                 })
               },
-            }, ],
+            },],
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
@@ -194,53 +194,53 @@ module.exports = {
             test: /\.(less)$/,
             loader: ExtractTextPlugin.extract(
               Object.assign({
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
+                fallback: {
+                  loader: require.resolve('style-loader'),
+                  options: {
+                    hmr: false,
                   },
-                  use: [{
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 2,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        plugins: () => [
-                          require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                              'Chrome >= 35',
-                              'Safari >= 7.1',
-                              'Firefox >= 31',
-                              'Opera >= 12'
-                            ],
-                            flexbox: 'no-2009',
-                          }),
-                        ],
-                      },
-                    },
-                    {
-                      loader: require.resolve('less-loader'), // compiles Less to CSS
-                      options: {
-                        modifyVars: process.env.REACT_APP_SERVER_ENV === 'DEV' ? packagejson.testtheme : packagejson.maintheme,
-                        javascriptEnabled: true
-                      }
-                    }
-                  ],
                 },
+                use: [{
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 2,
+                    minimize: true,
+                    sourceMap: shouldUseSourceMap,
+                  },
+                },
+                {
+                  loader: require.resolve('postcss-loader'),
+                  options: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                    ident: 'postcss',
+                    plugins: () => [
+                      require('postcss-flexbugs-fixes'),
+                      autoprefixer({
+                        browsers: [
+                          '>1%',
+                          'last 4 versions',
+                          'Firefox ESR',
+                          'not ie < 9', // React doesn't support IE8 anyway
+                          'Chrome >= 35',
+                          'Safari >= 7.1',
+                          'Firefox >= 31',
+                          'Opera >= 12'
+                        ],
+                        flexbox: 'no-2009',
+                      }),
+                    ],
+                  },
+                },
+                {
+                  loader: require.resolve('less-loader'), // compiles Less to CSS
+                  options: {
+                    modifyVars: process.env.REACT_APP_SERVER_ENV === 'PUB' ? packagejson.maintheme : packagejson.testtheme,
+                    javascriptEnabled: true
+                  }
+                }
+                ],
+              },
                 extractTextPluginOptions
               )
             ),

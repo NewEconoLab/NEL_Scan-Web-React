@@ -49,7 +49,7 @@ class Block extends React.Component<IBlockProps, any> {
   // 列表特殊处理
   public renderBlock = (value, key) => {
     if (key === 'index') {
-      return <span><img src={require('@/img/height.png')} alt="" /><a onClick={this.toBlockInfo.bind(this,value)} href="javascript:;">{toThousands(value.toString())}</a></span>
+      return <span><img src={require('@/img/height.png')} alt="" /><a onClick={this.toBlockInfo.bind(this, value)} href="javascript:;">{toThousands(value.toString())}</a></span>
     }
 
     if (key === 'time') {
@@ -59,8 +59,7 @@ class Block extends React.Component<IBlockProps, any> {
     return null;
   }
   // 跳转到详情页
-  public toBlockInfo = (index: string) =>
-  {
+  public toBlockInfo = (index: string) => {
     this.props.history.push('/block/' + index)
   }
   // 翻页功能
@@ -85,11 +84,11 @@ class Block extends React.Component<IBlockProps, any> {
             tableData={this.props.block.blockList}
             render={this.renderBlock}
           />
-          <Page 
-            totalCount={blockheight} 
-            pageSize={this.state.pageSize} 
-            currentPage={this.state.currentPage} 
-            onChange={this.onGoPage} 
+          <Page
+            totalCount={blockheight}
+            pageSize={this.state.pageSize}
+            currentPage={this.state.currentPage}
+            onChange={this.onGoPage}
           />
         </div>
       </div>

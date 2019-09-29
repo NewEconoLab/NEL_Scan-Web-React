@@ -16,35 +16,39 @@ class Transactions extends React.Component<ITransactionsProps, {}>
   public intrl = this.props.intl.messages;
   public state = {
     showTranType: false,// 显示表格列表选择
-    showTable:0 // 交易表格的切换，0为默认所有交易，1为nep5的交易
+    showTable: 0 // 交易表格的切换，0为默认所有交易，1为nep5的交易
   }
   // 显示标题下拉
   public onShowType = () => {
     this.setState({
-      showTranType:!this.state.showTranType
+      showTranType: !this.state.showTranType
     })
   }
   // 点击选择标题
-  public onClickType = (type:number) => {
-    if(type === 0){
+  public onClickType = (type: number) => {
+    if (type === 0) {
       this.setState({
-        showTable:0
+        showTable: 0
       })
     }
-    else if(type === 1){
+    else if (type === 1) {
       this.setState({
-        showTable:1
+        showTable: 1
       })
     }
   }
-  public render()
-  {
+  public render() {
 
     return (
       <div className="transaction-page">
         <div className="tran-title-wrapper" onClick={this.onShowType}>
           <img src={require('@/img/transactions.png')} alt="" />
-          <h3 className="tran-title">{this.state.showTable === 0 ? this.intrl.transaction.alltx: this.intrl.transaction.nep5tx}</h3>
+          <h3 className="tran-title">
+            {this.state.showTable === 0 ?
+              this.intrl.transaction.alltx :
+              (process.env.REACT_APP_SERVER_ENV === "NEO3" ? this.intrl.transaction.transfer : this.intrl.transaction.nep5tx)
+            }
+          </h3>
           <div className="select-trantype">
             <span className="triangle" />
             {
@@ -54,8 +58,8 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                     <div className="arrow" />
                   </div>
                   <ul className="type-list">
-                    <li onClick={this.onClickType.bind(this,0)}>{this.intrl.transaction.alltx}</li>
-                    <li onClick={this.onClickType.bind(this,1)}>{this.intrl.transaction.nep5tx}</li>
+                    <li onClick={this.onClickType.bind(this, 0)}>{this.intrl.transaction.alltx}</li>
+                    <li onClick={this.onClickType.bind(this, 1)}>{process.env.REACT_APP_SERVER_ENV === "NEO3" ? this.intrl.transaction.transfer : this.intrl.transaction.nep5tx}</li>
                   </ul>
                 </div>
               )
@@ -68,7 +72,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
         {
           this.state.showTable === 1 && (<Nep5tx {...this.props} />)
         }
-        
+
       </div>
     );
   }

@@ -9,7 +9,7 @@ import Layout from './containers/layout/index';
 import routes from './routers';
 import store from "./store";
 // import { en_US, zh_CN } from '@/language';
-addLocaleData([...en, ...zh]);
+addLocaleData([ ...en, ...zh ]);
 
 // setTimeout(() => {
 //   store['common'].language = 'en'
@@ -20,8 +20,8 @@ addLocaleData([...en, ...zh]);
 // }, 6000)
 
 // 初始化请求
-store['common'].initLanguage();
-store['common'].socketInit();
+store[ 'common' ].initLanguage();
+store[ 'common' ].socketInit();
 // const sessionLanguage = sessionStorage.getItem('language');
 
 // if (sessionLanguage) {
@@ -31,7 +31,7 @@ store['common'].socketInit();
 const ObserverRender = observer(() => {
   let locale = 'en';
 
-  if (store['common'].language === 'zh') {
+  if (store[ 'common' ].language === 'zh') {
     locale = 'zh';
   }
 
@@ -39,7 +39,7 @@ const ObserverRender = observer(() => {
     <IntlProvider
       key={locale}
       locale={locale}
-      messages={store['common'].message}
+      messages={store[ 'common' ].message}
     >
       {
         renderRoutes(routes)
@@ -53,6 +53,20 @@ export default () => {
     return (
       <Provider {...store}>
         <BrowserRouter basename="test">
+          <Layout>
+            <Switch>
+              <ObserverRender />
+            </Switch>
+          </Layout>
+        </BrowserRouter>
+      </Provider>
+    );
+  }
+
+  if (process.env.REACT_APP_SERVER_ENV === 'NEO3') {
+    return (
+      <Provider {...store}>
+        <BrowserRouter basename="neo3">
           <Layout>
             <Switch>
               <ObserverRender />

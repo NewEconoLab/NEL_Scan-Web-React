@@ -8,19 +8,20 @@ interface IOpts {
   getAll?: boolean, // 是否获取所有返回结果
 }
 
-const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : 'mainnet';
-const baseCommonUrl: string = "https://api.nel.group/api/" + network;
-const baseUrl: string = "https://apiscan.nel.group/api/" + network;
+const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : (process.env.REACT_APP_SERVER_ENV === 'NEO3' ? 'neo3' : 'mainnet');
+const baseCommonUrl: string = network === 'neo3' ? "https://apiblockneo3.nel.group/api/testnet" : ("https://api.nel.group/api/" + network);
+const baseUrl: string = network === 'neo3' ? "https://apiscanneo3.nel.group/api/testnet" : ("https://apiscan.nel.group/api/" + network);
+
 // const baseCommonUrl: string = "http://47.99.124.218:82/api/" + network;
 // const baseUrl: string = "http://47.99.124.218:86/api/" + network;
 
 const makeRpcPostBody = (method: string, params: any): {} => {
 
   const body = {};
-  body["jsonrpc"] = "2.0";
-  body["id"] = 1;
-  body["method"] = method;
-  body["params"] = params;
+  body[ "jsonrpc" ] = "2.0";
+  body[ "id" ] = 1;
+  body[ "method" ] = method;
+  body[ "params" ] = params;
   return body;
 }
 const defaultConfig = {
@@ -37,7 +38,7 @@ export default function request(opts: IOpts): Promise<any> {
   const args = {
     url,
     method: opts.isGET ? 'GET' : 'POST',
-    [opts.isGET ? 'params' : 'data']: opts.method ? params : JSON.stringify(params),
+    [ opts.isGET ? 'params' : 'data' ]: opts.method ? params : JSON.stringify(params),
     ...defaultConfig,
   }
   return new Promise((resolve, reject) => {
@@ -51,7 +52,7 @@ export default function request(opts: IOpts): Promise<any> {
           resolve(data.data.result);
           return;
         }
-        else if (data.data.error["code"] === -1) {
+        else if (data.data.error[ "code" ] === -1) {
           reject(data.data.error);
         }
         reject(data.data.error);

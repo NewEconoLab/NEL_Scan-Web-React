@@ -3,13 +3,11 @@ import * as React from 'react';
 import store from '@/store/common'
 import './index.less';
 
-interface IState
-{
+interface IState {
     isShowCode: boolean,
     isShowqqCode: boolean
 }
-interface IProps
-{
+interface IProps {
     locale: any
 }
 export default class Footer extends React.Component<IProps, IState>
@@ -19,21 +17,18 @@ export default class Footer extends React.Component<IProps, IState>
         isShowqqCode: false
     }
 
-    public isShowWechat = () =>
-    {
+    public isShowWechat = () => {
         this.setState({
             isShowCode: !this.state.isShowCode
         })
     }
 
-    public isShowQQ = () =>
-    {
+    public isShowQQ = () => {
         this.setState({
             isShowqqCode: !this.state.isShowqqCode
         })
     }
-    public render()
-    {
+    public render() {
         return (
             <div className="footer-group">
                 <div className="footer-wrap">
@@ -97,7 +92,7 @@ export default class Footer extends React.Component<IProps, IState>
                             <ul>
                                 <li>
                                     {
-                                        process.env.REACT_APP_SERVER_ENV === 'DEV' &&
+                                        process.env.REACT_APP_SERVER_ENV !== 'PUB' &&
                                         <>
                                             <img src={require('@/img/wallet-t.png')} alt="wallet.png" />
                                             <a href="https://testwallet.nel.group/#/login" target="_blank">{this.props.locale.wallet}</a>
@@ -105,7 +100,7 @@ export default class Footer extends React.Component<IProps, IState>
 
                                     }
                                     {
-                                        process.env.REACT_APP_SERVER_ENV !== 'DEV' &&
+                                        process.env.REACT_APP_SERVER_ENV === 'PUB' &&
                                         <>
                                             <img src={require('@/img/wallet-m.png')} alt="wallet.png" />
                                             <a href="https://wallet.nel.group/#/login" target="_blank">{this.props.locale.wallet}</a>
@@ -115,10 +110,10 @@ export default class Footer extends React.Component<IProps, IState>
                                 </li>
                                 <li>
                                     {
-                                        process.env.REACT_APP_SERVER_ENV === 'DEV' && <img src={require('@/img/nellogo-t.png')} alt="nel.png" />
+                                        process.env.REACT_APP_SERVER_ENV !== 'PUB' && <img src={require('@/img/nellogo-t.png')} alt="nel.png" />
                                     }
                                     {
-                                        process.env.REACT_APP_SERVER_ENV !== 'DEV' && <img src={require('@/img/nellogo-m.png')} alt="nel.png" />
+                                        process.env.REACT_APP_SERVER_ENV === 'PUB' && <img src={require('@/img/nellogo-m.png')} alt="nel.png" />
                                     }
                                     {
                                         store.language === 'zh' && <a href="https://nel.group/index.html" target="_blank">{this.props.locale.nel}</a>
@@ -129,10 +124,10 @@ export default class Footer extends React.Component<IProps, IState>
                                 </li>
                                 <li>
                                     {
-                                        process.env.REACT_APP_SERVER_ENV === 'DEV' && <img src={require('@/img/nns-t.png')} alt="nns.png" />
+                                        process.env.REACT_APP_SERVER_ENV !== 'PUB' && <img src={require('@/img/nns-t.png')} alt="nns.png" />
                                     }
                                     {
-                                        process.env.REACT_APP_SERVER_ENV !== 'DEV' && <img src={require('@/img/nns-m.png')} alt="nns.png" />
+                                        process.env.REACT_APP_SERVER_ENV === 'PUB' && <img src={require('@/img/nns-m.png')} alt="nns.png" />
                                     }
                                     {
                                         store.language === 'zh' && <a href="https://neons.name/index.html" target="_blank">{this.props.locale.nns}</a>
@@ -143,10 +138,10 @@ export default class Footer extends React.Component<IProps, IState>
                                 </li>
                                 <li>
                                     {
-                                        process.env.REACT_APP_SERVER_ENV === 'DEV' && <img src={require('@/img/neodun-t.png')} alt="neodun.png" />
+                                        process.env.REACT_APP_SERVER_ENV !== 'PUB' && <img src={require('@/img/neodun-t.png')} alt="neodun.png" />
                                     }
                                     {
-                                        process.env.REACT_APP_SERVER_ENV !== 'DEV' && <img src={require('@/img/neodun-m.png')} alt="neodun.png" />
+                                        process.env.REACT_APP_SERVER_ENV === 'PUB' && <img src={require('@/img/neodun-m.png')} alt="neodun.png" />
                                     }
                                     {
                                         store.language === 'zh' && <a href="http://neodun.com/index.html" target="_blank">{this.props.locale.neodun}</a>
@@ -160,7 +155,11 @@ export default class Footer extends React.Component<IProps, IState>
                     </div>
                 </div>
                 <div className="footer-version">
-                    <p>cli version: v2.9.2</p>
+                    {process.env.REACT_APP_SERVER_ENV === 'NEO3' ?
+                        <p>cli version: v3.0.0</p>
+                        :
+                        <p>cli version: v2.9.2</p>
+                    }
                     <p>© 2018 NewEconoLabs</p>
                 </div>
             </div>

@@ -16,8 +16,7 @@ import './index.less';
 import { observer } from 'mobx-react';
 import { IHomeStore } from '@/containers/home/interface/home.interface';
 
-interface IState
-{
+interface IState {
   isShowSearch: boolean,         // 是否在首页显示search功能
   inputValue: string,            // 输入框的输入
   inputPlaceHolder: string,      // 输入框的placeholder
@@ -29,14 +28,13 @@ interface IState
   languageImg: ImageData,
 }
 
-interface IProps
-{
+interface IProps {
   home: IHomeStore,
   history: History,
   locale: any,
   btn: any,
   input: any,
-  onChangeLanguage:(lang:string)=>void;
+  onChangeLanguage: (lang: string) => void;
 }
 
 @observer
@@ -48,25 +46,21 @@ export default class Header extends React.Component<IProps, IState>{
     isShowBrowse: false,
     isShowEnv: false,
     isShowLanguage: false,
-    inputPlaceHolder: this.props.input.placeholder,
-    languageText: store['common'].language === 'en' ? "En" : "中",
-    languageImg: store['common'].language === 'en' ? en : zh,    
+    inputPlaceHolder: process.env.REACT_APP_SERVER_ENV === 'NEO3' ? this.props.input.placeholder1 : this.props.input.placeholder,
+    languageText: store[ 'common' ].language === 'en' ? "En" : "中",
+    languageImg: store[ 'common' ].language === 'en' ? en : zh,
   }
-  public componentDidMount()
-  {
-    if (this.props.history.location.pathname !== '/')
-    {
+  public componentDidMount() {
+    if (this.props.history.location.pathname !== '/') {
       this.setState({
         isShowSearchBtn: true
       })
     }
 
-    this.props.history.listen(() =>
-    {
+    this.props.history.listen(() => {
       let isShowSearchBtn = false;
 
-      if (this.props.history.location.pathname !== '/')
-      {
+      if (this.props.history.location.pathname !== '/') {
         isShowSearchBtn = true
       }
 
@@ -80,8 +74,7 @@ export default class Header extends React.Component<IProps, IState>{
 
     EventHandler.add(this.globalClick);
   }
-  public globalClick = () =>
-  {
+  public globalClick = () => {
     this.setState({
       isShowEnv: false,
       isShowBrowse: false,
@@ -89,84 +82,67 @@ export default class Header extends React.Component<IProps, IState>{
     })
   }
   // 输入变化
-  public onChange = (value: string) =>
-  {
+  public onChange = (value: string) => {
     // 禁止输入中文，以及其他特殊字符
-    if(/[^a-zA-Z\d\.]/g.test(value)){
+    if (/[^a-zA-Z\d\.]/g.test(value)) {
       return
     }
     this.setState({
       inputValue: value
     })
-    if (value === '')
-    {
+    if (value === '') {
       this.props.home.searchAssetList = [];
       return
     }
     this.props.home.searchAsset(value);
   }
   // input获取焦点
-  public onFocus = () =>
-  {
+  public onFocus = () => {
     this.setState({
       inputPlaceHolder: '',
     })
   }
   // 失去焦点
-  public onBlur = () =>
-  {
+  public onBlur = () => {
     this.setState({
-      inputPlaceHolder: this.props.input.placeholder,
+      inputPlaceHolder: process.env.REACT_APP_SERVER_ENV === 'NEO3' ? this.props.input.placeholder1 : this.props.input.placeholder,
     })
   }
   // 搜索功能
-  public toSearchInfo = () =>
-  {
+  public toSearchInfo = () => {
     let search: string = this.state.inputValue;
     search = search.trim();
-    if (search)
-    {
+    if (search) {
       const isDomain = this.checkDomainname(search);// 判断是否为域名
-      if (isDomain)
-      {
+      if (isDomain) {
         window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nnsinfo/' + search : '/nnsinfo/' + search;
       }
-      if (search.length === 34)
-      {
-        if (Neotool.verifyPublicKey(search))
-        { // 是否是地址
+      if (search.length === 34) {
+        if (Neotool.verifyPublicKey(search)) { // 是否是地址
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address/' + search : '/address/' + search;
           // this.props.history.push('/address/' + search);
-        } else
-        {
+        } else {
           return false;
         }
         return;
-      } else
-      {
+      } else {
         search = search.replace('0x', '');
-        if (search.length === 64)
-        {
+        if (search.length === 64) {
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/transaction/0x' + search : '/transaction/0x' + search;
         }
-        else if (search.length === 40)
-        {
+        else if (search.length === 40) {
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/contract/0x' + search;
         }
-        else if (!isNaN(Number(search)))
-        {
+        else if (!isNaN(Number(search))) {
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/block/' + search : '/block/' + search;
         }
-        else if (search.length > 64)
-        {
+        else if (search.length > 64) {
           window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/0x' + search : '/asset/0x' + search;
-        } else
-        {
+        } else {
           return false;
         }
       }
-    } else
-    {
+    } else {
       return false;
     }
     this.setState({
@@ -175,59 +151,46 @@ export default class Header extends React.Component<IProps, IState>{
     return;
   }
   // 检测输入域名是否合法
-  public checkDomainname(domainname: string)
-  {
+  public checkDomainname(domainname: string) {
     let domain = domainname;
-    if (/\.neo$/.test(domainname))
-    {
+    if (/\.neo$/.test(domainname)) {
       domain = domain.substring(0, domain.length - 4);
     }
-    else if (/\.test$/.test(domainname))
-    {
+    else if (/\.test$/.test(domainname)) {
       domain = domain.substring(0, domain.length - 5);
     }
-    else
-    {
+    else {
       return false;
     }
-    if (domain.length >= 2 && domain.length <= 32)
-    {
+    if (domain.length >= 2 && domain.length <= 32) {
       return true;
-    } else
-    {
+    } else {
       return false;
     }
   }
   // 点击跳转到资产详情
-  public goAssetInfo = (assetid) =>
-  {
+  public goAssetInfo = (assetid) => {
     // this.props.home.searchAssetList = [];
-    if (assetid.length === 42)
-    {
+    if (assetid.length === 42) {
       window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/' + assetid : '/nep5/' + assetid;
-    } else
-    {
+    } else {
       window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/' + assetid : '/asset/' + assetid;
     }
   }
   // 是否显示search
-  public onToggleSearch = () =>
-  {
+  public onToggleSearch = () => {
     this.setState({
       isShowSearch: !this.state.isShowSearch,
       inputValue: ''
-    }, () =>
-      {
-        if (!this.state.inputValue)
-        {
-          this.props.home.searchAssetList = [];
-        }
-      })
+    }, () => {
+      if (!this.state.inputValue) {
+        this.props.home.searchAssetList = [];
+      }
+    })
 
   }
   // 是否显示版本
-  public toggleEnv = (e) =>
-  {
+  public toggleEnv = (e) => {
     this.setState({
       isShowEnv: !this.state.isShowEnv,
       isShowBrowse: false,
@@ -237,8 +200,7 @@ export default class Header extends React.Component<IProps, IState>{
     e.stopPropagation();
   }
   // 是否显示语言
-  public toggleLanguage = (e) =>
-  {
+  public toggleLanguage = (e) => {
     this.setState({
       isShowEnv: false,
       isShowBrowse: false,
@@ -248,8 +210,7 @@ export default class Header extends React.Component<IProps, IState>{
     e.stopPropagation();
   }
   // 是否显示浏览
-  public toggleBrowse = (e) =>
-  {
+  public toggleBrowse = (e) => {
     this.setState({
       isShowEnv: false,
       isShowBrowse: !this.state.isShowBrowse,
@@ -258,8 +219,7 @@ export default class Header extends React.Component<IProps, IState>{
     })
     e.stopPropagation();
   }
-  public componentWillUnmount()
-  {
+  public componentWillUnmount() {
     EventHandler.remove(this.globalClick);
 
     this.setState({
@@ -271,55 +231,46 @@ export default class Header extends React.Component<IProps, IState>{
       isShowLanguage: false,
     })
   }
-  public getPath = (base) =>
-  {
+  public getPath = (base) => {
     const locations = this.props.history.location;
     console.log(location.origin);
 
     window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`
   }
-  
+
   // 切换英文
-  public onClickEnglish = () =>
-  {
+  public onClickEnglish = () => {
     this.setState({
       languageText: "En",
       languageImg: en,
-      inputPlaceHolder: this.props.input.placeholder,
+      inputPlaceHolder: process.env.REACT_APP_SERVER_ENV === 'NEO3' ? this.props.input.placeholder1 : this.props.input.placeholder,
     })
     this.props.onChangeLanguage('en');
   }
   // 切换中文
-  public onClickChinese = () =>
-  {
+  public onClickChinese = () => {
     this.setState({
       languageText: "中",
       languageImg: zh,
-      inputPlaceHolder: this.props.input.placeholder,
+      inputPlaceHolder: process.env.REACT_APP_SERVER_ENV === 'NEO3' ? this.props.input.placeholder1 : this.props.input.placeholder,
     })
     this.props.onChangeLanguage('zh');
   }
 
-  public mapRouterUnderline = (path) =>
-  {
-    if (path instanceof Array)
-    {
-      for (const i in path)
-      {
-        if (new RegExp(path[i], 'i').test(this.props.history.location.pathname))
-        {
+  public mapRouterUnderline = (path) => {
+    if (path instanceof Array) {
+      for (const i in path) {
+        if (new RegExp(path[ i ], 'i').test(this.props.history.location.pathname)) {
           return "under-line"
         }
       }
     }
-    if (path === this.props.history.location.pathname)
-    {
+    if (path === this.props.history.location.pathname) {
       return "under-line"
     }
     return '';
   }
-  public render()
-  {
+  public render() {
     return (
       <div className="header-wrap">
         <div className="header-content">
@@ -333,7 +284,11 @@ export default class Header extends React.Component<IProps, IState>{
                 <div className="select-box">
                   <div className="select-content">
                     <label onClick={this.toggleEnv}>
-                      <span>{process.env.REACT_APP_SERVER_ENV === 'DEV' ? this.props.locale.testnet : this.props.locale.mainnet}</span>
+                      <span>
+                        {process.env.REACT_APP_SERVER_ENV === 'DEV' && this.props.locale.testnet}
+                        {process.env.REACT_APP_SERVER_ENV === 'PUB' && this.props.locale.mainnet}
+                        {process.env.REACT_APP_SERVER_ENV === 'NEO3' && this.props.locale.neo3test}
+                      </span>
                       <span className="triangle" />
                     </label>
                   </div>
@@ -343,6 +298,7 @@ export default class Header extends React.Component<IProps, IState>{
                         <ul>
                           <li><a onClick={this.getPath.bind(this, '')}>{this.props.locale.mainnet}</a></li>
                           <li><a onClick={this.getPath.bind(this, '/test')}>{this.props.locale.testnet}</a></li>
+                          <li><a onClick={this.getPath.bind(this, '/neo3')}>{this.props.locale.neo3test}</a></li>
                         </ul>
                       </div>
                     )
@@ -378,7 +334,7 @@ export default class Header extends React.Component<IProps, IState>{
           <div className="header-menu">
             <ul>
               <li className={this.mapRouterUnderline('/')}><Link to="/">{this.props.locale.explorer}</Link></li>
-              <li className={this.mapRouterUnderline(['/blocks', '/block', '/transactions', '/transaction', '/addresses', '/address','/contract'])}>
+              <li className={this.mapRouterUnderline([ '/blocks', '/block', '/transactions', '/transaction', '/addresses', '/address', '/contract' ])}>
                 <div className="select-box">
                   <div className="select-content">
                     <label onClick={this.toggleBrowse}>
@@ -399,8 +355,8 @@ export default class Header extends React.Component<IProps, IState>{
                   }
                 </div>
               </li>
-              <li className={this.mapRouterUnderline(['/asset', '/assets', '/nep5'])}><Link to="/assets">{this.props.locale.assets}</Link></li>
-              <li className={this.mapRouterUnderline(['/nns', '/nnsinfo', '/nnsbeing', '/nnsrank'])}><Link to="/nns">{this.props.locale.nnsevent}</Link></li>
+              <li className={this.mapRouterUnderline([ '/asset', '/assets', '/nep5' ])}><Link to="/assets">{this.props.locale.assets}</Link></li>
+              {process.env.REACT_APP_SERVER_ENV !== 'NEO3' && <li className={this.mapRouterUnderline([ '/nns', '/nnsinfo', '/nnsbeing', '/nnsrank' ])}><Link to="/nns">{this.props.locale.nnsevent}</Link></li>}
               <li>
                 {
                   process.env.REACT_APP_SERVER_ENV === 'DEV' ? <a href="https://testwallet.nel.group/" target="_blank">{this.props.locale.wallet}</a> : <a href="https://wallet.nel.group/" target="_blank">{this.props.locale.wallet}</a>
@@ -439,8 +395,7 @@ export default class Header extends React.Component<IProps, IState>{
                     </div>
                     <ul className="search-list">
                       {
-                        this.props.home.searchAssetList.map((key, value) =>
-                        {
+                        this.props.home.searchAssetList.map((key, value) => {
                           return <li key={value} onClick={this.goAssetInfo.bind(this, key.assetid)}>{key.name}({key.assetid})</li>
                         })
                       }
