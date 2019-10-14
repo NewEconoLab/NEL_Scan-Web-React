@@ -112,14 +112,15 @@ export default class Header extends React.Component<IProps, IState>{
   public toSearchInfo = () => {
     let search: string = this.state.inputValue;
     search = search.trim();
+    const urltitle: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test' : (process.env.REACT_APP_SERVER_ENV === 'NEO3' ? '/neo3' : "");
     if (search) {
       const isDomain = this.checkDomainname(search);// 判断是否为域名
       if (isDomain) {
-        window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nnsinfo/' + search : '/nnsinfo/' + search;
+        window.location.href = urltitle + '/nnsinfo/' + search;
       }
       if (search.length === 34) {
         if (Neotool.verifyPublicKey(search)) { // 是否是地址
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/address/' + search : '/address/' + search;
+          window.location.href = urltitle + '/address/' + search;
           // this.props.history.push('/address/' + search);
         } else {
           return false;
@@ -128,16 +129,16 @@ export default class Header extends React.Component<IProps, IState>{
       } else {
         search = search.replace('0x', '');
         if (search.length === 64) {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/transaction/0x' + search : '/transaction/0x' + search;
+          window.location.href = urltitle + '/transaction/0x' + search;
         }
         else if (search.length === 40) {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/0x' + search : '/contract/0x' + search;
+          window.location.href = urltitle + '/contract/0x' + search;
         }
         else if (!isNaN(Number(search))) {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/block/' + search : '/block/' + search;
+          window.location.href = urltitle + '/block/' + search;
         }
         else if (search.length > 64) {
-          window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/0x' + search : '/asset/0x' + search;
+          window.location.href = urltitle + '/asset/0x' + search;
         } else {
           return false;
         }
@@ -170,11 +171,12 @@ export default class Header extends React.Component<IProps, IState>{
   }
   // 点击跳转到资产详情
   public goAssetInfo = (assetid) => {
+    const urltitle: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test' : (process.env.REACT_APP_SERVER_ENV === 'NEO3' ? '/neo3' : "");
     // this.props.home.searchAssetList = [];
     if (assetid.length === 42) {
-      window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/nep5/' + assetid : '/nep5/' + assetid;
+      window.location.href = urltitle + '/nep5/' + assetid;
     } else {
-      window.location.href = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test/asset/' + assetid : '/asset/' + assetid;
+      window.location.href = urltitle + '/asset/' + assetid;
     }
   }
   // 是否显示search
