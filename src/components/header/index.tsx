@@ -281,7 +281,7 @@ export default class Header extends React.Component<IProps, IState>{
           </div>
           <div className="header-other">
             <ul>
-              <li><a href="http://www.xiaoyaoji.cn/share/1H0gjTDtfk/" target="_blank">API</a></li>
+              <li><a href="http://www.docway.net/project/1GzwrWimm3/1GzwrYN3Ab" target="_blank">API</a></li>
               <li>
                 <div className="select-box">
                   <div className="select-content">
