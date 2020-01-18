@@ -41,7 +41,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
 
     return (
       <div className="transaction-page">
-        <div className="tran-title-wrapper" onClick={this.onShowType}>
+        {/* <div className="tran-title-wrapper" onClick={this.onShowType}>
           <img src={require('@/img/transactions.png')} alt="" />
           <h3 className="tran-title">
             {this.state.showTable === 0 ?
@@ -65,7 +65,23 @@ class Transactions extends React.Component<ITransactionsProps, {}>
               )
             }
           </div>
+        </div> */}
+        <div className="tran-title-wrapper">
+          <img src={require('@/img/transactions.png')} alt="" />
+          <div
+            className={`tran-title-label ${this.state.showTable === 0 ? 'active' : ''}`}
+            onClick={this.onClickType.bind(this, 0)}
+          >
+            {this.intrl.transaction.alltx}
+          </div>
+          <div
+            className={`tran-title-label ${this.state.showTable === 1 ? 'active' : ''}`}
+            onClick={this.onClickType.bind(this, 1)}
+          >
+            {process.env.REACT_APP_SERVER_ENV === "NEO3" ? this.intrl.transaction.transfer : this.intrl.transaction.nep5tx}
+          </div>
         </div>
+        {/* <div className="tran-title-label">{this.intrl.transaction.nep5tx}</div> */}
         {
           this.state.showTable === 0 && (<Alltx {...this.props} />)
         }

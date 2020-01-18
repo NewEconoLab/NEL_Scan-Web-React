@@ -12,7 +12,8 @@ import { ITransactionsProps } from './interface/transaction.interface';
 import { observer, inject } from 'mobx-react';
 import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
-import { ITransaction } from '@/store/interface/common.interface';
+import { IVinOut, ITransaction } from '@/store/interface/common.interface';
+import * as formatTime from 'utils/formatTime';
 // import Spinner from '@/components/spinner'
 
 @inject('transaction')
@@ -105,7 +106,8 @@ class Transactions extends React.Component<ITransactionsProps, {}>
     register: require('@/img/register.png'),
     publish: require('@/img/publish.png'),
     enrollment: require('@/img/enrollment.png'),
-    agency: require('@/img/agency.png')
+    agency: require('@/img/agency.png'),
+    transfer: process.env.REACT_APP_SERVER_ENV === "PUB" ? require('@/img/transaction-from.png') : require('@/img/transaction-from-test.png')
   }
   public state = {
     currentPage: 1,
@@ -195,8 +197,75 @@ class Transactions extends React.Component<ITransactionsProps, {}>
               {/* 有数据时 */}
               {
                 this.props.transaction.transList.length !== 0 && (
-                  <div className="table-body">
-                    <ul>
+                  <div className="table-body-new">
+                    {
+                      this.props.transaction.transList.map((item: ITransaction, index: number) => {
+                        return (
+                          <div className="table-row" key={index}>
+                            <div className="tr-header">
+                              {
+                                process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
+                                <span className="img-text-bg">
+                                  <img src={this.imgs[ item.type.replace('Transaction', '').toLowerCase() ]} alt="" />
+                                  {item.type.replace('Transaction', '')}
+                                </span>
+                              }
+                              <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                              {
+                                process.env.REACT_APP_SERVER_ENV === "NEO3" &&
+                                <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, item.sender)}>
+                                  {item.sender.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
+                                </a></span>
+                              }
+                              <span><a href="javascript:;">{item.blockindex}</a></span>
+                              <span>
+                                {formatTime.format('yyyy/MM/dd | hh:mm:ss', item.blocktime.toString(), this.props.intl.locale)}
+                              </span>
+                            </div>
+                            {(item.vinout.length > 0 || item.vout.length > 0) &&
+                              <div className="tr-data">
+                                <div className="amount-data">
+                                  <div className="amount-title">Input</div>
+                                  {item.vinout.map((vin: IVinOut, vinIndex: number) => {
+                                    return (
+                                      vinIndex < 3 ?
+                                        <div className="amount-info" key={vinIndex}>
+                                          <a href="javascript:;" onClick={this.goAddrInfo.bind(this, vin.address)}>{vin.address}</a>
+                                          <span className="asset">{vin.assetJA}</span>
+                                        </div> : false)
+                                  })}
+                                  {item.vinout.length > 3 && <span className="ellipsis">...</span>}
+                                </div>
+                                <div className="transfer-icon">
+                                  <img src={this.imgs.transfer} alt="" />
+                                  {item.vinout.length > 3 || item.vout.length > 3 &&
+                                    <div className="view-all" onClick={this.goTransInfo.bind(this, item.txid)}>{this.props.intl.messages.btn.viewAll}</div>
+                                  }
+                                </div>
+                                <div className="amount-data">
+                                  <div className="amount-title">Output</div>
+                                  {item.vout.map((vout: IVinOut, outIndex: number) => {
+                                    return (
+                                      outIndex < 3 ?
+                                        <div className="amount-info" key={outIndex}>
+                                          <a href="javascript:;" onClick={this.goAddrInfo.bind(this, vout.address)}>{vout.address}</a>
+                                          <span className="asset">{vout.assetJA}</span>
+                                        </div> : false)
+                                  })}
+                                  {item.vout.length > 3 && <span className="ellipsis">...</span>}
+                                </div>
+                              </div>
+                            }
+                            <div className="tr-foot">
+                              <span>Network Fee: {item.net_fee}</span>
+                              <span>System Fee: {item.sys_fee}</span>
+                              <span>Size: {item.size} Bytes</span>
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
+                    {/* <ul>
                       {
                         this.props.transaction.transList.map((item: ITransaction, index: number) => {
                           return (
@@ -219,7 +288,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                           )
                         })
                       }
-                    </ul>
+                    </ul> */}
                   </div>
                 )
               }

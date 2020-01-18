@@ -48,6 +48,10 @@ class AllTable extends React.Component<IContractProps> {
         {
             name: this.intrl.tableTh.asset,
             key: 'assetName'
+        },
+        {
+            name: this.intrl.tableTh.fee,
+            key: 'net_fee'
         }
     ]
     public mobilenep5TableTh = [
@@ -80,44 +84,36 @@ class AllTable extends React.Component<IContractProps> {
             key: 'assetName'
         }
     ]
-    public componentDidMount()
-    {
+    public componentDidMount() {
         this.getNepList();
     }
-    public getNepList = () =>
-    {
+    public getNepList = () => {
         this.props.contract.getNep5Contrant(this.state.currentPage, this.state.pageSize)
     }
     // 刷新时间
-    public refreshTime = () =>
-    {
+    public refreshTime = () => {
         this.setState({
             showTimeChange: !this.state.showTimeChange
         })
     }
     // 交易详情链接
-    public goTransInfo = (txid: string) =>
-    {
+    public goTransInfo = (txid: string) => {
         this.props.history.push('/transaction/' + txid)
     }
     // 跳转到地址详情页
-    public toAddressInfo = (address: string) =>
-    {
+    public toAddressInfo = (address: string) => {
         this.props.history.push('/address/' + address)
     }
     // 翻页功能
-    public onGoPage = (index: number) =>
-    {
+    public onGoPage = (index: number) => {
         this.setState({
             currentPage: index,
             isLoading: true
-        }, async () =>
-            {
-                this.getNepList();
-            })
+        }, async () => {
+            this.getNepList();
+        })
     }
-    public render()
-    {
+    public render() {
         return (
             <>
                 <div className="contract-table">
@@ -126,10 +122,8 @@ class AllTable extends React.Component<IContractProps> {
                             <div className="table-th">
                                 <ul>
                                     {
-                                        this.nep5TableTh.map((item, index) =>
-                                        {
-                                            if (index === 1)
-                                            {
+                                        this.nep5TableTh.map((item, index) => {
+                                            if (index === 1) {
                                                 return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require('@/img/refresh.png')} /></li>
                                             }
                                             return <li key={index}>{item.name}</li>
@@ -149,8 +143,7 @@ class AllTable extends React.Component<IContractProps> {
                                     <div className="table-body">
                                         <ul>
                                             {
-                                                this.props.contract.nep5TxList.map((item, index: number) =>
-                                                {
+                                                this.props.contract.nep5TxList.map((item, index: number) => {
                                                     return (
                                                         <li key={index}>
                                                             <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
@@ -193,6 +186,7 @@ class AllTable extends React.Component<IContractProps> {
                                                             </span>
                                                             <span>{item.value}</span>
                                                             <span>{item.assetName}</span>
+                                                            <span>{item.net_fee}</span>
                                                         </li>
                                                     )
                                                 })
@@ -211,8 +205,7 @@ class AllTable extends React.Component<IContractProps> {
                                         <ul>
                                             <li>
                                                 {
-                                                    this.mobilenep5TableTh.map((item, index) =>
-                                                    {
+                                                    this.mobilenep5TableTh.map((item, index) => {
                                                         return (
                                                             <div className="table-line" key={index}>
                                                                 <span className="line-title" >{item.name}</span>
@@ -234,8 +227,7 @@ class AllTable extends React.Component<IContractProps> {
                                     <div className="table-body">
                                         <ul>
                                             {
-                                                this.props.contract.nep5TxList.map((item: IContractNep5, index: number) =>
-                                                {
+                                                this.props.contract.nep5TxList.map((item: IContractNep5, index: number) => {
                                                     return (
                                                         <li key={index}>
                                                             <div className="table-line">

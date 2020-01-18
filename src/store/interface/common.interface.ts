@@ -14,10 +14,11 @@ export interface ITransaction {
   gas: string,
   size: number,
   blockindex: number,
+  blocktime: number,
   version: number,
   sender: string,
-  vin: IVin[],
-  vout: IOut[],
+  vinout: IVinOut[],
+  vout: IVinOut[],
 }
 export interface IVin {
   txid: string;
@@ -28,4 +29,8 @@ export interface IOut {
   asset: string;
   n: number;
   value: string;
+}
+export interface IVinOut {
+  address: string;
+  assetJA: string;
 }

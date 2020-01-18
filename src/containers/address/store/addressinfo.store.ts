@@ -1,12 +1,13 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/addressinfo.api';
-import { IAddressInfoStore, IAddrBalance, IAddrTrans, IBanlance, IAddrNep5Tx, INep5OfAddress, ITransOfAddress, IUtxobyAddresslist } from '../interface/addressinfo.interface';
+import { IAddressInfoStore, IAddrBalance, IBanlance, IAddrNep5Tx, INep5OfAddress, IUtxobyAddresslist } from '../interface/addressinfo.interface';
 import { IAddress } from '../interface/address.interface';
 import * as CoinTool from '@/utils/cointool';
+import { ITransaction } from '@/store/interface/common.interface';
 class AddressInfo implements IAddressInfoStore {
     @observable public addrInfo: IAddress;
     @observable public addrBalanceList: IAddrBalance[] = [];
-    @observable public addrTransList: IAddrTrans[];
+    @observable public addrTransList: ITransaction[];
     @observable public addrUtxoList: IUtxobyAddresslist[] = [];
     @observable public addrUtxoListCount: number;
     @observable public bindDomainName: string = '';
@@ -102,19 +103,35 @@ class AddressInfo implements IAddressInfoStore {
         } catch (error) {
             return false;
         }
-        const arr: ITransOfAddress[] = result ? result[ 0 ].list : [];
+        const arr: ITransaction[] = result ? result[ 0 ].list : [];
         // 筛选
         if (arr && arr.length > 0) {
-            this.addrTransList = arr.map((key) => {
-                const newObject = {
-                    type: key.type,
+            // this.addrTransList = arr.map((key) => {
+            //     const newObject = {
+            //         type: key.type,
+            //         txid: key.txid,
+            //         sender: key.addr,
+            //         height: key.blockindex,
+            //         time: (typeof key.blocktime === "object") ? key.blocktime.$date : key.blocktime
+            //     }
+            //     return newObject;
+            // })
+            this.addrTransList = arr.map(key => {
+                return {
                     txid: key.txid,
-                    sender: key.addr,
-                    height: key.blockindex,
-                    time: (typeof key.blocktime === "object") ? key.blocktime.$date : key.blocktime
-                }
-                return newObject;
-            })
+                    type: key.type,
+                    net_fee: key.net_fee,
+                    sys_fee: key.sys_fee,
+                    gas: key.gas,
+                    size: key.size,
+                    blockindex: key.blockindex,
+                    blocktime: key.blocktime,
+                    version: key.version,
+                    sender: key.sender,
+                    vinout: key.vinout,
+                    vout: key.vout,
+                } as ITransaction
+            });
         }
         return true;
     }

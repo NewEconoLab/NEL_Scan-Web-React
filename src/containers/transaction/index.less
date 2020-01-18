@@ -38,12 +38,28 @@
     .tran-title-wrapper {
         margin-bottom: 20px;
         display: inline-block;
-        cursor: pointer;
         position: relative;
         img{
           width: 20px;
           height: 20px;
           margin-right: 10px;
+        }
+        .tran-title-label{
+            color: #9B9B9B;
+            font-size: 20px;
+            height: 20px;
+            display: inline-block;
+            font-weight: 500;
+            font-family: NotoSansHans-Medium;
+            margin-right:30px;
+            user-select:none;
+            padding-bottom: 5px;     
+            // font-weight:500;
+            cursor: pointer;
+            &.active{
+                border-bottom: 4px solid #5F86FB;
+                color: #222222;
+            }  
         }
         h3{
           font-size: 20px;
@@ -102,7 +118,7 @@
                 }
             }
         }
-    }    
+    }
     .loading-wrapper{
         text-align: center;        
     }
@@ -176,6 +192,146 @@
                                 max-width: 30px;
                             }
                         }
+                    }
+                }
+            }
+        }
+        .table-wrap{
+            .table-content{
+                .table-body-new{
+                    background: #f6f6f6;
+                    .table-row{
+                        background: #fff;
+                        margin-bottom: 10px;
+                        .tr-header{
+                            height: 55px;
+                            line-height: 55px;
+                            display: flex;
+                            span{
+                                flex: 1;
+                                text-align: center;
+                                // &:nth-of-type(3){
+                                //     min-width: 260px !important;
+                                // }
+                                // &:nth-of-type(4){
+                                //     max-width: 30px;
+                                // }
+                                &.img-text-bg{
+                                    text-align: left;
+                                    text-indent: .95rem;
+                                    img{
+                                        height: 20px;
+                                        width: 20px;
+                                        vertical-align: middle;
+                                    }
+                                }
+                                a{
+                                    color:@text-link;
+                                    cursor: pointer;
+                                    &:hover{
+                                        text-decoration: underline;
+                                        color:@link-hover;
+                                    }
+                                }
+                            }
+                        }
+                        .tr-data{
+                            display: flex;
+                            border-top: 1px solid #ECECEC;
+                            padding: 20px 0px;
+                            position: relative;
+                            div{
+                                flex: 1;
+                                text-align: center;
+                                &.transfer-icon{
+                                    img{
+                                        height: 50px;
+                                        position: absolute;
+                                        top: 30%;
+                                        left: 50%;
+                                        -webkit-transform: translateX(-50%);
+                                        -moz-transform: translateX(-50%);
+                                        -ms-transform: translateX(-50%); 
+                                        -o-transform: translateX(-50%); 
+                                        transform: translateX(-50%);
+                                    }
+                                    .view-all{
+                                        font-size: 14px;
+                                        color: @text-link;
+                                        height: 14px;
+                                        line-height: 14px;
+                                        text-align: center;
+                                        cursor: pointer;
+                                        position: absolute;
+                                        left: 50%;
+                                        bottom: 20px;
+                                        -webkit-transform: translateX(-50%);
+                                        -moz-transform: translateX(-50%);
+                                        -ms-transform: translateX(-50%); 
+                                        -o-transform: translateX(-50%); 
+                                        transform: translateX(-50%);
+                                    }
+
+                                }
+                                &.amount-data{
+                                    .amount-title{
+                                        font-size: 16px;
+                                        color: #333333;
+                                        text-align: center;
+                                        // font-weight:600;
+                                    }
+                                    span{
+                                        display: block;
+                                        height: 14px;
+                                        font-size: 14px;
+                                        line-height: 14px;
+                                        color: #333333;
+                                        text-align: center;
+                                        margin-top: 10px;
+                                        &.ellipsis{
+                                            color: #B2B2B2;
+                                        }
+                                    }
+                                    a{
+                                        color:@text-link;
+                                        cursor: pointer;
+                                        &:hover{
+                                            text-decoration: underline;
+                                            color:@link-hover;
+                                        }
+                                    }
+                                    a{
+                                        display: block;
+                                        height: 14px;
+                                        font-size: 14px;
+                                        line-height: 14px;
+                                        text-align: center;
+                                        margin-top: 15px;
+                                    }
+                                }
+                            }
+                        }
+                        .tr-foot{
+                            border-top: 1px solid #ECECEC;
+                            font-family: NotoSansHans-Regular;
+                            font-size: 12px;
+                            color: #333333;
+                            text-align: center;
+                            line-height: 42px;
+                            height: 42px;
+                            span{
+                                margin: auto 15.25px;
+                            }
+                        }
+                    }
+                    .table-row:nth-of-type(2n){
+                        border-left: solid 3px #5F86FB;
+                    }
+                    .table-row:nth-of-type(2n-1){
+                        border-left: solid 3px #FB985F;
+                    }
+                    .table-row:last-child{
+                        margin-bottom: auto;
                     }
                 }
             }
