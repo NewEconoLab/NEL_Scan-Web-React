@@ -196,7 +196,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
               }
               {/* 有数据时 */}
               {
-                this.props.transaction.transList.length !== 0 && (
+                process.env.REACT_APP_SERVER_ENV !== "NEO3" && this.props.transaction.transList.length !== 0 && (
                   <div className="table-body-new">
                     {
                       this.props.transaction.transList.map((item: ITransaction, index: number) => {
@@ -265,32 +265,27 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                         )
                       })
                     }
-                    {/* <ul>
-                      {
-                        this.props.transaction.transList.map((item: ITransaction, index: number) => {
-                          return (
-                            <li key={index}>
-                              {
-                                process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
-                                <span className="img-text-bg">
-                                  <img src={this.imgs[ item.type.replace('Transaction', '').toLowerCase() ]} alt="" />
-                                  {item.type.replace('Transaction', '')}
-                                </span>
-                              }
-                              <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
-                              {
-                                process.env.REACT_APP_SERVER_ENV === "NEO3" &&
-                                <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, item.sender)}>{item.sender.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
-                              }
-                              <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, item.blockindex)}>{toThousands(item.blockindex.toString())}</a></span>
-                              <span>{item.size}</span>
-                            </li>
-                          )
-                        })
-                      }
-                    </ul> */}
                   </div>
                 )
+              }
+              {
+                process.env.REACT_APP_SERVER_ENV === "NEO3" &&
+                <div className="table-body">
+                  <ul>
+                    {
+                      this.props.transaction.transList.map((item: ITransaction, index: number) => {
+                        return (
+                          <li key={index}>
+                            <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                            <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, item.sender)}>{item.sender.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                            <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, item.blockindex)}>{toThousands(item.blockindex.toString())}</a></span>
+                            <span>{item.size}</span>
+                          </li>
+                        )
+                      })
+                    }
+                  </ul>
+                </div>
               }
             </div>
             {/* 移动端表格 */}
