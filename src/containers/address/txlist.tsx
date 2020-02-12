@@ -295,7 +295,7 @@ class AddrTxs extends React.Component<any, {}>
             <div className="mobile-table-content">
               {/* 没有数据时 */}
               {
-                this.props.addressinfo.addrTransList.length === 0 && (
+                this.props.addressinfo.addrTransList&&this.props.addressinfo.addrTransList.length === 0 && (
                   <div className="table-body">
                     <ul>
                       <li>
