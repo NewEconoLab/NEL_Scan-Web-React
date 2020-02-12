@@ -318,7 +318,7 @@ class AddrTxs extends React.Component<any, {}>
               }
               {/* 有数据时 */}
               {
-                this.props.addressinfo.addrTransList.length !== 0 && (
+                this.props.addressinfo.addrTransList && this.props.addressinfo.addrTransList.length !== 0 && (
                   <div className="table-body-new">
                     {
                       this.props.addressinfo.addrTransList.map((item: ITransaction, index: number) => {
