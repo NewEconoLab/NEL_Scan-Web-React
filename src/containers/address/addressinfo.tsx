@@ -12,7 +12,7 @@ import { toThousands } from '@/utils/numberTool';
 import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
 import AddrNep5Tx from './nep5tx';
-import { ITransaction, IVinOut } from '@/store/interface/common.interface';
+import AddrTxs from './txlist'
 @inject('addressinfo')
 @observer
 class AddressInfo extends React.Component<IAddressInfoProps, {}> {
@@ -211,14 +211,6 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
   public goBlockInfo = (index: string) => {
     this.props.history.push('/block/' + index)
   }
-  // trans翻页功能
-  public onTransPage = (index: number) => {
-    this.setState({
-      transPage: index
-    }, () => {
-      this.props.addressinfo.getAddressTrans(this.state.address, this.state.transSize, this.state.transPage);
-    })
-  }
   // utxo翻页功能
   public onUtxoPage = (index: number) => {
     this.setState({
@@ -318,124 +310,16 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
             </div>
           </div>
           {
-            this.state.showTable === 0 && (
-              <div className="address-trans-table">
-                {/* <Table
-                  tableTh={this.transTableTh}
-                  tableData={this.props.addressinfo.addrTransList}
-                  render={this.renderTran}
-                /> */}
-                <div className="table-wrap">
-                  <div className="table-content">
-                    <div className="table-th">
-                      <ul>
-                        {/* {
-                    process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
-                    <li>
-                      <div className="choose-type-trans">
-                        <Select options={this.options} text={this.intrl.tableTh.type} onCallback={this.onCallback} />
-                      </div>
-                    </li>
-                  } */}
-                        {
-                          this.transTableTh.map((item, index) => {
-                            return <li key={index}>{item.name}</li>
-                          })
-                        }
-                      </ul>
-                    </div>
-                    {/* 没有数据时 */}
-                    {
-                      !this.props.addressinfo.addrTransList || this.props.addressinfo.addrTransList.length === 0 && (
-                        <div className="no-data-content">{this.props.intl.messages.tableTh.nodata}</div>
-                      )
-                    }
-                    {
-                      this.props.addressinfo.addrTransList && this.props.addressinfo.addrTransList.length !== 0 &&
-                      <div className="table-body-new">
-                        {
-                          this.props.addressinfo.addrTransList.map((item: ITransaction, index: number) => {
-                            return (
-                              <div className="table-row" key={index}>
-                                <div className="tr-header">
-                                  {
-                                    process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
-                                    <span className="img-text-bg">
-                                      <img src={this.imgs[ item.type.replace('Transaction', '').toLowerCase() ]} alt="" />
-                                      {item.type.replace('Transaction', '')}
-                                    </span>
-                                  }
-                                  <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
-                                  {
-                                    process.env.REACT_APP_SERVER_ENV === "NEO3" &&
-                                    <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, item.sender)}>
-                                      {item.sender.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}
-                                    </a></span>
-                                  }
-                                  <span><a href="javascript:;">{item.blockindex}</a></span>
-                                  <span>
-                                    {formatTime.format('yyyy/MM/dd | hh:mm:ss', item.blocktime.toString(), this.props.intl.locale)}
-                                  </span>
-                                </div>
-                                {(item.vinout.length > 0 || item.vout.length > 0) &&
-                                  <div className="tr-data">
-                                    <div className="amount-data">
-                                      <div className="amount-title">Input</div>
-                                      {
-                                        item.vinout.map((vin: IVinOut, vinIndex: number) => {
-                                          return (
-                                            vinIndex < 3 ?
-                                              <div className="amount-info" key={vinIndex}>
-                                                <a href="javascript:;" onClick={this.goAddrInfo.bind(this, vin.address)}>{vin.address}</a>
-                                                <span className="asset">{vin.assetJA}</span>
-                                              </div> : false
-                                          )
-                                        })
-                                      }
-                                      {item.vinout.length > 3 && <span className="ellipsis">...</span>}
-                                    </div>
-                                    <div className="transfer-icon">
-                                      <img src={this.imgs.transfer} alt="" />
-                                      {item.vinout.length > 3 || item.vout.length > 3 &&
-                                        <div className="view-all" onClick={this.goTransInfo.bind(this, item.txid)}>{this.props.intl.messages.btn.viewAll}</div>
-                                      }
-                                    </div>
-                                    <div className="amount-data">
-                                      <div className="amount-title">Output</div>
-                                      {item.vout.map((vout: IVinOut, outIndex: number) => {
-                                        return (
-                                          outIndex < 3 ?
-                                            <div className="amount-info" key={outIndex}>
-                                              <a href="javascript:;" onClick={this.goAddrInfo.bind(this, vout.address)}>{vout.address}</a>
-                                              <span className="asset">{vout.assetJA}</span>
-                                            </div> : false
-                                        )
-                                      })}
-                                      {item.vout.length > 3 && <span className="ellipsis">...</span>}
-                                    </div>
-                                  </div>
-                                }
-                                <div className="tr-foot">
-                                  <span>Network Fee: {item.net_fee}</span>
-                                  <span>System Fee: {item.sys_fee}</span>
-                                  <span>Size: {item.size} Bytes</span>
-                                </div>
-                              </div>
-                            )
-                          })
-                        }
-                      </div>
-                    }
-                    <Page
-                      totalCount={this.props.addressinfo.addrInfo && this.props.addressinfo.addrInfo.txcount}
-                      pageSize={this.state.transSize}
-                      currentPage={this.state.transPage}
-                      onChange={this.onTransPage}
-                    />
-                  </div>
-                </div>
-              </div>
-            )
+            this.state.showTable === 0 && <AddrTxs {...this.props} refresh={this.refreshAddress} />
+              // <div className="address-trans-table">
+              //   {/* <Table
+              //     tableTh={this.transTableTh}
+              //     tableData={this.props.addressinfo.addrTransList}
+              //     render={this.renderTran}
+              //   /> */}
+              //   <div className="table-wrap"></div>
+              // </div>
+            
           }
           {
             this.state.showTable === 1 && <AddrNep5Tx {...this.props} refresh={this.refreshAddress} />

@@ -32,5 +32,5 @@ export interface IOut {
 }
 export interface IVinOut {
   address: string;
-  assetJA: string;
+  assetJA: string[];
 }

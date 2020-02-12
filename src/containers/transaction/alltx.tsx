@@ -82,10 +82,10 @@ class Transactions extends React.Component<ITransactionsProps, {}>
       }
     ]
     : [
-      // {
-      //   name: this.intrl.tableTh.type,
-      //   key: 'type',
-      // },
+      {
+        name: this.intrl.tableTh.type,
+        key: 'type',
+      },
       {
         name: this.intrl.tableTh.txid,
         key: 'txid'
@@ -94,7 +94,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
         key: 'blockindex'
       }, {
         name: this.intrl.tableTh.size,
-        key: 'size'
+        key: 'blocktime'
       }
     ]
   public imgs = {
@@ -206,7 +206,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                               {
                                 process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
                                 <span className="img-text-bg">
-                                  <img src={this.imgs[ item.type.replace('Transaction', '').toLowerCase() ]} alt="" />
+                                  <img src={this.imgs[item.type.replace('Transaction', '').toLowerCase()]} alt="" />
                                   {item.type.replace('Transaction', '')}
                                 </span>
                               }
@@ -257,9 +257,9 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                               </div>
                             }
                             <div className="tr-foot">
-                              <span>Network Fee: {item.net_fee}</span>
-                              <span>System Fee: {item.sys_fee}</span>
-                              <span>Size: {item.size} Bytes</span>
+                              <span>{this.intrl.transaction.netFee}: {item.net_fee}</span>
+                              <span>{this.intrl.transaction.sysFee}: {item.sys_fee}</span>
+                              <span>{this.intrl.transaction.size}: {item.size} Bytes</span>
                             </div>
                           </div>
                         )
@@ -315,48 +315,142 @@ class Transactions extends React.Component<ITransactionsProps, {}>
                 )
               }
               {/* 有数据时 */}
-              {
-                this.props.transaction.transList.length !== 0 && (
-                  <div className="table-body">
-                    <ul>
-                      {
-                        this.props.transaction.transList.map((item: ITransaction, index: number) => {
-                          return (
-                            <li key={index}>
-                              {
-                                process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
-                                <div className="table-line">
-                                  <span className="line-title">{this.intrl.tableTh.type}</span>
-                                  <span className="line-content">
-                                    <span className="img-text-bg"><img src={this.imgs[ item.type.replace('Transaction', '').toLowerCase() ]} alt="" />{item.type.replace('Transaction', '')}</span>
-                                  </span>
-                                </div>
-                              }
-                              <div className="table-line">
-                                <span className="line-title">{this.intrl.tableTh.txid}</span>
-                                <span className="line-content">
-                                  <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
-                                </span>
-                              </div>
-                              <div className="table-line">
-                                <span className="line-title">{this.intrl.tableTh.height}</span>
-                                <span className="line-content">
-                                  <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, item.blockindex)}>{toThousands(item.blockindex.toString())}</a></span>
-                                </span>
-                              </div>
-                              <div className="table-line">
+              {                 
+                process.env.REACT_APP_SERVER_ENV !== "NEO3" &&this.props.transaction.transList.length !== 0 && (
+                  <div className="table-body-new">
+                    {
+                      this.props.transaction.transList.map((item: ITransaction, index: number) => {
+                        return (
+                          <div className="table-row" key={index}>
+                            <div className="tr-header">
+                              <ul>
+                                <li>
+                                  {
+                                    process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
+                                    <div className="table-line">
+                                      <span className="line-title">{this.intrl.tableTh.type}</span>
+                                      <span className="line-content">
+                                        <span className="img-text-bg"><img src={this.imgs[item.type.replace('Transaction', '').toLowerCase()]} alt="" />{item.type.replace('Transaction', '')}</span>
+                                      </span>
+                                    </div>
+                                  }
+                                  <div className="table-line">
+                                    <span className="line-title">{this.intrl.tableTh.txid}</span>
+                                    <span className="line-content">
+                                      <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                                    </span>
+                                  </div>
+                                  <div className="table-line">
+                                    <span className="line-title">{this.intrl.tableTh.height}</span>
+                                    <span className="line-content">
+                                      <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, item.blockindex)}>{toThousands(item.blockindex.toString())}</a></span>
+                                    </span>
+                                  </div>
+                                  <div className="table-line">
+                                    <span className="line-title">{this.intrl.tableTh.time}</span>
+                                    <span className="line-content">
+                                      <span>
+                                        {formatTime.format('yyyy/MM/dd | hh:mm:ss', item.blocktime.toString(), this.props.intl.locale)}
+                                      </span>
+                                    </span>
+                                  </div>
+                                  {/* <div className="table-line">
                                 <span className="line-title">{this.intrl.tableTh.size}</span>
                                 <span className="line-content">
                                   <span>{item.size}</span>
                                 </span>
+                              </div> */}
+                                </li>
+                              </ul>
+                            </div>
+                            {(item.vinout.length > 0 || item.vout.length > 0) &&
+                              <div className="tr-data">
+                                <div className="amount-data">
+                                  <div className="amount-title">Input</div>
+                                  {item.vinout.map((vin: IVinOut, vinIndex: number) => {
+                                    return (
+                                      vinIndex < 3 ?
+                                        <div className="amount-info" key={vinIndex}>
+                                          <a href="javascript:;" onClick={this.goAddrInfo.bind(this, vin.address)}>{vin.address}</a>
+                                          {vin.assetJA.map(str=>(<span className="asset">{str}</span>))}
+                                        </div> : false)
+                                  })}
+                                  {item.vinout.length > 3 && <span className="ellipsis">...</span>}
+                                </div>
+                                <div className="transfer-icon">
+                                  <img src={this.imgs.transfer} alt="" />
+                                  {item.vinout.length > 3 || item.vout.length > 3 &&
+                                    <div className="view-all" onClick={this.goTransInfo.bind(this, item.txid)}>{this.props.intl.messages.btn.viewAll}</div>
+                                  }
+                                </div>
+                                <div className="amount-data">
+                                  <div className="amount-title">Output</div>
+                                  {item.vout.map((vout: IVinOut, outIndex: number) => {
+                                    return (
+                                      outIndex < 3 ?
+                                        <div className="amount-info" key={outIndex}>
+                                          <a href="javascript:;" onClick={this.goAddrInfo.bind(this, vout.address)}>{vout.address}</a>
+                                          {/* <span className="asset">{vout.assetJA}</span> */}
+                                          {vout.assetJA.map(str=>(<span className="asset">{str}</span>))}
+                                        </div> : false)
+                                  })}
+                                  {item.vout.length > 3 && <span className="ellipsis">...</span>}
+                                </div>
                               </div>
-                            </li>
-                          )
-                        })
-                      }
-                    </ul>
+                            }
+                            <div className="tr-foot">
+                              <span>{this.intrl.transaction.netFee}: {item.net_fee}</span>
+                              <span>{this.intrl.transaction.sysFee}: {item.sys_fee}</span>
+                              <span>{this.intrl.transaction.size}: {item.size} Bytes</span>
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
                   </div>
                 )
+              }
+              {
+                process.env.REACT_APP_SERVER_ENV ==="NEO3" &&this.props.transaction.transList.length !== 0 &&
+                <div className="table-body">
+                  <ul>
+                    {
+                      this.props.transaction.transList.map((item: ITransaction, index: number) => {
+                        return (
+                          <li key={index}>
+                            {
+                              process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
+                              <div className="table-line">
+                                <span className="line-title">{this.intrl.tableTh.type}</span>
+                                <span className="line-content">
+                                  <span className="img-text-bg"><img src={this.imgs[ item.type.replace('Transaction', '').toLowerCase() ]} alt="" />{item.type.replace('Transaction', '')}</span>
+                                </span>
+                              </div>
+                            }
+                            <div className="table-line">
+                              <span className="line-title">{this.intrl.tableTh.txid}</span>
+                              <span className="line-content">
+                                <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
+                              </span>
+                            </div>
+                            <div className="table-line">
+                              <span className="line-title">{this.intrl.tableTh.height}</span>
+                              <span className="line-content">
+                                <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, item.blockindex)}>{toThousands(item.blockindex.toString())}</a></span>
+                              </span>
+                            </div>
+                            <div className="table-line">
+                              <span className="line-title">{this.intrl.tableTh.size}</span>
+                              <span className="line-content">
+                                <span>{item.size}</span>
+                              </span>
+                            </div>
+                          </li>
+                        )
+                      })
+                    }
+                  </ul>
+                </div>
               }
             </div>
           </div>

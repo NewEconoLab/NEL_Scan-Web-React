@@ -25,7 +25,7 @@ class AddressInfo implements IAddressInfoStore {
         } catch (error) {
             return false;
         }
-        this.addrInfo = result ? result[ 0 ] : [];
+        this.addrInfo = result ? result[ 0 ] : {};
         return true;
     }
     @action public async getBindDomain(address: string) {
@@ -116,22 +116,23 @@ class AddressInfo implements IAddressInfoStore {
             //     }
             //     return newObject;
             // })
-            this.addrTransList = arr.map(key => {
-                return {
-                    txid: key.txid,
-                    type: key.type,
-                    net_fee: key.net_fee,
-                    sys_fee: key.sys_fee,
-                    gas: key.gas,
-                    size: key.size,
-                    blockindex: key.blockindex,
-                    blocktime: key.blocktime,
-                    version: key.version,
-                    sender: key.sender,
-                    vinout: key.vinout,
-                    vout: key.vout,
-                } as ITransaction
-            });
+            // this.addrTransList = arr.map(key => {
+            //     return {
+            //         txid: key.txid,
+            //         type: key.type,
+            //         net_fee: key.net_fee,
+            //         sys_fee: key.sys_fee,
+            //         gas: key.gas,
+            //         size: key.size,
+            //         blockindex: key.blockindex,
+            //         blocktime: key.blocktime,
+            //         version: key.version,
+            //         sender: key.sender,
+            //         vinout: key.vinout,
+            //         vout: key.vout,
+            //     } as ITransaction
+            // });
+            this.addrTransList=arr;
         }
         return true;
     }

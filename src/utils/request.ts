@@ -10,8 +10,9 @@ interface IOpts {
 
 const network: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? 'testnet' : (process.env.REACT_APP_SERVER_ENV === 'NEO3' ? 'neo3' : 'mainnet');
 const baseCommonUrl: string = network === 'neo3' ? "https://apiblockneo3.nel.group/api/testnet" : ("https://api.nel.group/api/" + network);
-// const baseUrl: string = network === 'neo3' ? "https://apiscanneo3.nel.group/api/testnet" : ("https://apiscan.nel.group/api/" + network);
-const baseUrl: string = "http://local.scan.group:86/api/mainnet"
+const baseUrl: string = network === 'neo3' ? "https://apiscanneo3.nel.group/api/testnet" : ("https://apiscan.nel.group/api/" + network);
+// const baseUrl: string = "http://local.scan.group:86/api/mainnet"
+// const baseUrl:string = "https://apiscantest.nel.group/api/testnet"
 
 // const baseCommonUrl: string = "http://47.99.124.218:82/api/" + network;
 // const baseUrl: string = "http://47.99.124.218:86/api/" + network;
