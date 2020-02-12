@@ -119,6 +119,10 @@ class Transactions extends React.Component<ITransactionsProps, {}>
     this.props.transaction.transList = [];
   }
 
+  public componentDidMount(){
+    this.getTransactionList();
+  }
+
   // 区块详情链接
   public goBlockInfo = (index: string) => {
     this.props.history.push('/block/' + index)
@@ -289,8 +293,11 @@ class Transactions extends React.Component<ITransactionsProps, {}>
               }
             </div>
             {/* 移动端表格 */}
-            <div className="mobile-table-content">
+            <div className={`mobile-table-content ${process.env.REACT_APP_SERVER_ENV !== "NEO3"?'select':''}`}>
+              {
+                process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
               <Select options={this.options} text={this.intrl.tableTh.type} onCallback={this.onCallback} />
+              }
               {/* 没有数据时 */}
               {
                 this.props.transaction.transList.length === 0 && (
