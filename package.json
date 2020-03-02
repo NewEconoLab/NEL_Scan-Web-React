@@ -7,6 +7,7 @@
     "@types/react-router": "^4.0.31",
     "@types/react-router-config": "^1.0.9",
     "@types/react-router-dom": "^4.3.1",
+    "antd": "3.19.3",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",
     "babel-jest": "^22.1.0",

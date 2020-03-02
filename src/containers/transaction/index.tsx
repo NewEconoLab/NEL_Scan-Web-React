@@ -8,6 +8,7 @@ import { observer, inject } from 'mobx-react';
 import { injectIntl } from 'react-intl';
 import Alltx from './alltx';
 import Nep5tx from './nep5tx';
+import Intertx from './intertx';
 
 @inject('transaction')
 @observer
@@ -26,16 +27,9 @@ class Transactions extends React.Component<ITransactionsProps, {}>
   }
   // 点击选择标题
   public onClickType = (type: number) => {
-    if (type === 0) {
-      this.setState({
-        showTable: 0
-      })
-    }
-    else if (type === 1) {
-      this.setState({
-        showTable: 1
-      })
-    }
+    this.setState({
+      showTable: type
+    })
   }
   public render() {
 
@@ -80,6 +74,12 @@ class Transactions extends React.Component<ITransactionsProps, {}>
           >
             {process.env.REACT_APP_SERVER_ENV === "NEO3" ? this.intrl.transaction.transfer : this.intrl.transaction.nep5tx}
           </div>
+          <div
+            className={`tran-title-label ${this.state.showTable === 2 ? 'active' : ''}`}
+            onClick={this.onClickType.bind(this, 2)}
+          >
+            {this.intrl.transaction.intx}
+          </div>
         </div>
         {/* <div className="tran-title-label">{this.intrl.transaction.nep5tx}</div> */}
         {
@@ -88,7 +88,9 @@ class Transactions extends React.Component<ITransactionsProps, {}>
         {
           this.state.showTable === 1 && (<Nep5tx {...this.props} />)
         }
-
+  {
+          this.state.showTable === 2 && (<Intertx {...this.props} />)
+        }
       </div>
     );
   }

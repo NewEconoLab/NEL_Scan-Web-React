@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/transcation.api'
-import { ITransactionsStore, INep5List, ITransInfo, ITransaction, INep5Trans, IPoolCheck } from '../interface/transaction.interface';
+import { ITransactionsStore, INep5List, ITransInfo, ITransaction, INep5Trans, IPoolCheck, IInterTx, IInfoInterTX } from '../interface/transaction.interface';
 import { INep5Asset } from '@/containers/asset/interface/asset.interface';
 
 class Transaction implements ITransactionsStore {
@@ -12,6 +12,10 @@ class Transaction implements ITransactionsStore {
     @observable public nep5TxList: INep5List[] = [];  // nep5的交易列表
     @observable public nep5TxListCount: number = 0;
     @observable public poolCheck: IPoolCheck | null = null;
+    @observable public interList:IInterTx[] = [];// 内部交易列表
+    @observable public interListCount:number =0; // 内部交易统计
+    @observable public infoInterList:IInfoInterTX[]=[];
+    @observable public infoInterListCount:number=0;
 
     /**
      * 根据交易类型获取交易列表（默认获取所有交易）
@@ -116,6 +120,40 @@ class Transaction implements ITransactionsStore {
         }
         this.poolCheck = result[ 0 ];
         return true
+    }
+    /**
+     * 获取列表页的内部交易
+     * @param page 分页索引
+     * @param size 分页大小
+     */
+    @action public async getInterList(page: number, size: number) {
+        let result: any = null;
+        try {
+            result = await Api.getInnerList(page, size);
+        } catch (error) {
+            this.interListCount = 0;
+            this.interList = [];
+            return false;
+        }
+        this.interListCount = result[ 0 ].count || 0;
+        this.interList = result ? result[ 0 ].list : [];
+        return true;
+    }
+    /**
+     * 获取详情页的内部交易
+     */
+    @action public async getInfoInterList(txid: string) {
+        let result: any = null;
+        try {
+            result = await Api.getInfoInnerList(txid);
+        } catch (error) {
+            this.infoInterListCount = 0;
+            this.infoInterList = [];
+            return false;
+        }
+        this.infoInterListCount = result[ 0 ].count || 0;
+        this.infoInterList = result ? result[ 0 ].list : [];
+        return true;
     }
 }
 export default new Transaction();

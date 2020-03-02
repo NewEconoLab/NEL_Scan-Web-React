@@ -35,90 +35,7 @@
 }
    
 .transaction-page{
-    .tran-title-wrapper {
-        margin-bottom: 20px;
-        display: inline-block;
-        position: relative;
-        img{
-          width: 20px;
-          height: 20px;
-          margin-right: 10px;
-        }
-        .tran-title-label{
-            color: #9B9B9B;
-            font-size: 20px;
-            height: 20px;
-            display: inline-block;
-            font-weight: 500;
-            font-family: NotoSansHans-Medium;
-            margin-right:30px;
-            user-select:none;
-            padding-bottom: 5px;     
-            // font-weight:500;
-            cursor: pointer;
-            &.active{
-                border-bottom: 4px solid #5F86FB;
-                color: #222222;
-            }  
-        }
-        h3{
-          font-size: 20px;
-          display: inline-block;
-          font-weight: 500;
-          font-family: NotoSansHans-Medium;
-          margin-right:30px;
-          user-select:none;
-        }    
-        .select-trantype{
-            .triangle{
-                width: 0;
-                height: 0;
-                border: 6px solid transparent;
-                border-top: 8px solid @text-color;
-                border-radius: 2px;position: absolute;
-                right: 5px;
-                top: 7px;
-            }
-            .trantype-list{
-                position: absolute;
-                top: 30px;
-                right: -49px;
-                z-index: 2;
-                background: #FFFFFF;
-                box-shadow: 0 2px 4px 0 rgba(192,192,192,0.50);
-                border-radius: 3px;
-                width: 120px;
-                line-height: 30px;
-                text-align: center;
-                .qipao-wrapper {
-                    width: 20px;
-                    height: 20px;
-                    position: absolute;
-                    top: -10px;
-                    left: 50%;
-                    margin-left: -10px;
-                    clip: rect(0,20px,10px,0);
-                    .arrow {
-                        width:10px;
-                        height:10px;
-                        transform: rotate(-45deg);
-                        background: #fff;
-                        box-shadow: -2px 0 10px 0 rgba(185, 185, 185, 0.5);
-                        margin-left:5px;
-                        margin-top:5px;
-                    }
-                }
-                .type-list{
-                    li{
-                        border-bottom: 1px solid #E5E5E5;
-                        &:last-child{
-                            border-bottom: none;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    
     .loading-wrapper{
         text-align: center;        
     }
@@ -524,7 +441,90 @@
         }
     }
 }
-
+.tran-title-wrapper {
+    margin-bottom: 20px;
+    display: inline-block;
+    position: relative;
+    img{
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    .tran-title-label{
+        color: #9B9B9B;
+        font-size: 20px;
+        height: 20px;
+        display: inline-block;
+        font-weight: 500;
+        font-family: NotoSansHans-Medium;
+        margin-right:30px;
+        user-select:none;
+        padding-bottom: 5px;     
+        // font-weight:500;
+        cursor: pointer;
+        &.active{
+            border-bottom: 4px solid #5F86FB;
+            color: #222222;
+        }  
+    }
+    h3{
+      font-size: 20px;
+      display: inline-block;
+      font-weight: 500;
+      font-family: NotoSansHans-Medium;
+      margin-right:30px;
+      user-select:none;
+    }    
+    .select-trantype{
+        .triangle{
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-top: 8px solid @text-color;
+            border-radius: 2px;position: absolute;
+            right: 5px;
+            top: 7px;
+        }
+        .trantype-list{
+            position: absolute;
+            top: 30px;
+            right: -49px;
+            z-index: 2;
+            background: #FFFFFF;
+            box-shadow: 0 2px 4px 0 rgba(192,192,192,0.50);
+            border-radius: 3px;
+            width: 120px;
+            line-height: 30px;
+            text-align: center;
+            .qipao-wrapper {
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                margin-left: -10px;
+                clip: rect(0,20px,10px,0);
+                .arrow {
+                    width:10px;
+                    height:10px;
+                    transform: rotate(-45deg);
+                    background: #fff;
+                    box-shadow: -2px 0 10px 0 rgba(185, 185, 185, 0.5);
+                    margin-left:5px;
+                    margin-top:5px;
+                }
+            }
+            .type-list{
+                li{
+                    border-bottom: 1px solid #E5E5E5;
+                    &:last-child{
+                        border-bottom: none;
+                    }
+                }
+            }
+        }
+    }
+}
 
 @media screen and (max-width:768px) {
     .transaction-page,.transactioninfo-page{
@@ -535,11 +535,13 @@
         margin-top: .5rem;
         margin-bottom: 1rem;
         box-sizing: border-box;
+        
+        
         .inline-select{
             margin-top: 15px !important;
         }
         .info-content {
-            .info-list {
+            .info-list {rgb(187, 195, 216)
                 ul {
                     li {
                         min-height:.54rem;
@@ -562,7 +564,12 @@
                 }
             }
         }
-    }    
+    }  
+    .tran-title-wrapper{
+        .tran-title-label{
+            margin-right:15px;
+        }
+    }  
     .transactioninfo-page{
         .transactioninfo-input-output{
             display: block;

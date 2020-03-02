@@ -108,3 +108,30 @@ export const getrawtransaction = (txid: string) => {
     baseUrl: 'common'
   })
 }
+/**
+ * 获取交易列表的内部交易列表
+ * @param page 分页索引
+ * @param size 分页大小
+ */
+export const getInnerList = (page:number,size:number) => {
+  const opts = {
+    method: 'getInnerTxAtTxList',
+    params: [
+      page,size
+    ]
+  }
+  return request(opts);
+}
+/**
+ * 获取交易详情处查询内部交易
+ * @param txid 交易id
+ */
+export const getInfoInnerList = (txid:string) => {
+  const opts = {
+    method: 'getInnerTxAtTxList',
+    params: [
+      txid
+    ]
+  }
+  return request(opts);
+}

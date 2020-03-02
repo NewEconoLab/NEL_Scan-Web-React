@@ -120,11 +120,11 @@ class Assets extends React.Component<IAssetProps, {}>
         }
         return null;
     }
-    // 跳转到详情页
+    // 跳转到资产详情页
     public toAssetInfo = (assetid: string) => {
         this.props.history.push('/asset/' + assetid)
     }
-    // 跳转到详情页
+    // 跳转到合约详情页
     public toNep5Info = (assetid: string) => {
         this.props.history.push('/nep5/' + assetid)
     }

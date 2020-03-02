@@ -116,6 +116,7 @@ export default {
     alltx: 'All TX',
     nep5tx: 'Nep5 TX',
     transfer: 'Token Transfer',
+    intx:"内部交易"
   },
   address: {
     title1: "Addresses",

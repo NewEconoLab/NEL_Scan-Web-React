@@ -116,6 +116,7 @@ export default {
     alltx: '所有交易',
     nep5tx: 'Nep5交易',
     transfer: '转账交易',
+    intx:"内部交易"
   },
   address: {
     title1: "地址列表",

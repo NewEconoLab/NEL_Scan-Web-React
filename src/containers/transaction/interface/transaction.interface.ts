@@ -9,12 +9,18 @@ export interface ITransactionsStore {
     nep5TxList: INep5List[],
     nep5TxListCount: number,
     poolCheck: IPoolCheck | null,
+    interList:IInterTx[],
+    interListCount:number,
+    infoInterList:IInfoInterTX[],
+    infoInterListCount:number,
     getTransList: (page: number, size: number, type: string) => Promise<boolean>,
     getTransInfo: (txid: string) => Promise<boolean>,
     getNep5Transbytxid: (txid: string) => Promise<boolean>,
     getNep5Info: (nep5: string) => Promise<boolean>,
     getNep5List: (page: number, size: number) => Promise<boolean>,
-    getPoolTypeAndCount: (txid: string) => Promise<boolean>
+    getPoolTypeAndCount: (txid: string) => Promise<boolean>,
+    getInterList:(page: number, size: number)=>Promise<boolean>,
+    getInfoInterList:(txid:string)=>Promise<boolean>
 }
 export interface ITransactionsProps extends RouteComponentProps {
     intl: any,
@@ -47,7 +53,8 @@ export interface ITransaction {
 }
 export interface ITransInfoState {
     vinList: ITransInputOutput[],
-    outList: ITransInputOutput[]
+    outList: ITransInputOutput[],
+    infoShowTable:number
 }
 export interface ITransInputOutput {
     address: string,
@@ -75,4 +82,29 @@ export interface INep5Trans {
     from: string,
     to: string,
     value: string
+}
+export interface IInterTx {
+    txid:string,
+    time:number,
+    type:number,
+    from:string,
+    to:string
+}
+export interface IInfoInterTX{
+    caller:string,// 发送方
+    callee:string, // 接收方
+    txCount:number, 
+    txList:IInterInfoList[]
+}
+export interface IInterInfoList {
+    orderId:string,
+    type:number,
+    from:string,
+    to:string
+}
+export enum InvokeType{
+    Call=1, // 调用合约
+    Create = 2,  // 创建合约
+    Update = 3, // 升级合约
+    Destory=4 // 销毁合约
 }
