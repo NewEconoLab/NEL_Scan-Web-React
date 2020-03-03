@@ -4,6 +4,7 @@ import { IAddressInfoStore, IAddrBalance, IBanlance, IAddrNep5Tx, INep5OfAddress
 import { IAddress } from '../interface/address.interface';
 import * as CoinTool from '@/utils/cointool';
 import { ITransaction } from '@/store/interface/common.interface';
+import { IInterTx } from '@/containers/transaction/interface/transaction.interface';
 class AddressInfo implements IAddressInfoStore {
     @observable public addrInfo: IAddress;
     @observable public addrBalanceList: IAddrBalance[] = [];
@@ -13,6 +14,8 @@ class AddressInfo implements IAddressInfoStore {
     @observable public bindDomainName: string = '';
     @observable public addrNep5List: IAddrNep5Tx[] = [];
     @observable public addrNep5Count: number = 0;
+    @observable public addrInterList:IInterTx[] = [];
+    @observable public addrInterListCount:number = 0;
 
     /**
      * 获取该地址详情
@@ -171,6 +174,23 @@ class AddressInfo implements IAddressInfoStore {
         }
         this.addrNep5Count = result ? result[ 0 ].count : 0;
         this.addrNep5List = result ? result[ 0 ].list : [];
+        return true;
+    }
+    /**
+     * 地址详情处查询内部交易
+     * @param addr 地址
+     * @param size 分页大小
+     * @param page 页码
+     */
+    @action public async getAddressInterList(address: string, page: number, size: number) {
+        let result: any = null;
+        try {
+            result = await Api.getInnerByAddr(address, page, size);
+        } catch (error) {
+            return false;
+        }
+        this.addrInterListCount = result ? result[ 0 ].count : 0;
+        this.addrInterList = result ? result[ 0 ].list : [];
         return true;
     }
 }

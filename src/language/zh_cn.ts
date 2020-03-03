@@ -76,7 +76,8 @@ export default {
     fee: "交易费",
     number: "数量",
     sender: "发送方",
-    index:"序号"
+    index:"序号",
+    transid:"父交易ID"
   },
   page: {
     page: "第",
@@ -132,6 +133,7 @@ export default {
     alltx: '所有交易',
     nep5tx: 'Nep5交易',
     transfer: '转账交易',
+    intx:"内部交易"
   },
   asset: {
     title1: "资产",

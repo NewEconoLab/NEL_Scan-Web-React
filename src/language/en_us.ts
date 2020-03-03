@@ -76,7 +76,8 @@ export default {
     fee: "Fee",
     number: "Value",
     sender: "Sender",
-    index:"序号"
+    index:"序号",
+    transid:"父交易ID"
   },
   page: {
     page: "Page",
@@ -132,6 +133,7 @@ export default {
     alltx: 'All TX',
     nep5tx: 'Nep5 TX',
     transfer: 'Token Transfer',
+    intx:"内部交易"
   },
   asset: {
     title1: "Assets",

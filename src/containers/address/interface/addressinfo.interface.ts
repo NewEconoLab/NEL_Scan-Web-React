@@ -1,6 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { IAddress } from './address.interface';
-import { ITransaction } from '@/containers/transaction/interface/transaction.interface';
+import { ITransaction, IInterTx } from '@/containers/transaction/interface/transaction.interface';
 export interface IAddressInfoStore {
     addrInfo: IAddress,                // 地址详情
     addrBalanceList: IAddrBalance[],    // 地址balance列表
@@ -10,6 +10,8 @@ export interface IAddressInfoStore {
     bindDomainName: string, // 绑定的域名
     addrNep5List: IAddrNep5Tx[], // 地址的nep5交易列表
     addrNep5Count: number, // nep5交易总数
+    addrInterList:IInterTx[],
+    addrInterListCount:number,
     getAddressInfo: (address: string) => Promise<boolean>,
     getAddrUtxoList: (address: string, size: number, page: number) => Promise<boolean>,
     getAddressBalance: (address: string) => Promise<boolean>,
@@ -17,6 +19,7 @@ export interface IAddressInfoStore {
     getAddressTrans: (address: string, size: number, page: number) => Promise<boolean>,
     getBindDomain: (address: string) => Promise<boolean>,
     getNep5Trans: (address: string, size: number, page: number) => Promise<boolean>,
+    getAddressInterList:(address:string,page:number,size:number)=>Promise<boolean>
 }
 export interface IAddrNep5Tx {
     txid: string,

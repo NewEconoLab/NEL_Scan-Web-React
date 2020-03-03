@@ -12,7 +12,8 @@ import { toThousands } from '@/utils/numberTool';
 import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
 import AddrNep5Tx from './nep5tx';
-import AddrTxs from './txlist'
+import AddrTxs from './txlist';
+import AddrInterTx from './intertx';
 @inject('addressinfo')
 @observer
 class AddressInfo extends React.Component<IAddressInfoProps, {}> {
@@ -91,6 +92,7 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
       key: 'txid'
     }
   ]
+
   // 交易列表用到的img
   public imgs = {
     contract: require('@/img/contract.png'),
@@ -104,14 +106,16 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     agency: require('@/img/agency.png'),
     transfer: process.env.REACT_APP_SERVER_ENV === "PUB" ? require('@/img/transaction-from.png') : require('@/img/transaction-from-test.png')
   }
-  public async componentDidMount() {
+  public async componentDidMount()
+  {
     const params = this.props.match.params;
     this.setState({
-      address: params[ "address" ]
+      address: params["address"]
     });
-    this.initAddress(params[ "address" ]);
+    this.initAddress(params["address"]);
   }
-  public initAddress = (address: string) => {
+  public initAddress = (address: string) =>
+  {
     this.props.addressinfo.getAddressInfo(address);
     this.props.addressinfo.getBindDomain(address);
     this.props.addressinfo.getAddressBalance(address);
@@ -119,33 +123,30 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     this.props.addressinfo.getAddressTrans(address, this.state.transSize, this.state.transPage);
     this.getUtxoList(address);
   }
-  public componentWillUnmount() {
+  public componentWillUnmount()
+  {
     this.props.addressinfo.addrBalanceList = [];
     this.props.addressinfo.addrTransList = [];
     this.props.addressinfo.addrUtxoList = [];
     this.props.addressinfo.addrUtxoListCount = 0;
   }
   // 显示标题下拉
-  public onShowType = () => {
+  public onShowType = () =>
+  {
     this.setState({
       showTranType: !this.state.showTranType
     })
   }
   // 点击选择标题
-  public onClickType = (type: number) => {
-    if (type === 0) {
-      this.setState({
-        showTable: 0
-      })
-    }
-    else if (type === 1) {
-      this.setState({
-        showTable: 1
-      })
-    }
+  public onClickType = (type: number) =>
+  {
+    this.setState({
+      showTable: type
+    })
   }
   // 切换地址，刷新页面
-  public refreshAddress = (address: string) => {
+  public refreshAddress = (address: string) =>
+  {
     this.props.addressinfo.addrBalanceList = [];
     this.props.addressinfo.addrTransList = [];
     this.props.addressinfo.addrUtxoList = [];
@@ -156,16 +157,20 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     })
   }
   // 获取utxo列表
-  public getUtxoList = (address: string) => {
+  public getUtxoList = (address: string) =>
+  {
     return this.props.addressinfo.getAddrUtxoList(address, this.state.utxoPage, this.state.utxoSize)
   }
   // 返回地址列表
-  public onGoBack = () => {
+  public onGoBack = () =>
+  {
     this.props.history.push('/addresses/');
   }
   // 列表特殊处理
-  public renderUtxo = (value, key) => {
-    if (key === 'txid') {
+  public renderUtxo = (value, key) =>
+  {
+    if (key === 'txid')
+    {
       // const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
       return <>
         <span className="addr-utxo-text"><a href="javascript:;" onClick={this.goTransInfo.bind(this, value)}>{value}</a></span>
@@ -175,24 +180,29 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     return null;
   }
   // 列表特殊处理
-  public renderTran = (value, key) => {
-    if (key === 'type') {
+  public renderTran = (value, key) =>
+  {
+    if (key === 'type')
+    {
       value = value.replace('Transaction', '');
-      return <span className="img-text-bg"><img src={this.imgs[ value.toLowerCase() ]} alt="" />{value}</span>
+      return <span className="img-text-bg"><img src={this.imgs[value.toLowerCase()]} alt="" />{value}</span>
     }
     // if (key === 'addr' && value) {
     //   const addr = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
     //   return <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, value)}>{addr}</a></span>
     // }
 
-    if (key === 'txid') {
+    if (key === 'txid')
+    {
       const txid = value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3');
       return <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, value)}>{txid}</a></span>
     }
-    if (key === 'blockindex') {
+    if (key === 'blockindex')
+    {
       return <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, value)}>{toThousands(value.toString())}</a></span>
     }
-    if (key === 'time') {
+    if (key === 'time')
+    {
       const time = formatTime.format('yyyy/MM/dd | hh:mm:ss', value.toString(), this.props.intl.locale);
       return <span>{time}</span>
     }
@@ -200,27 +210,34 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
   }
 
   // 交易详情链接
-  public goAddrInfo = (addr: string) => {
+  public goAddrInfo = (addr: string) =>
+  {
     this.props.history.push('/address/' + addr)
   }
   // 交易详情链接
-  public goTransInfo = (txid: string) => {
+  public goTransInfo = (txid: string) =>
+  {
     this.props.history.push('/transaction/' + txid)
   }
   // 区块详情链接
-  public goBlockInfo = (index: string) => {
+  public goBlockInfo = (index: string) =>
+  {
     this.props.history.push('/block/' + index)
   }
   // utxo翻页功能
-  public onUtxoPage = (index: number) => {
+  public onUtxoPage = (index: number) =>
+  {
     this.setState({
       utxoPage: index
-    }, () => {
+    }, () =>
+    {
       this.getUtxoList(this.state.address);
     })
   }
-  public render() {
-    if (!this.props.addressinfo.addrInfo) {
+  public render()
+  {
+    if (!this.props.addressinfo.addrInfo)
+    {
       return (
         <div className="nodata-wrap">
           <img src={require('@/img/nodata.png')} alt="" />
@@ -295,7 +312,7 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
           </div> */}
 
           <div className="tran-title-wrapper">
-            <img src={require('@/img/transactions.png')} alt="" />
+            {/* <img src={require('@/img/transactions.png')} alt="" /> */}
             <div
               className={`tran-title-label ${this.state.showTable === 0 ? 'active' : ''}`}
               onClick={this.onClickType.bind(this, 0)}
@@ -308,21 +325,30 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
             >
               {process.env.REACT_APP_SERVER_ENV === "NEO3" ? this.intrl.transaction.transfer : this.intrl.transaction.nep5tx}
             </div>
+            <div
+              className={`tran-title-label ${this.state.showTable === 2 ? 'active' : ''}`}
+              onClick={this.onClickType.bind(this, 2)}
+            >
+              {this.intrl.transaction.intx}
+            </div>
           </div>
           {
             this.state.showTable === 0 && <AddrTxs {...this.props} refresh={this.refreshAddress} />
-              // <div className="address-trans-table">
-              //   {/* <Table
-              //     tableTh={this.transTableTh}
-              //     tableData={this.props.addressinfo.addrTransList}
-              //     render={this.renderTran}
-              //   /> */}
-              //   <div className="table-wrap"></div>
-              // </div>
-            
+            // <div className="address-trans-table">
+            //   {/* <Table
+            //     tableTh={this.transTableTh}
+            //     tableData={this.props.addressinfo.addrTransList}
+            //     render={this.renderTran}
+            //   /> */}
+            //   <div className="table-wrap"></div>
+            // </div>
+
           }
           {
             this.state.showTable === 1 && <AddrNep5Tx {...this.props} refresh={this.refreshAddress} />
+          }
+          {
+            this.state.showTable === 2 && <AddrInterTx {...this.props} />
           }
         </div>
         {process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
