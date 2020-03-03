@@ -122,7 +122,8 @@ export default {
     tips1:"合约调用由",
     tips2:"调用",
     tips3:"，共生成",
-    tips4:"个合约内部交易"
+    tips4:"个合约内部交易",
+    contract:"调用"
   },
   address: {
     title1: "地址列表",

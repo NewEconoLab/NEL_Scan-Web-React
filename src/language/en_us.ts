@@ -122,7 +122,8 @@ export default {
     tips1:"The contract call From ",
     tips2:" To ",
     tips3:" produced ",
-    tips4:" Internal Transaction"
+    tips4:" Internal Transaction",
+    contract:"Call "
   },
   address: {
     title1: "Addresses",

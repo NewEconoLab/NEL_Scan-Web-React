@@ -190,7 +190,8 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
     // 内部交易的表格处理
     public renderInter = (value, key) =>
     {
-        if(key === 'type'){
+        if (key === 'type')
+        {
             return (
                 <span>
                     {
@@ -372,13 +373,18 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                                         return (
                                             <div className="onebox-table" key={value}>
                                                 <div className="top-title">
-                                                    <span>{this.intrl.transaction.tips1} <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.caller)}>{item.caller.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> {this.intrl.transaction.tips2} <a href="javascript:;" onClick={this.toContractInfo.bind(this, item.callee)}>{item.callee.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> {this.intrl.transaction.tips3}{item.txCount}{this.intrl.transaction.tips4}</span>
+                                                    <span>{this.intrl.transaction.contract}{value + 1}：{this.intrl.transaction.tips1} <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.caller)}>{item.caller.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> {this.intrl.transaction.tips2} <a href="javascript:;" onClick={this.toContractInfo.bind(this, item.callee)}>{item.callee.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> {this.intrl.transaction.tips3}{item.txCount}{this.intrl.transaction.tips4}</span>
                                                 </div>
-                                                <Table
-                                                    tableTh={this.interTableTh}
-                                                    tableData={item.txList}
-                                                    render={this.renderInter}
-                                                />
+                                                {
+                                                    item.txCount > 0 && (
+                                                        <Table
+                                                            tableTh={this.interTableTh}
+                                                            tableData={item.txList}
+                                                            render={this.renderInter}
+                                                        />
+                                                    )
+                                                }
+
                                             </div>
                                         )
                                     })
