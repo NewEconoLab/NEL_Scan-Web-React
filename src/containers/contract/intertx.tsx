@@ -80,9 +80,9 @@ class InterTransactions extends React.Component<IContractProps>
         this.props.history.push('/transaction/' + txid)
     }
     // 跳转到合约详情页
-    public toContractInfo = (address: string) =>
+    public toContractInfo = (hash: string) =>
     {
-        this.props.history.push('/contract/' + address)
+        window.location.href = '/contract/' + hash
     }
     // 翻页功能
     public onGoPage = (index: number) =>
