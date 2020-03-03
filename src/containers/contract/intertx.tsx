@@ -82,7 +82,8 @@ class InterTransactions extends React.Component<IContractProps>
     // 跳转到合约详情页
     public toContractInfo = (hash: string) =>
     {
-        window.location.href = '/contract/' + hash
+        const urltitle: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test' : (process.env.REACT_APP_SERVER_ENV === 'NEO3' ? '/neo3' : "");
+        window.location.href = urltitle + '/contract/' + hash;
     }
     // 翻页功能
     public onGoPage = (index: number) =>
