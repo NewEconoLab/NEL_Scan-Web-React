@@ -6,7 +6,7 @@ import TitleText from '@/components/titletext/index';
 import Table from '@/components/Table/Table';
 import * as formatTime from 'utils/formatTime';
 import './index.less'
-import { ITransactionsProps, ITransInfoState } from './interface/transaction.interface';
+import { ITransactionsProps, ITransInfoState, IInfoInterTX, InvokeType } from './interface/transaction.interface';
 import { inject, observer } from 'mobx-react';
 import { injectIntl } from 'react-intl';
 
@@ -46,6 +46,24 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
             name: this.intrl.tableTh.asset,
             key: 'asset',
         },
+    ]
+    public interTableTh = [
+        {
+            name: this.intrl.tableTh.index,
+            key: 'orderId',
+        },
+        {
+            name: this.intrl.tableTh.type,
+            key: 'type'
+        },
+        {
+            name: this.intrl.tableTh.from2,
+            key: 'from'
+        },
+        {
+            name: this.intrl.tableTh.to2,
+            key: 'to'
+        }
     ]
     public async componentDidMount()
     {
@@ -169,15 +187,59 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
         }
         return null;
     }
-    // 跳转资产详情页
+    // 内部交易的表格处理
+    public renderInter = (value, key) =>
+    {
+        if(key === 'type'){
+            return (
+                <span>
+                    {
+                        value === InvokeType.Call && "调用合约"
+                    }
+                    {
+                        value === InvokeType.Create && "创建合约"
+                    }
+                    {
+                        value === InvokeType.Update && "升级合约"
+                    }
+                    {
+                        value === InvokeType.Destory && "销毁合约"
+                    }
+                </span>
+            )
+        }
+        if (key === 'from')
+        {
+            return (
+                <span>
+                    <a href="javascript:;" onClick={this.toContractInfo.bind(this, value)}>{value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a>
+                </span>)
+
+        }
+        if (key === 'to')
+        {
+            return (
+                <span>
+                    <a href="javascript:;" onClick={this.toContractInfo.bind(this, value)}>{value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a>
+                </span>)
+
+        }
+        return null;
+    }
+    // 跳转nep5资产详情页
     public goNep5Info = (asset: string) =>
     {
         this.props.history.push('/nep5/' + asset)
     }
-
+    // 跳转到地址详情页
     public toAddressInfo = (addr: string) =>
     {
         this.props.history.push('/address/' + addr)
+    }
+    // 跳转到合约详情页
+    public toContractInfo = (hash: string) =>
+    {
+        this.props.history.push('/contract/' + hash)
     }
 
     public render()
@@ -275,34 +337,71 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                         </div>
                     </div>
                 }
-                <div className="transinfo-memu-wrapper">
-                    <div className="tran-title-wrapper">
-                        <div
-                            className={`tran-title-label ${this.state.infoShowTable === 0 ? 'active' : ''}`}
-                            onClick={this.onhandleClickTable.bind(this, 0)}
-                        >
-                            {this.intrl.transaction.nep5}
-                        </div>
-                        <div
-                            className={`tran-title-label ${this.state.infoShowTable === 1 ? 'active' : ''}`}
-                            onClick={this.onhandleClickTable.bind(this, 1)}
-                        >
-                            {this.intrl.transaction.intx}
-                        </div>
-                    </div>
-                </div>
                 <div className="nep5-trans-wrapper">
                     {
-                        process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
-                        <TitleText text={this.intrl.transaction.nep5} />
+                        this.props.transaction.infoInterListCount > 0 ? (
+                            <>
+                                <div className="tran-title-wrapper">
+                                    <div
+                                        className={`tran-title-label ${this.state.infoShowTable === 0 ? 'active' : ''}`}
+                                        onClick={this.onhandleClickTable.bind(this, 0)}
+                                    >
+                                        {this.intrl.transaction.nep5}
+                                    </div>
+                                    <div
+                                        className={`tran-title-label ${this.state.infoShowTable === 1 ? 'active' : ''}`}
+                                        onClick={this.onhandleClickTable.bind(this, 1)}
+                                    >
+                                        {this.intrl.transaction.intx}
+                                    </div>
+                                </div>
+                                {
+                                    this.state.infoShowTable === 0 && (
+                                        <div className="nep5-trans-table">
+
+                                            <Table
+                                                tableTh={this.nep5TransTableTh}
+                                                tableData={this.props.transaction.nep5Trans}
+                                                render={this.renderNep5Trans}
+                                            />
+                                        </div>)
+                                }
+                                {
+                                    this.state.infoShowTable === 1 && this.props.transaction.infoInterList.map((item: IInfoInterTX, value: number) =>
+                                    {
+                                        return (
+                                            <div className="onebox-table" key={value}>
+                                                <div className="top-title">
+                                                    <span>合约调用由 <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.caller)}>{item.caller.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> 调用 <a href="javascript:;" onClick={this.toContractInfo.bind(this, item.callee)}>{item.callee.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> ，共生成{item.txCount}个合约内部交易</span>
+                                                </div>
+                                                <Table
+                                                    tableTh={this.interTableTh}
+                                                    tableData={item.txList}
+                                                    render={this.renderInter}
+                                                />
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </>
+                        ) : (
+                                <>
+                                    {
+                                        process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
+                                        <TitleText text={this.intrl.transaction.nep5} />
+                                    }
+                                    <div className="nep5-trans-table">
+                                        <Table
+                                            tableTh={this.nep5TransTableTh}
+                                            tableData={this.props.transaction.nep5Trans}
+                                            render={this.renderNep5Trans}
+                                        />
+                                    </div>
+                                </>
+                            )
                     }
-                    <div className="nep5-trans-table">
-                        <Table
-                            tableTh={this.nep5TransTableTh}
-                            tableData={this.props.transaction.nep5Trans}
-                            render={this.renderNep5Trans}
-                        />
-                    </div>
+
+
                 </div>
             </div>
         );

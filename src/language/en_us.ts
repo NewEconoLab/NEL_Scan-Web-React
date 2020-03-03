@@ -75,7 +75,8 @@ export default {
     value2: "Value",
     fee: "Fee",
     number: "Value",
-    sender: "Sender"
+    sender: "Sender",
+    index:"序号"
   },
   page: {
     page: "Page",

@@ -75,7 +75,8 @@ export default {
     value2: "价值",
     fee: "交易费",
     number: "数量",
-    sender: "发送方"
+    sender: "发送方",
+    index:"序号"
   },
   page: {
     page: "第",

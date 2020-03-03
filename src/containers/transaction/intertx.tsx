@@ -28,18 +28,18 @@ class InterTransactions extends React.Component<ITransactionsProps, {}>
         },
         {
             name: this.intrl.tableTh.time,
-            key: 'blocktime'
+            key: 'time'
         },
         {
             name: this.intrl.tableTh.type,
             key: 'type'
         },
         {
-            name: "发送方",
+            name: this.intrl.tableTh.from2,
             key: 'from'
         },
         {
-            name: '接收方',
+            name: this.intrl.tableTh.to2,
             key: 'to'
         }
     ]
@@ -50,18 +50,18 @@ class InterTransactions extends React.Component<ITransactionsProps, {}>
         },
         {
             name: this.intrl.tableTh.time,
-            key: 'blocktime'
+            key: 'time'
         },
         {
             name: this.intrl.tableTh.type,
             key: 'type'
         },
         {
-            name: "发送方",
+            name: this.intrl.tableTh.from2,
             key: 'from'
         },
         {
-            name: '接收方',
+            name: this.intrl.tableTh.to2,
             key: 'to'
         }
     ]
@@ -102,7 +102,7 @@ class InterTransactions extends React.Component<ITransactionsProps, {}>
     // 跳转到合约详情页
     public toContractInfo = (address: string) =>
     {
-        this.props.history.push('/nep5/' + address)
+        this.props.history.push('/contract/' + address)
     }
     // 翻页功能
     public onGoPage = (index: number) =>

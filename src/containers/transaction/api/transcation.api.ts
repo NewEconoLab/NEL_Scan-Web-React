@@ -128,7 +128,7 @@ export const getInnerList = (page:number,size:number) => {
  */
 export const getInfoInnerList = (txid:string) => {
   const opts = {
-    method: 'getInnerTxAtTxList',
+    method: 'getInnerTxAtTxDetail',
     params: [
       txid
     ]
