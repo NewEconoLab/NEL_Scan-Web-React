@@ -118,7 +118,11 @@ export default {
     alltx: '所有交易',
     nep5tx: 'Nep5交易',
     transfer: '转账交易',
-    intx:"内部交易"
+    intx:"内部交易",
+    tips1:"合约调用由",
+    tips2:"调用",
+    tips3:"，共生成",
+    tips4:"个合约内部交易"
   },
   address: {
     title1: "地址列表",
@@ -235,5 +239,11 @@ export default {
     all: "全部",
     contract: "合约",
     copy: "复制成功"
+  },
+  other:{
+    call:"调用合约",
+    create:"创建合约",
+    update:"升级合约",
+    destory:"销毁合约"
   }
 }

@@ -129,6 +129,8 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
     this.props.addressinfo.addrTransList = [];
     this.props.addressinfo.addrUtxoList = [];
     this.props.addressinfo.addrUtxoListCount = 0;
+    this.props.addressinfo.addrInterList = [];
+    this.props.addressinfo.addrInterListCount = 0;
   }
   // 显示标题下拉
   public onShowType = () =>

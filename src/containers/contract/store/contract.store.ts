@@ -2,11 +2,12 @@ import { observable, action } from 'mobx';
 import * as Api from '../api/contract.api';
 import * as CoinTool from '@/utils/cointool';
 import { IContractStore, IContractInfo, IBalanceInfo, INep5Balance, IContractAll, IContractNep5, IBalanceList } from '../interface/contract.interface';
+import { IInterTx } from '@/containers/transaction/interface/transaction.interface';
 
 class Contract implements IContractStore
 {
     @observable public contractHash: string = ''; // 当前合约hash
-    @observable public contractAddr:string = ''; // 当前合约地址
+    @observable public contractAddr: string = ''; // 当前合约地址
     @observable public conInfo: IContractInfo | null = null;  // 合约信息详情
     @observable public balanceList: IBalanceList[] = []; // 资产列表
     @observable public nep5BalanceList: IBalanceList[] = []; // nep5资产列表
@@ -14,6 +15,8 @@ class Contract implements IContractStore
     @observable public allTxList: IContractAll[] = []; // 所有调用的列表
     @observable public nep5TxCount: number = 0; // nep5调用的总数
     @observable public nep5TxList: IContractNep5[] = []; // nep5调用的列表
+    @observable public contInterList: IInterTx[] = [];// 内部交易列表
+    @observable public contInterListCount: number = 0// 内部交易统计
     /**
      * 获取合约信息详情
      */
@@ -77,17 +80,18 @@ class Contract implements IContractStore
             this.balanceList = [];
             return error;
         }
-        const arr:IBalanceInfo[] = result || [];
-        if(arr.length !== 0){
+        const arr: IBalanceInfo[] = result || [];
+        if (arr.length !== 0)
+        {
             this.balanceList = arr.map((key) =>
             {
                 const newObject = {
-                    assetName:CoinTool.toChangeAssetName(key),
-                    balance:key.balance
+                    assetName: CoinTool.toChangeAssetName(key),
+                    balance: key.balance
                 }
                 return newObject;
             })
-        }       
+        }
         return true;
     }
 
@@ -103,17 +107,38 @@ class Contract implements IContractStore
             return error;
         }
         console.log(result)
-        const arr:INep5Balance[] = result || [];
-        if(arr.length !== 0){
+        const arr: INep5Balance[] = result || [];
+        if (arr.length !== 0)
+        {
             this.nep5BalanceList = arr.map((key) =>
             {
                 const newObject = {
-                    assetName:key.symbol + "(" + key.assetid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') + ")",
-                    balance:key.balance
+                    assetName: key.symbol + "(" + key.assetid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') + ")",
+                    balance: key.balance
                 }
                 return newObject;
             })
-        }   
+        }
+        return true;
+    }
+    /**
+     * 合约详情处查询内部交易
+     * @param page 
+     * @param size 
+     */
+    @action public async getContractInterList(page: number, size: number)
+    {
+        let result: any = null;
+        try
+        {
+            result = await Api.getContractInterList(this.contractHash, page, size);
+        } catch (error)
+        {
+            this.contInterList = [];
+            return error;
+        }
+        this.contInterListCount = result[0].count || 0;
+        this.contInterList = result[0].list || [];
         return true;
     }
 }

@@ -66,3 +66,17 @@ export const getnep5Balance = (addr: string) =>
     }
     return request(opts);
 }
+/**
+ * 合约详情处查询内部交易
+ * @param hash 合约哈希
+ * @param page 分页索引
+ * @param size 分页大小
+ */
+export const getContractInterList = (hash: string,page:number,size:number) =>
+{
+    const opts = {
+        method: 'getInnerTxAtContractDetail',
+        params: [hash,page,size]
+    }
+    return request(opts);
+}

@@ -1,5 +1,5 @@
 /**
- * 交易详情页
+ * 合约详情页
  */
 import * as React from 'react';
 import TitleText from '@/components/titletext/index';
@@ -10,6 +10,7 @@ import { injectIntl } from 'react-intl';
 import AssetTable from './assettable';
 import AllTable from './alltable';
 import Nep5Table from './nep5table';
+import InterTable from './intertx';
 import Toast from '@/components/Toast';
 import { IContractProps } from './interface/contract.interface';
 
@@ -41,6 +42,8 @@ class ContractInfo extends React.Component<IContractProps> {
         this.props.contract.allTxList = [];
         this.props.contract.nep5TxCount = 0;
         this.props.contract.nep5TxList = [];
+        this.props.contract.contInterList = [];
+        this.props.contract.contInterListCount = 0;
     }
     // 请求数据
     public getContractInfo = () =>
@@ -62,18 +65,9 @@ class ContractInfo extends React.Component<IContractProps> {
     // 点击选择标题
     public onClickType = (type: number) =>
     {
-        if (type === 0)
-        {
-            this.setState({
-                showTabletype: 0
-            })
-        }
-        else if (type === 1)
-        {
-            this.setState({
-                showTabletype: 1
-            })
-        }
+        this.setState({
+            showTabletype: type
+        })
     }
     public handleToCopyHash = (hash: string) =>
     {
@@ -134,7 +128,7 @@ class ContractInfo extends React.Component<IContractProps> {
                             <li>
                                 <span className="type-name">{this.intrl.contract.author}</span>
                                 <span className="type-content">
-                                {this.props.contract.conInfo.author}（{this.props.contract.conInfo.email}）
+                                    {this.props.contract.conInfo.author}（{this.props.contract.conInfo.email}）
                                 </span>
                             </li>
                             <li>
@@ -167,7 +161,7 @@ class ContractInfo extends React.Component<IContractProps> {
                     </div>
                 </div>
                 <AssetTable {...this.props} />
-                <div className="contract-title-wrapper" onClick={this.onShowType}>
+                {/* <div className="contract-title-wrapper" onClick={this.onShowType}>
                     <h3 className="contract-title">{this.state.showTabletype === 0 ? this.intrl.contract.title3 : this.intrl.contract.title4}</h3>
                     <div className="select-contracttype">
                         <span className="triangle" />
@@ -185,12 +179,36 @@ class ContractInfo extends React.Component<IContractProps> {
                             )
                         }
                     </div>
+                </div> */}
+                <div className="tran-title-wrapper">
+                    {/* <img src={require('@/img/transactions.png')} alt="" /> */}
+                    <div
+                        className={`tran-title-label ${this.state.showTabletype === 0 ? 'active' : ''}`}
+                        onClick={this.onClickType.bind(this, 0)}
+                    >
+                        {this.intrl.transaction.alltx}
+                    </div>
+                    <div
+                        className={`tran-title-label ${this.state.showTabletype === 1 ? 'active' : ''}`}
+                        onClick={this.onClickType.bind(this, 1)}
+                    >
+                        {process.env.REACT_APP_SERVER_ENV === "NEO3" ? this.intrl.transaction.transfer : this.intrl.transaction.nep5tx}
+                    </div>
+                    <div
+                        className={`tran-title-label ${this.state.showTabletype === 2 ? 'active' : ''}`}
+                        onClick={this.onClickType.bind(this, 2)}
+                    >
+                        {this.intrl.transaction.intx}
+                    </div>
                 </div>
                 {
                     this.state.showTabletype === 0 && (<AllTable {...this.props} />)
                 }
                 {
                     this.state.showTabletype === 1 && (<Nep5Table {...this.props} />)
+                }
+                {
+                    this.state.showTabletype === 2 && (<InterTable {...this.props} />)
                 }
             </div>
         );

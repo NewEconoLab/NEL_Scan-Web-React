@@ -158,16 +158,16 @@ class InterTransactions extends React.Component<ITransactionsProps, {}>
                                                             <span>{this.state.showTimeChange ? formatTime.computeTime(item.time, this.props.intl.locale) : formatTime.format('yyyy/MM/dd | hh:mm:ss', item.time.toString(), this.props.intl.locale)}</span>
                                                             <span>
                                                                 {
-                                                                    item.type === InvokeType.Call && "调用合约"
+                                                                    item.type === InvokeType.Call && this.intrl.other.call
                                                                 }
                                                                 {
-                                                                    item.type === InvokeType.Create && "创建合约"
+                                                                    item.type === InvokeType.Create && this.intrl.other.create
                                                                 }
                                                                 {
-                                                                    item.type === InvokeType.Update && "升级合约"
+                                                                    item.type === InvokeType.Update && this.intrl.other.update
                                                                 }
                                                                 {
-                                                                    item.type === InvokeType.Destory && "销毁合约"
+                                                                    item.type === InvokeType.Destory && this.intrl.other.destory
                                                                 }
                                                             </span>
                                                             <span><a href="javascript:;" onClick={this.toContractInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
@@ -234,16 +234,16 @@ class InterTransactions extends React.Component<ITransactionsProps, {}>
                                                                 <span className="line-content">
                                                                     <span>
                                                                         {
-                                                                            item.type === InvokeType.Call && "调用合约"
+                                                                            item.type === InvokeType.Call && this.intrl.other.call
                                                                         }
                                                                         {
-                                                                            item.type === InvokeType.Create && "创建合约"
+                                                                            item.type === InvokeType.Create && this.intrl.other.create
                                                                         }
                                                                         {
-                                                                            item.type === InvokeType.Update && "升级合约"
+                                                                            item.type === InvokeType.Update && this.intrl.other.update
                                                                         }
                                                                         {
-                                                                            item.type === InvokeType.Destory && "销毁合约"
+                                                                            item.type === InvokeType.Destory && this.intrl.other.destory
                                                                         }
                                                                     </span>
                                                                 </span>

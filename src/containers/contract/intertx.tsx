@@ -13,12 +13,12 @@ import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
 // import Spinner from '@/components/spinner';
 import * as formatTime from 'utils/formatTime';
-import { IAddressInfoProps } from './interface/addressinfo.interface';
 import { IInterTx, InvokeType } from '../transaction/interface/transaction.interface';
+import { IContractProps } from './interface/contract.interface';
 
 @inject('transaction')
 @observer
-class InterTransactions extends React.Component<IAddressInfoProps, {}>
+class InterTransactions extends React.Component<IContractProps>
 {
     public intrl = this.props.intl.messages;
 
@@ -50,23 +50,18 @@ class InterTransactions extends React.Component<IAddressInfoProps, {}>
         pageSize: 15,
         isLoading: true,
         showTimeChange: true, // 转换时间显示，true默认显示计时，false显示默认时间
-        address: ''
     }
     public componentDidMount()
     {
-        const params = this.props.match.params;
-        this.setState({
-            address: params["address"]
-        });
-        this.getAddrInterList(params["address"]);
+        this.getContractData();
     }
     public componentWillUnmount()
     {
-        this.props.addressinfo.addrInterList = [];
+        this.props.contract.contInterList = [];
     }
-    public getAddrInterList = async (addr: string) =>
+    public getContractData = async () =>
     {
-        await this.props.addressinfo.getAddressInterList(addr, this.state.currentPage, this.state.pageSize);
+        await this.props.contract.getContractInterList(this.state.currentPage, this.state.pageSize);
         this.setState({
             isLoading: false
         })
@@ -97,14 +92,14 @@ class InterTransactions extends React.Component<IAddressInfoProps, {}>
             isLoading: true
         }, async () =>
         {
-            this.getAddrInterList(this.state.address);
+            this.getContractData();
         })
     }
     public render()
     {
 
         return (
-            <div className="address-trans-table">
+            <div className="contract-table">
                 <div className="table-wrap">
                     <div className="table-content">
                         <div className="table-th">
@@ -123,17 +118,17 @@ class InterTransactions extends React.Component<IAddressInfoProps, {}>
                         </div>
                         {/* 没有数据时 */}
                         {
-                            this.props.addressinfo.addrInterList.length === 0 && (
+                            this.props.contract.contInterList.length === 0 && (
                                 <div className="no-data-content">{this.props.intl.messages.tableTh.nodata}</div>
                             )
                         }
                         {/* 有数据时 */}
                         {
-                            this.props.addressinfo.addrInterList.length !== 0 && (
+                            this.props.contract.contInterList.length !== 0 && (
                                 <div className="table-body">
                                     <ul>
                                         {
-                                            this.props.addressinfo.addrInterList.map((item: IInterTx, index: number) =>
+                                            this.props.contract.contInterList.map((item: IInterTx, index: number) =>
                                             {
                                                 return (
                                                     <li key={index}>
@@ -168,7 +163,7 @@ class InterTransactions extends React.Component<IAddressInfoProps, {}>
                     <div className="mobile-table-content">
                         {/* 没有数据时 */}
                         {
-                            this.props.addressinfo.addrInterList.length === 0 && (
+                            this.props.contract.contInterList.length === 0 && (
                                 <div className="table-body">
                                     <ul>
                                         <li>
@@ -192,11 +187,11 @@ class InterTransactions extends React.Component<IAddressInfoProps, {}>
                         }
                         {/* 有数据时 */}
                         {
-                            this.props.addressinfo.addrInterList.length !== 0 && (
+                            this.props.contract.contInterList.length !== 0 && (
                                 <div className="table-body">
                                     <ul>
                                         {
-                                            this.props.addressinfo.addrInterList.map((item: IInterTx, index: number) =>
+                                            this.props.contract.contInterList.map((item: IInterTx, index: number) =>
                                             {
                                                 return (
                                                     <li key={index}>
@@ -258,7 +253,7 @@ class InterTransactions extends React.Component<IAddressInfoProps, {}>
                     </div>
                 </div>
                 <Page
-                    totalCount={this.props.addressinfo.addrInterListCount && this.props.addressinfo.addrInterListCount}
+                    totalCount={this.props.contract.contInterListCount && this.props.contract.contInterListCount}
                     pageSize={this.state.pageSize}
                     currentPage={this.state.currentPage}
                     onChange={this.onGoPage}

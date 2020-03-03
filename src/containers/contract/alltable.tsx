@@ -94,7 +94,7 @@ class AllTable extends React.Component<IContractProps> {
                                         {
                                             if (index === 1)
                                             {
-                                                return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require('@/img/refresh.png')} /></li>
+                                                return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require(process.env.REACT_APP_SERVER_ENV === "PUB" ? '@/img/refresh.png' : '@/img/refreshTest.png')} /></li>
                                             }
                                             return <li key={index}>{item.name}</li>
                                         })

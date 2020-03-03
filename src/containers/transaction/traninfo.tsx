@@ -194,16 +194,16 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
             return (
                 <span>
                     {
-                        value === InvokeType.Call && "调用合约"
+                        value === InvokeType.Call && this.intrl.other.call
                     }
                     {
-                        value === InvokeType.Create && "创建合约"
+                        value === InvokeType.Create && this.intrl.other.create
                     }
                     {
-                        value === InvokeType.Update && "升级合约"
+                        value === InvokeType.Update && this.intrl.other.update
                     }
                     {
-                        value === InvokeType.Destory && "销毁合约"
+                        value === InvokeType.Destory && this.intrl.other.destory
                     }
                 </span>
             )
@@ -372,7 +372,7 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                                         return (
                                             <div className="onebox-table" key={value}>
                                                 <div className="top-title">
-                                                    <span>合约调用由 <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.caller)}>{item.caller.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> 调用 <a href="javascript:;" onClick={this.toContractInfo.bind(this, item.callee)}>{item.callee.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> ，共生成{item.txCount}个合约内部交易</span>
+                                                    <span>{this.intrl.transaction.tips1} <a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.caller)}>{item.caller.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> {this.intrl.transaction.tips2} <a href="javascript:;" onClick={this.toContractInfo.bind(this, item.callee)}>{item.callee.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a> {this.intrl.transaction.tips3}{item.txCount}{this.intrl.transaction.tips4}</span>
                                                 </div>
                                                 <Table
                                                     tableTh={this.interTableTh}

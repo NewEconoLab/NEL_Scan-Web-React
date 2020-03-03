@@ -1,4 +1,5 @@
 import { RouteComponentProps } from 'react-router-dom';
+import { IInterTx } from '@/containers/transaction/interface/transaction.interface';
 export interface IContractStore {
     contractHash: string,
     contractAddr: string,
@@ -9,11 +10,14 @@ export interface IContractStore {
     allTxList: IContractAll[],
     nep5TxCount: number,
     nep5TxList: IContractNep5[],
+    contInterList:IInterTx[],
+    contInterListCount:number,
     getContractData: () => Promise<boolean>,
     getAllContrant: (page: number, size: number) => Promise<boolean>,
     getNep5Contrant: (page: number, size: number) => Promise<boolean>,
     getbalance: () => Promise<boolean>,
     getNep5Balance: () => Promise<boolean>,
+    getContractInterList:(page: number, size: number)=> Promise<boolean>,
 }
 export interface IContractProps extends RouteComponentProps {
     contract: IContractStore,

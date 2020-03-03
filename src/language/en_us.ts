@@ -76,8 +76,8 @@ export default {
     fee: "Fee",
     number: "Value",
     sender: "Sender",
-    index:"序号",
-    transid:"父交易ID"
+    index:"Trace",
+    transid:"Parent Tx Hash"
   },
   page: {
     page: "Page",
@@ -118,7 +118,11 @@ export default {
     alltx: 'All TX',
     nep5tx: 'Nep5 TX',
     transfer: 'Token Transfer',
-    intx:"内部交易"
+    intx:"Internal TX",
+    tips1:"The contract call From ",
+    tips2:" To ",
+    tips3:" produced ",
+    tips4:" Internal Transaction"
   },
   address: {
     title1: "Addresses",
@@ -133,7 +137,7 @@ export default {
     alltx: 'All TX',
     nep5tx: 'Nep5 TX',
     transfer: 'Token Transfer',
-    intx:"内部交易"
+    intx:"Internal TX"
   },
   asset: {
     title1: "Assets",
@@ -235,5 +239,11 @@ export default {
     all: "All ",
     contract: " Contract",
     copy: "Copy"
+  },
+  other:{
+    call:"call",
+    create:"create",
+    update:"update",
+    destory:"destruct"
   }
 }
