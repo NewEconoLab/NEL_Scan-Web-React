@@ -115,7 +115,7 @@ export default {
     input: "Input",
     output: "Output",
     nep5: "Nep5",
-    alltx: 'All TX',
+    alltx: 'Call TX',
     nep5tx: 'Nep5 TX',
     transfer: 'Token Transfer',
     intx:"Internal TX",
@@ -135,7 +135,7 @@ export default {
     create: "Created on",
     transaction: "Transactions",
     binddomain: "Bound domain",
-    alltx: 'All TX',
+    alltx: 'Call TX',
     nep5tx: 'Nep5 TX',
     transfer: 'Token Transfer',
     intx:"Internal TX"
