@@ -32,5 +32,6 @@ export interface ITransList {
 }
 export interface ISearchAsset{
     assetid:string,
-    name:string
+    name:string,
+    symbol:string
 }

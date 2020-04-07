@@ -142,7 +142,7 @@ class Search extends React.Component<IHomeProps, any> {
               </div>
               <ul className="search-list">
                 {this.props.home.searchAssetList.map((key, value) => {
-                  return <li key={value} onClick={this.goAssetInfo.bind(this, key.assetid)}>{key.name}({key.assetid})</li>
+                return <li key={value} onClick={this.goAssetInfo.bind(this, key.assetid)}>{key.name}({key.symbol?key.symbol:"-"})-{key.assetid}</li>
                 })}
               </ul>
             </div>
