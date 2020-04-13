@@ -5,6 +5,7 @@ export interface IAddressInfoStore {
     addrInfo: IAddress,                // 地址详情
     addrBalanceList: IAddrBalance[],    // 地址balance列表
     addrTransList: ITransaction[],        // 地址交易列表
+    addrTransCount:number,
     addrUtxoList: IUtxobyAddresslist[],      // 地址utxo列表
     addrUtxoListCount: number,               // 交易总数
     bindDomainName: string, // 绑定的域名

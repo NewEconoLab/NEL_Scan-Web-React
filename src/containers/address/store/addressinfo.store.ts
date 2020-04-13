@@ -9,6 +9,7 @@ class AddressInfo implements IAddressInfoStore {
     @observable public addrInfo: IAddress;
     @observable public addrBalanceList: IAddrBalance[] = [];
     @observable public addrTransList: ITransaction[];
+    @observable public addrTransCount:number = 0;
     @observable public addrUtxoList: IUtxobyAddresslist[] = [];
     @observable public addrUtxoListCount: number;
     @observable public bindDomainName: string = '';
@@ -109,7 +110,8 @@ class AddressInfo implements IAddressInfoStore {
         } catch (error) {
             return false;
         }
-        const arr: ITransaction[] = result ? result[ 0 ].list : [];
+        const arr: ITransaction[] = result ? result[ 0 ].list : [];   
+        this.addrTransCount = result[0].count||0;
         // 筛选
         if (arr && arr.length > 0) {
             // this.addrTransList = arr.map((key) => {

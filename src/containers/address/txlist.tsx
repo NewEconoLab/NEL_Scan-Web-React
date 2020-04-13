@@ -416,7 +416,7 @@ class AddrTxs extends React.Component<any, {}>
           </div>
                 }
                     <Page
-                    totalCount={this.props.addressinfo.addrInfo && this.props.addressinfo.addrInfo.txcount}
+                    totalCount={this.props.addressinfo.addrTransCount}
                     pageSize={this.state.pageSize}
                     currentPage={this.state.currentPage}
                     onChange={this.onTransPage}
