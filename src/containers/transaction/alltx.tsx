@@ -93,7 +93,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
         name: this.intrl.tableTh.height,
         key: 'blockindex'
       }, {
-        name: this.intrl.tableTh.size,
+        name: this.intrl.tableTh.time,
         key: 'blocktime'
       }
     ]
@@ -177,14 +177,14 @@ class Transactions extends React.Component<ITransactionsProps, {}>
             <div className="table-content">
               <div className="table-th">
                 <ul>
-                  {
+                  {/* {
                     process.env.REACT_APP_SERVER_ENV !== "NEO3" &&
                     <li>
                       <div className="choose-type-trans">
                         <Select options={this.options} text={this.intrl.tableTh.type} onCallback={this.onCallback} />
                       </div>
                     </li>
-                  }
+                  } */}
                   {
                     this.transTableTh.map((item, index) => {
                       return <li key={index}>{item.name}</li>

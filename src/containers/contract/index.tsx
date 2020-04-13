@@ -186,7 +186,7 @@ class ContractInfo extends React.Component<IContractProps> {
                         className={`tran-title-label ${this.state.showTabletype === 0 ? 'active' : ''}`}
                         onClick={this.onClickType.bind(this, 0)}
                     >
-                        {this.intrl.transaction.alltx}
+                        {this.intrl.contract.calltx}
                     </div>
                     <div
                         className={`tran-title-label ${this.state.showTabletype === 1 ? 'active' : ''}`}

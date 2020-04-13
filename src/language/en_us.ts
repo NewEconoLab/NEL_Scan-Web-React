@@ -115,7 +115,7 @@ export default {
     input: "Input",
     output: "Output",
     nep5: "Nep5",
-    alltx: 'Call TX',
+    alltx: 'All TX',
     nep5tx: 'Nep5 TX',
     transfer: 'Token Transfer',
     intx:"Internal TX",
@@ -135,7 +135,7 @@ export default {
     create: "Created on",
     transaction: "Transactions",
     binddomain: "Bound domain",
-    alltx: 'Call TX',
+    alltx: 'All TX',
     nep5tx: 'Nep5 TX',
     transfer: 'Token Transfer',
     intx:"Internal TX"
@@ -239,7 +239,8 @@ export default {
     usr24: "Users in 24h",
     all: "All ",
     contract: " Contract",
-    copy: "Copy"
+    copy: "Copy",
+    calltx:"Call Tx"
   },
   other:{
     call:"call",

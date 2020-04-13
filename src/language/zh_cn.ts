@@ -115,7 +115,7 @@ export default {
     input: "输入",
     output: "输出",
     nep5: "Nep5",
-    alltx: '调用交易',
+    alltx: '所有交易',
     nep5tx: 'Nep5交易',
     transfer: '转账交易',
     intx:"内部交易",
@@ -135,7 +135,7 @@ export default {
     create: "创建时间",
     transaction: "交易总数",
     binddomain: "绑定的域名",
-    alltx: '调用交易',
+    alltx: '所有交易',
     nep5tx: 'Nep5交易',
     transfer: '转账交易',
     intx:"内部交易"
@@ -239,7 +239,8 @@ export default {
     usr24: "24小时用户",
     all: "全部",
     contract: "合约",
-    copy: "复制成功"
+    copy: "复制成功",
+    calltx:"调用交易"
   },
   other:{
     call:"调用合约",
