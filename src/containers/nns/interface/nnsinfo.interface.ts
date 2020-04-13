@@ -9,6 +9,7 @@ export interface INNSInfoStore
     domainBidInfoList :IDomainBidInfoList[],
     domainTransCount:number,
     domainTransList:IDomainTransList[],
+    isPending:boolean,
     getAuctionInfo: (domain:string) => Promise<boolean>,
     getAuctionBidRank: (domainid:string,size: number, page: number) => Promise<boolean>,
     getAuctionBidInfoTx: (domainid:string,size: number, page: number) => Promise<boolean>,

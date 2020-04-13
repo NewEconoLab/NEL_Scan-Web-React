@@ -13,6 +13,7 @@ export interface ITransactionsStore {
     interListCount:number,
     infoInterList:IInfoInterTX[],
     infoInterListCount:number,
+    isPending:boolean,
     getTransList: (page: number, size: number, type: string) => Promise<boolean>,
     getTransInfo: (txid: string) => Promise<boolean>,
     getNep5Transbytxid: (txid: string) => Promise<boolean>,

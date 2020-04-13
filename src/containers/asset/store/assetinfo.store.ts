@@ -10,6 +10,7 @@ class AssetInfo implements IAssetInfoStore {
     @observable public balanceRankList: IBalanceRank[];  // 资产排名列表
     @observable public nep5TransList: INep5TransList[];   // nep5的交易列表
     @observable public nep5TransCount: number;        // nep5的交易总数
+    @observable public isPending:boolean = false; // 是否正在加载数据
 
     /**
      * 获取资产详情
@@ -18,12 +19,14 @@ class AssetInfo implements IAssetInfoStore {
     @action public async getAssetInfo(assetid: string) {
         this.assetInfo = null;
         let result: any = null;
+        this.isPending = true;
         try {
             result = await Api.getassetinfo(assetid);
         } catch (error) {
             return false;
         }
         this.assetInfo = result ? result[0] : null;
+        this.isPending = false;
         return true;
     }
     /**
@@ -33,12 +36,14 @@ class AssetInfo implements IAssetInfoStore {
     @action public async getNep5Info(nep5id: string) {
         this.nep5Info = null;
         let result: any = null;
+        this.isPending = true;
         try {
             result = await Api.getnep5info(nep5id);
         } catch (error) {
             return false;
         }
         this.nep5Info = result ? result[0] : null;
+        this.isPending = false;
         return true;
     }
     /**

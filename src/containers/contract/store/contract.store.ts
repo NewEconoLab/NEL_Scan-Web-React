@@ -17,12 +17,14 @@ class Contract implements IContractStore
     @observable public nep5TxList: IContractNep5[] = []; // nep5调用的列表
     @observable public contInterList: IInterTx[] = [];// 内部交易列表
     @observable public contInterListCount: number = 0// 内部交易统计
+    @observable public isPending:boolean = false;
     /**
      * 获取合约信息详情
      */
     @action public async getContractData()
     {
         let result: any = null;
+        this.isPending = true;
         try
         {
             result = await Api.getcontractinfo(this.contractHash);
@@ -32,6 +34,7 @@ class Contract implements IContractStore
             return error;
         }
         this.conInfo = result[0] || null;
+        this.isPending = false;
         return true;
     }
 

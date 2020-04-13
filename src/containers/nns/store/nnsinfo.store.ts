@@ -12,18 +12,21 @@ class NNSInfo implements INNSInfoStore {
     @observable public domainBidInfoList: IDomainBidInfoList[] = [];
     @observable public domainTransCount: number = 0;
     @observable public domainTransList: IDomainTransList[] = [];
+    @observable public isPending:boolean = false;
     /**
      * 获取域名信息
      * @param domain 域名 
      */
     @action public async getAuctionInfo(domain: string) {
         let result: any = null;
+        this.isPending = true;
         try {
             result = await Api.getauctionres(domain);
         } catch (error) {
             return false;
         }
         this.nnsInfo = result ? result[0] : null;
+        this.isPending = false;
         return true;
     }
     /**

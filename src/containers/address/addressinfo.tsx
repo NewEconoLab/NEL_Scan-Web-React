@@ -243,7 +243,9 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
       return (
         <div className="nodata-wrap">
           <img src={require('@/img/nodata.png')} alt="" />
-          <p>{this.intrl.nodata.msg}</p>
+          {
+            this.props.addressinfo.isPending?<p>{this.intrl.nodata.pending}</p>:<p>{this.intrl.nodata.msg}</p>
+          }
         </div>
       )
     }

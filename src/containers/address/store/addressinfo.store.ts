@@ -16,6 +16,7 @@ class AddressInfo implements IAddressInfoStore {
     @observable public addrNep5Count: number = 0;
     @observable public addrInterList:IInterTx[] = [];
     @observable public addrInterListCount:number = 0;
+    @observable public isPending:boolean = false; // 是否正在加载数据
 
     /**
      * 获取该地址详情
@@ -23,12 +24,14 @@ class AddressInfo implements IAddressInfoStore {
      */
     @action public async getAddressInfo(address: string) {
         let result: any = null;
+        this.isPending = true;
         try {
             result = await Api.getaddrinfo(address);
         } catch (error) {
             return false;
         }
         this.addrInfo = result ? result[ 0 ] : {};
+        this.isPending = false;
         return true;
     }
     @action public async getBindDomain(address: string) {

@@ -6,6 +6,7 @@ class Block implements IBlockStore {
     @observable public blockHeight: string = '';  // 区块高度总数
     @observable public blockList: IBlock[] = [];   // 区块列表
     @observable public blockInfo: IBlockInfo | null = null;   // 区块详情
+    @observable public isPending:boolean = false;
     /**
      * 获取区块高度总数
      */
@@ -41,6 +42,7 @@ class Block implements IBlockStore {
      */
     @action public async getBlockInfo(index: number) {
         let result: any = null;
+        this.isPending = true;
         try {
             result = await Api.getblock(index);
         } catch (error) {
@@ -48,6 +50,7 @@ class Block implements IBlockStore {
             return false;
         }
         this.blockInfo = result ? result[0] : null;
+        this.isPending = false;
         return true;
     }
 }

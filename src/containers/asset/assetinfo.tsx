@@ -34,7 +34,8 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         pageSize: 15
     }
     // 初始化数据
-    public componentDidMount() {
+    public componentDidMount()
+    {
         const params = this.props.match.params;
         this.setState({
             assetid: params["assetid"]
@@ -49,38 +50,48 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         this.props.assetinfo.balanceRankList = [];
     }
     // 返回区块列表
-    public onGoBack = () => {
+    public onGoBack = () =>
+    {
         this.props.history.push('/assets/');
     }
     // 请求数据
-    public getBalanceRankList = (asset: string) => {
+    public getBalanceRankList = (asset: string) =>
+    {
         return this.props.assetinfo.getBalanceRankList(asset, this.state.pageSize, this.state.currentPage);
     }
     // 列表特殊处理
-    public renderBalance = (value, key) => {
-        if (key === 'addr') {
+    public renderBalance = (value, key) =>
+    {
+        if (key === 'addr')
+        {
             return <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, value)}>{value}</a></span>
         }
         return null;
     }
-    public goAddrInfo = (addr: string) => {
+    public goAddrInfo = (addr: string) =>
+    {
         this.props.history.push('/address/' + addr)
     }
     // 翻页功能
-    public onBalancePage = (index: number) => {
+    public onBalancePage = (index: number) =>
+    {
         this.setState({
             currentPage: index
-        }, () => {
+        }, () =>
+        {
             this.getBalanceRankList(this.state.assetid);
         })
     }
-    public render() {
+    public render()
+    {
         if (!this.props.assetinfo.assetInfo)
         {
             return (
                 <div className="nodata-wrap">
                     <img src={require('@/img/nodata.png')} alt="" />
-                    <p>{this.intrl.nodata.msg}</p>
+                    {
+                        this.props.assetinfo.isPending ? <p>{this.intrl.nodata.pending}</p> : <p>{this.intrl.nodata.msg}</p>
+                    }
                 </div>
             )
         }

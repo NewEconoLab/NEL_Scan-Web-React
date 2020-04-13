@@ -167,7 +167,9 @@ class BlockInfo extends React.Component<IBlockProps, IBlockInfoState> {
             return (
                 <div className="nodata-wrap">
                     <img src={require('@/img/nodata.png')} alt="" />
-                    <p>{this.intrl.nodata.msg}</p>
+                    {
+                        this.props.block.isPending?<p>{this.intrl.nodata.pending}</p>:<p>{this.intrl.nodata.msg}</p>
+                    }
                 </div>
             )
         }

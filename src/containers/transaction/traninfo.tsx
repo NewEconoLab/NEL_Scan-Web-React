@@ -251,8 +251,15 @@ class TransactionInfo extends React.Component<ITransactionsProps, ITransInfoStat
                 <div className="nodata-wrap">
                     <img src={require('@/img/tran-nodata.png')} alt="" />
                     {
-                        (this.props.transaction.poolCheck && this.props.transaction.poolCheck.isExistPool) ? <><p>{this.intrl.nodata.waiting}</p><p>{this.intrl.nodata.waitcount + (this.props.transaction.poolCheck.memPoolCount) + this.intrl.nodata.waitcount2}</p></>
-                            : <p>{this.intrl.nodata.msg}</p>
+                        (this.props.transaction.poolCheck && this.props.transaction.poolCheck.isExistPool) 
+                        ? <><p>{this.intrl.nodata.waiting}</p><p>{this.intrl.nodata.waitcount + (this.props.transaction.poolCheck.memPoolCount) + this.intrl.nodata.waitcount2}</p></>
+                        : (
+                            <>
+                            {
+                                this.props.transaction.isPending?<p>{this.intrl.nodata.pending}</p>:<p>{this.intrl.nodata.msg}</p>
+                            }
+                            </>
+                        )
                     }
                 </div>
             )

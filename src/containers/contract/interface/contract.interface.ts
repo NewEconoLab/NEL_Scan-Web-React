@@ -12,6 +12,7 @@ export interface IContractStore {
     nep5TxList: IContractNep5[],
     contInterList:IInterTx[],
     contInterListCount:number,
+    isPending:boolean,
     getContractData: () => Promise<boolean>,
     getAllContrant: (page: number, size: number) => Promise<boolean>,
     getNep5Contrant: (page: number, size: number) => Promise<boolean>,

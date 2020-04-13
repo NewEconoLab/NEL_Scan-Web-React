@@ -16,6 +16,7 @@ class Transaction implements ITransactionsStore {
     @observable public interListCount:number =0; // 内部交易统计
     @observable public infoInterList:IInfoInterTX[]=[];
     @observable public infoInterListCount:number=0;
+    @observable public isPending:boolean = false;
 
     /**
      * 根据交易类型获取交易列表（默认获取所有交易）
@@ -60,6 +61,7 @@ class Transaction implements ITransactionsStore {
      */
     @action public async getTransInfo(txid: string) {
         let result: any = null;
+        this.isPending = true;
         try {
             if (process.env.REACT_APP_SERVER_ENV === "NEO3") {
                 result = await Api.getrawtransaction(txid);
@@ -72,6 +74,7 @@ class Transaction implements ITransactionsStore {
             return false;
         }
         this.tranInfo = result[ 0 ] || [];
+        this.isPending = false;
         return true;
     }
     /**

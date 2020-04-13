@@ -12,6 +12,7 @@ export interface IAddressInfoStore {
     addrNep5Count: number, // nep5交易总数
     addrInterList:IInterTx[],
     addrInterListCount:number,
+    isPending:boolean,
     getAddressInfo: (address: string) => Promise<boolean>,
     getAddrUtxoList: (address: string, size: number, page: number) => Promise<boolean>,
     getAddressBalance: (address: string) => Promise<boolean>,

@@ -222,7 +222,8 @@ export default {
     msg: "This is no result!",
     waiting: "Transaction sent, pending confirmation...",
     waitcount: "(transaction pending count: ",
-    waitcount2: ")"
+    waitcount2: ")",
+    pending:"Processing"
   },
   contract: {
     title1: "Contract Details",

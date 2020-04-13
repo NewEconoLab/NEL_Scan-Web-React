@@ -93,7 +93,9 @@ class ContractInfo extends React.Component<IContractProps> {
             return (
                 <div className="nodata-wrap">
                     <img src={require('@/img/tran-nodata.png')} alt="" />
-                    <p>{this.intrl.nodata.msg}</p>
+                    {
+                        this.props.contract.isPending?<p>{this.intrl.nodata.pending}</p>:<p>{this.intrl.nodata.msg}</p>
+                    }
                 </div>
             )
         }

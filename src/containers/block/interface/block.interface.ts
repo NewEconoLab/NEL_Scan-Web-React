@@ -4,6 +4,7 @@ export interface IBlockStore {
     blockHeight: string,
     blockList: IBlock[],
     blockInfo: IBlockInfo | null,
+    isPending:boolean,
     getBlockHeight: () => Promise<boolean>,
     getBlockList: (size: number, page: number) => Promise<boolean>,
     getBlockInfo: (index: number) => Promise<boolean>

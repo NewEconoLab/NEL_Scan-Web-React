@@ -222,7 +222,8 @@ export default {
     msg: "没有搜索结果哦",
     waiting: "交易已发出，等待共识确认...",
     waitcount: "（当前等待数量：",
-    waitcount2: "）"
+    waitcount2: "）",
+    pending:"处理中"
   },
   contract: {
     title1: "合约信息",

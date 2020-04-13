@@ -8,6 +8,7 @@ export interface IAssetInfoStore
     balanceRankList: IBalanceRank[],
     nep5TransList:INep5TransList[],
     nep5TransCount:number,
+    isPending:boolean,
     getAssetInfo: (assetid: string) => Promise<boolean>,
     getNep5Info:(assetid: string) => Promise<boolean>,
     getBalanceRankCount: (assetid: string) => Promise<boolean>,

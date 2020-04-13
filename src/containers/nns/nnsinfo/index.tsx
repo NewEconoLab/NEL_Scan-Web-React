@@ -121,7 +121,9 @@ class NNSInfo extends React.Component<INNSInfoProps, {}> {
       return (
         <div className="nodata-wrap">
           <img src={require('@/img/nodata.png')} alt="" />
-          <p>{this.intrl.nodata.msg}</p>
+          {
+            this.props.nnsinfo.isPending?<p>{this.intrl.nodata.pending}</p>:<p>{this.intrl.nodata.msg}</p>
+          }
         </div>
       )
     }
