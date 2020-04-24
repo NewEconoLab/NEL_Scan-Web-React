@@ -29,5 +29,5 @@ export interface IAddressTime
 {
     txid: string,
     blockindex: number,
-    blocktime: { $date: number }
+    blocktime: string
 }
