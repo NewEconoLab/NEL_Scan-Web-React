@@ -133,8 +133,8 @@ class AddrTxs extends React.Component<any, {}>
     if (key === 'blockindex') {
       return <span><a href="javascript:;" onClick={this.goBlockInfo.bind(this, value)}>{toThousands(value.toString())}</a></span>
     }
-    if (key === 'time') {
-      const time = formatTime.format('yyyy/MM/dd | hh:mm:ss', value.toString(), this.props.intl.locale);
+    if (key === 'blocktime') {
+      const time = formatTime.format('yyyy/MM/dd | hh:mm:ss', value.$date.toString(), this.props.intl.locale);
       return <span>{time}</span>
     }
     return null;
@@ -322,6 +322,7 @@ class AddrTxs extends React.Component<any, {}>
                   <div className="table-body-new">
                     {
                       this.props.addressinfo.addrTransList.map((item: ITransaction, index: number) => {
+                        console.log(item.blocktime)
                         return (
                           <div className="table-row" key={index}>
                             <div className="tr-header">
