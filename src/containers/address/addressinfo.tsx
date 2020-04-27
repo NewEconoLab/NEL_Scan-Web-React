@@ -273,7 +273,7 @@ class AddressInfo extends React.Component<IAddressInfoProps, {}> {
               <li>
                 <span className="type-name">{this.intrl.address.create}</span>
                 <span className="type-content">
-                  {this.props.addressinfo.addrInfo && this.props.addressinfo.addrInfo.firstuse && formatTime.format('yyyy/MM/dd | hh:mm:ss', new Date(this.props.addressinfo.addrInfo.firstuse.blocktime).getTime().toString(), this.props.intl.locale)}
+                  {this.props.addressinfo.addrInfo && this.props.addressinfo.addrInfo.firstuse && formatTime.format('yyyy/MM/dd | hh:mm:ss', this.props.addressinfo.addrInfo.firstuse.blocktime.$date.toString(), this.props.intl.locale)}
                 </span>
               </li>
               <li>

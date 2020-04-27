@@ -39,8 +39,8 @@ class Address implements IAddressStore {
             this.addrList = arr.map((key) => {
                 const newObject = {
                     addr: key.addr,
-                    firstuse: key.firstuse ? new Date(key.firstuse.blocktime).getTime() : 0,
-                    lastuse: key.lastuse ? new Date(key.lastuse.blocktime).getTime() : 0,
+                    firstuse: key.firstuse ?  key.firstuse.blocktime.$date  : 0,
+                    lastuse: key.lastuse ?  key.lastuse.blocktime.$date  : 0,
                     txcount: key.txcount ? key.txcount : 0
                 }
                 return newObject;
