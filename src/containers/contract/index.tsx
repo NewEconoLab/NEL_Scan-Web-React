@@ -94,7 +94,7 @@ class ContractInfo extends React.Component<IContractProps> {
                 <div className="nodata-wrap">
                     <img src={require('@/img/tran-nodata.png')} alt="" />
                     {
-                        this.props.contract.isPending?<p>{this.intrl.nodata.pending}</p>:<p>{this.intrl.nodata.msg}</p>
+                        this.props.contract.isPending ? <p>{this.intrl.nodata.pending}</p> : <p>{this.intrl.nodata.msg}</p>
                     }
                 </div>
             )
@@ -108,10 +108,15 @@ class ContractInfo extends React.Component<IContractProps> {
                     <TitleText text={this.intrl.contract.title1} isInfoTitle={true} />
                     <div className="info-list">
                         <ul>
-                            <li>
-                                <span className="type-name">{this.intrl.contract.name}</span>
-                                <span className="type-content">{this.props.contract.conInfo.name}</span>
-                            </li>
+                            {
+                                this.props.contract.conInfo.name && (
+                                    <li>
+                                        <span className="type-name">{this.intrl.contract.name}</span>
+                                        <span className="type-content">{this.props.contract.conInfo.name}</span>
+                                    </li>
+                                )
+                            }
+
                             <li>
                                 <span className="type-name">{this.intrl.contract.hash}</span>
                                 <span className="type-content">
@@ -127,26 +132,48 @@ class ContractInfo extends React.Component<IContractProps> {
                                     }
                                 </span>
                             </li>
+
                             <li>
                                 <span className="type-name">{this.intrl.contract.author}</span>
-                                <span className="type-content">
+                                {
+                                    process.env.REACT_APP_SERVER_ENV === "NEO3" ? (
+                                        <span className="type-content">
+                                            {this.props.contract.conInfo.creator?this.props.contract.conInfo.creator:"system"}
+                                        </span>
+                                    )
+                                        : (
+                                            <span className="type-content">
+                                                {this.props.contract.conInfo.author}（{this.props.contract.conInfo.email}）
+                                        </span>
+                                        )
+                                }
+                                {/* <span className="type-content">
                                     {this.props.contract.conInfo.author}（{this.props.contract.conInfo.email}）
-                                </span>
+                                </span> */}
                             </li>
                             <li>
                                 <span className="type-name">{this.intrl.contract.createtime}</span>
                                 <span className="type-content">{formatTime.format('yyyy/MM/dd | hh:mm:ss', this.props.contract.conInfo.createDate.toString(), this.props.intl.locale)}</span>
                             </li>
-                            <li>
-                                <span className="type-name">{this.intrl.contract.version}</span>
-                                <span className="type-content">{this.props.contract.conInfo.version}</span>
-                            </li>
-                            <li>
-                                <span className="type-name">{this.intrl.contract.des}</span>
-                                <span className="type-content">
-                                    {this.props.contract.conInfo.description}
-                                </span>
-                            </li>
+                            {
+                                this.props.contract.conInfo.version && (
+                                    <li>
+                                        <span className="type-name">{this.intrl.contract.version}</span>
+                                        <span className="type-content">{this.props.contract.conInfo.version}</span>
+                                    </li>
+                                )
+                            }
+                            {
+                                this.props.contract.conInfo.description && (
+                                    <li>
+                                        <span className="type-name">{this.intrl.contract.des}</span>
+                                        <span className="type-content">
+                                            {this.props.contract.conInfo.description}
+                                        </span>
+                                    </li>
+                                )
+                            }
+
                             <li>
                                 <span className="type-name">{this.intrl.contract.tx24}</span>
                                 <span className="type-content">

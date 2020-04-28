@@ -38,7 +38,8 @@ export interface IContractInfo {
     txCount: number,
     txCount24h: number,
     usrCount: number,
-    usrCount24h: number
+    usrCount24h: number,
+    creator:string,
 }
 export interface IContractAll {
     txid: string,
