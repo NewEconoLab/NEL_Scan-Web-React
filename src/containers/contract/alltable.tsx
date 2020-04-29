@@ -7,7 +7,7 @@ import './index.less'
 import { inject, observer } from 'mobx-react';
 import { injectIntl } from 'react-intl';
 import Page from '@/components/Page';
-import { IContractProps,IContractAll } from './interface/contract.interface';
+import { IContractProps, IContractAll } from './interface/contract.interface';
 
 @inject('contract')
 @observer
@@ -46,42 +46,36 @@ class AllTable extends React.Component<IContractProps> {
             key: 'net_fee'
         }
     ]
-    public componentDidMount () {
+    public componentDidMount() {
         this.getAllList();
     }
-    public getAllList = ()=>{
-        this.props.contract.getAllContrant(this.state.currentPage,this.state.pageSize)
+    public getAllList = () => {
+        this.props.contract.getAllContrant(this.state.currentPage, this.state.pageSize)
     }
     // 刷新时间
-    public refreshTime = () =>
-    {
+    public refreshTime = () => {
         this.setState({
             showTimeChange: !this.state.showTimeChange
         })
     }
     // 交易详情链接
-    public goTransInfo = (txid: string) =>
-    {
+    public goTransInfo = (txid: string) => {
         this.props.history.push('/transaction/' + txid)
     }
     // 跳转到地址详情页
-    public toAddressInfo = (address: string) =>
-    {
+    public toAddressInfo = (address: string) => {
         this.props.history.push('/address/' + address)
     }
     // 翻页功能
-    public onGoPage = (index: number) =>
-    {
+    public onGoPage = (index: number) => {
         this.setState({
             currentPage: index,
             isLoading: true
-        }, async () =>
-            {
-                this.getAllList();
-            })
+        }, async () => {
+            this.getAllList();
+        })
     }
-    public render()
-    {
+    public render() {
         return (
             <>
                 <div className="contract-table">
@@ -90,11 +84,12 @@ class AllTable extends React.Component<IContractProps> {
                             <div className="table-th">
                                 <ul>
                                     {
-                                        this.allTableTh.map((item, index) =>
-                                        {
-                                            if (index === 1)
-                                            {
+                                        this.allTableTh.map((item, index) => {
+                                            if (index === 1) {
                                                 return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require(process.env.REACT_APP_SERVER_ENV === "PUB" ? '@/img/refresh.png' : '@/img/refreshTest.png')} /></li>
+                                            }
+                                            if(index ===4 && process.env.REACT_APP_SERVER_ENV === "NEO3"){
+                                                return null
                                             }
                                             return <li key={index}>{item.name}</li>
                                         })
@@ -113,15 +108,24 @@ class AllTable extends React.Component<IContractProps> {
                                     <div className="table-body">
                                         <ul>
                                             {
-                                                this.props.contract.allTxList.map((item:IContractAll, index: number) =>
-                                                {
+                                                this.props.contract.allTxList.map((item: IContractAll, index: number) => {
                                                     return (
                                                         <li key={index}>
                                                             <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
-                                                            <span>{this.state.showTimeChange ? formatTime.computeTime(parseInt(item.time,10), this.props.intl.locale) : formatTime.format('yyyy/MM/dd | hh:mm:ss', item.time, this.props.intl.locale)}</span>
+                                                            <span>{this.state.showTimeChange ? formatTime.computeTime(parseInt(item.time, 10), this.props.intl.locale) : formatTime.format('yyyy/MM/dd | hh:mm:ss', item.time, this.props.intl.locale)}</span>
                                                             <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
-                                                            <span title={this.props.contract.conInfo ? this.props.contract.conInfo.name:'-'}><img src={require('@/img/contract-test.png')} alt=""/>{this.props.contract.conInfo ? this.props.contract.conInfo.name.replace(/^(.{10})(.*)(.{0})$/, '$1...$3') : '-'}</span>
-                                                            <span>{item.value.toString()}</span>
+                                                            {
+                                                                process.env.REACT_APP_SERVER_ENV === "NEO3" ?
+                                                                (
+                                                                    <span title={this.props.contract.conInfo ? this.props.contract.conInfo.name : '-'}><img src={require('@/img/contract-test.png')} alt="" />{(item.to === "当前合约"&&this.props.contract.conInfo) ? this.props.contract.conInfo.hash.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') : '-'}</span>
+                                                                ):(
+                                                                    <span title={this.props.contract.conInfo ? this.props.contract.conInfo.name : '-'}><img src={require('@/img/contract-test.png')} alt="" />{this.props.contract.conInfo ? this.props.contract.conInfo.name.replace(/^(.{10})(.*)(.{0})$/, '$1...$3') : '-'}</span>
+                                                                )
+                                                            }
+                                                            {
+                                                                process.env.REACT_APP_SERVER_ENV !== "NEO3" && <span>{item.value.toString()}</span>
+                                                            }
+                                                            
                                                             <span>{item.net_fee}</span>
                                                         </li>
                                                     )
@@ -141,8 +145,7 @@ class AllTable extends React.Component<IContractProps> {
                                         <ul>
                                             <li>
                                                 {
-                                                    this.allTableTh.map((item, index) =>
-                                                    {
+                                                    this.allTableTh.map((item, index) => {
                                                         return (
                                                             <div className="table-line" key={index}>
                                                                 <span className="line-title" >{item.name}</span>
@@ -164,8 +167,7 @@ class AllTable extends React.Component<IContractProps> {
                                     <div className="table-body">
                                         <ul>
                                             {
-                                                this.props.contract.allTxList.map((item, index: number) =>
-                                                {
+                                                this.props.contract.allTxList.map((item: IContractAll, index: number) => {
                                                     return (
                                                         <li key={index}>
                                                             <div className="table-line">
@@ -186,18 +188,35 @@ class AllTable extends React.Component<IContractProps> {
                                                                     <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
                                                                 </span>
                                                             </div>
-                                                            <div className="table-line">
-                                                                <span className="line-title">{this.intrl.tableTh.to}</span>
-                                                                <span className="line-content">
-                                                                    <span><img src={require('@/img/contract-test.png')} alt=""/>{this.props.contract.conInfo ? this.props.contract.conInfo.name.replace(/^(.{10})(.*)(.{0})$/, '$1...$3') : '-'}</span>
-                                                                </span>
-                                                            </div>
-                                                            <div className="table-line">
-                                                                <span className="line-title">{this.intrl.tableTh.value2}</span>
-                                                                <span className="line-content">
-                                                                    <span>{item.value}</span>
-                                                                </span>
-                                                            </div>
+                                                            {
+                                                                process.env.REACT_APP_SERVER_ENV === "NEO3" ? (
+                                                                    <div className="table-line">
+                                                                        <span className="line-title">{this.intrl.tableTh.to}</span>
+                                                                        <span className="line-content">
+                                                                            <span><img src={require('@/img/contract-test.png')} alt="" />{(item.to === "当前合约"&&this.props.contract.conInfo) ? this.props.contract.conInfo.hash.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') : '-'}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                ) :
+                                                                    (
+                                                                        <div className="table-line">
+                                                                            <span className="line-title">{this.intrl.tableTh.to}</span>
+                                                                            <span className="line-content">
+                                                                                <span><img src={require('@/img/contract-test.png')} alt="" />{this.props.contract.conInfo ? this.props.contract.conInfo.name.replace(/^(.{10})(.*)(.{0})$/, '$1...$3') : '-'}</span>
+                                                                            </span>
+                                                                        </div>
+                                                                    )
+                                                            }
+                                                            {
+                                                                process.env.REACT_APP_SERVER_ENV !== "NEO3" && (
+                                                                    <div className="table-line">
+                                                                        <span className="line-title">{this.intrl.tableTh.value2}</span>
+                                                                        <span className="line-content">
+                                                                            <span>{item.value}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                )
+                                                            }
+
                                                             <div className="table-line">
                                                                 <span className="line-title">{this.intrl.tableTh.fee}</span>
                                                                 <span className="line-content">
