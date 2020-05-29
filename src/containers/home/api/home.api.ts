@@ -84,3 +84,23 @@ export const searchSomething = (str:string)=>{
   }
   return request(opts)
 }
+/**
+ * 首页上部分获取信息
+ */
+export const getScanStatistic = ()=>{
+  const opts = {
+    method:'getScanStatistic',
+    params:[]
+  }
+  return request(opts)
+}
+/**
+ * 首页上部分交易统计
+ */
+export const getScanTxCountHist = ()=>{
+  const opts = {
+    method:'getScanTxCountHist',
+    params:[]
+  }
+  return request(opts)
+}

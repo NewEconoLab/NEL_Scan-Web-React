@@ -89,7 +89,14 @@ export default {
     totalTrans: "交易总数",
     totalAddr: "已创建的钱包地址数",
     blocks: "最新的10个区块",
-    transactions: "最新的10笔交易"
+    transactions: "最新的10笔交易",
+    neoprice:"NEO价格",
+    gasprice:"GAS价格",
+    sevenday:"7天活跃地址数",
+    neocount:"NEO持币地址数",
+    gascount:"GAS持币地址数",
+    totalcount:"交易总量",
+    txcount:"30天交易数"
   },
   block: {
     title1: "区块列表",

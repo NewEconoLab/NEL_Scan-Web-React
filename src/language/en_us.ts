@@ -89,7 +89,14 @@ export default {
     totalTrans: "Total Transactions",
     totalAddr: "Wallet Address Created",
     blocks: "Blocks",
-    transactions: "Transactions"
+    transactions: "Transactions",
+    neoprice:"NEO",
+    gasprice:"GAS",
+    sevenday:"Active Address",
+    neocount:"Neo Holders",
+    gascount:"GAS Holders",
+    totalcount:"Total Tx",
+    txcount:"Daily Trade Amount"
   },
   block: {
     title1: "Blocks",

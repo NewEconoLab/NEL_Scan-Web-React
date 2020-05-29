@@ -1,7 +1,8 @@
 import { observable, action } from 'mobx';
 import * as Api from '../api/home.api'
-import { IHomeStore, IBlock, ITransList, ISearchAsset } from '../interface/home.interface';
+import { IHomeStore, IBlock, ITransList, ISearchAsset, IStatisInfo, ITxHistoryList } from '../interface/home.interface';
 import { toThousands } from '@/utils/numberTool'
+import * as formatTime from '@/utils/formatTime';
 
 class Home implements IHomeStore {
     @observable public blockCount: string = '0';  // 区块高度
@@ -10,7 +11,54 @@ class Home implements IHomeStore {
     @observable public blockList: IBlock[] = [];  // 区块列表
     @observable public transList: ITransList[] = [];   // 交易列表
     @observable public searchAssetList: ISearchAsset[] = [];
-
+    @observable public statisInfo: IStatisInfo | null = null;
+    @observable public txHistoryList: ITxHistoryList = {
+        count: [],
+        time: []
+    }
+    /**
+     * 获取基本数据
+     */
+    @action public async getStatisData() {
+        let result: any = null;
+        try {
+            result = await Api.getScanStatistic();
+        } catch (error) {
+            return false;
+        }
+        this.statisInfo = result[0] || null;
+        return true;
+    }
+    /**
+     * 交易统计，图表数据
+     */
+    @action public async getHistoryData() {
+        let result: any = null;
+        try {
+            result = await Api.getScanTxCountHist();
+        } catch (error) {
+            return false;
+        }
+        if (Object.keys(result[0].list).length === 0) {
+            this.txHistoryList = {
+                count: [],
+                time: []
+            }
+            return false
+        }
+        result[0].list = result[0].list.reverse()
+        const timeArr = result[0].list.map((item) => {
+            return formatTime.format('MM-dd', item.time, 'zh')
+        })
+        const arr = result[0].list.map((item) => {
+            return toThousands(item.count)
+        })
+        this.txHistoryList = {
+            count:arr,
+            time:timeArr
+        };
+        return true;
+    }
     /**
      * 获取区块高度
      */
@@ -21,7 +69,7 @@ class Home implements IHomeStore {
         } catch (error) {
             return false;
         }
-        const count = (parseInt(result[ 0 ].blockcount, 10) - 1).toString();
+        const count = (parseInt(result[0].blockcount, 10) - 1).toString();
         this.blockCount = result ? toThousands(count) : '0';
         return true;
     }
@@ -36,7 +84,7 @@ class Home implements IHomeStore {
         } catch (error) {
             return false;
         }
-        this.txCount = result ? toThousands(result[ 0 ].txcount) : '0';
+        this.txCount = result ? toThousands(result[0].txcount) : '0';
         return true;
     }
     /**
@@ -49,7 +97,7 @@ class Home implements IHomeStore {
         } catch (error) {
             return false;
         }
-        this.addrCount = result ? toThousands(result[ 0 ].addrcount) : '0';
+        this.addrCount = result ? toThousands(result[0].addrcount) : '0';
         return true;
     }
     /**
