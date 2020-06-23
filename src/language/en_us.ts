@@ -11,7 +11,8 @@ export default {
     mainnet: "MainNet",
     testnet: "TestNet",
     neo3test: "NEO3.0 TestNet",
-    lang: "Language"
+    lang: "Language",
+    contract:"Contract"
   },
   hint: {
     type1: "The auction period is the first stage of the auction and its duration is 3 days, during which all bids are valid. An overtime bidding of up to 2 days will be triggered when someone bids on the last day of the auction period. Otherwise the auction ends at the end of the auction period.",
@@ -77,7 +78,11 @@ export default {
     number: "Value",
     sender: "Sender",
     index:"Trace",
-    transid:"Parent Tx Hash"
+    transid:"Parent Tx Hash",
+    contract:"Hash",
+    ctime:"Create Time",
+    cname:"Name",
+    cauthor:"Author",
   },
   page: {
     page: "Page",
@@ -248,7 +253,8 @@ export default {
     all: "All ",
     contract: " Contract",
     copy: "Copy",
-    calltx:"Call Tx"
+    calltx:"Call Tx",
+    title5:"Contracts"
   },
   other:{
     call:"call",

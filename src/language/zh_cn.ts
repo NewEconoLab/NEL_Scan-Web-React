@@ -11,7 +11,8 @@ export default {
     mainnet: "主网",
     testnet: "测试网",
     neo3test: "NEO3.0 测试网",
-    lang: "语言"
+    lang: "语言",
+    contract:"合约"
   },
   hint: {
     type1: "确定期为竞拍第一阶段，时长为3天，此期间所有的出价都有效。当确定期最后一天有人出价时将触发最大时长为2天的随机期。否则竞拍即在确定期结束。",
@@ -77,7 +78,11 @@ export default {
     number: "数量",
     sender: "发送方",
     index:"序号",
-    transid:"父交易ID"
+    transid:"父交易ID",
+    contract:"合约哈希",
+    ctime:"创建时间",
+    cname:"名称",
+    cauthor:"作者",
   },
   page: {
     page: "第",
@@ -248,7 +253,8 @@ export default {
     all: "全部",
     contract: "合约",
     copy: "复制成功",
-    calltx:"调用交易"
+    calltx:"调用交易",
+    title5:"合约列表"
   },
   other:{
     call:"调用合约",

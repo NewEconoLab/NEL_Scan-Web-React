@@ -26,7 +26,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
     isShowBrowse: false,
     isShowEnv: false,
     inputValue: '',
-    languageText: store[ 'common' ].language === 'en' ? "中" : "En",
+    languageText: store['common'].language === 'en' ? "中" : "En",
     isShowLang: false,
     isShowSearch: false,
   }
@@ -271,6 +271,9 @@ export default class HeaderMobile extends React.Component<any, IState> {
                         <span><Link to="/blocks">{this.props.locale.blocks}</Link></span>
                         <span><Link to="/transactions">{this.props.locale.transactions}</Link></span>
                         <span><Link to="/addresses">{this.props.locale.addresses}</Link></span>
+                        {
+                          process.env.REACT_APP_SERVER_ENV === 'PUB' && <li><Link to="/contracts">{this.props.locale.contract}</Link></li>
+                        }
                       </div>
                     )
                   }

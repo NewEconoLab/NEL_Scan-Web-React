@@ -386,7 +386,7 @@ export default class Header extends React.Component<IProps, IState>{
           <div className="header-menu">
             <ul>
               <li className={this.mapRouterUnderline('/')}><Link to="/">{this.props.locale.explorer}</Link></li>
-              <li className={this.mapRouterUnderline(['/blocks', '/block', '/transactions', '/transaction', '/addresses', '/address', '/contract'])}>
+              <li className={this.mapRouterUnderline(['/blocks', '/block', '/transactions', '/transaction', '/addresses', '/address', '/contract','/contracts'])}>
                 <div className="select-box">
                   <div className="select-content">
                     <label onClick={this.toggleBrowse}>
@@ -400,7 +400,10 @@ export default class Header extends React.Component<IProps, IState>{
                         <ul>
                           <li><Link to="/blocks">{this.props.locale.blocks}</Link></li>
                           <li><Link to="/transactions">{this.props.locale.transactions}</Link></li>
-                          <li><Link to="/addresses">{this.props.locale.addresses}</Link></li>
+                          <li><Link to="/addresses">{this.props.locale.addresses}</Link></li> 
+                          {
+                            process.env.REACT_APP_SERVER_ENV === 'PUB' && <li><Link to="/contracts">{this.props.locale.contract}</Link></li>
+                          }
                         </ul>
                       </div>
                     )

@@ -2,9 +2,14 @@ import asyncComponent from '@/components/asyncComponent';
 // import redirectComponent from '@/components/redirectComponent';
 
 export default [
+  
   {
     component: asyncComponent(() => import('../containers/contract')),
     path: '/contract/:hash',
+  },
+  {
+    component: asyncComponent(() => import('../containers/contract/contractlist')),
+    path: '/contracts',
   },
   {
     component: asyncComponent(() => import('../containers/nns/soldpage')),

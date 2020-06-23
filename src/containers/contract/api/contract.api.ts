@@ -1,6 +1,19 @@
 import request from 'utils/request';
 
 /**
+ * 获取合约列表
+ * @param page 
+ * @param pageSize 
+ */
+export const getcontractlist = (page:number,pageSize:number) =>
+{
+    const opts = {
+        method: 'getContractList',
+        params: [page,pageSize],
+    }
+    return request(opts);
+}
+/**
  * 获取合约详情
  * @param hash 合约哈希
  */
