@@ -212,7 +212,6 @@ class Topstatistic extends React.Component<IHomeProps, any>
     const echartsEl = document.getElementById('transEcharts') as HTMLDivElement;
     if (echartsEl) {
       const myChart = Echarts.init(echartsEl, null, { height: 200 });
-      console.log(this.props.home.txHistoryList.time)
       chartsOptions.title.text = this.intrl.home.txcount;
       chartsOptions.xAxis.data = this.props.home.txHistoryList.time;
       chartsOptions.series[0].data = this.props.home.txHistoryList.count;

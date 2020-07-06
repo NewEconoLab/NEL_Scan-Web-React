@@ -51,7 +51,7 @@ class Home implements IHomeStore {
             return formatTime.format('MM-dd', item.time, 'zh')
         })
         const arr = result[0].list.map((item) => {
-            return toThousands(item.count)
+            return toThousands(item.count)||0
         })
         this.txHistoryList = {
             count:arr,
