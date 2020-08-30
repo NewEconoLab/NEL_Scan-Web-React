@@ -46,7 +46,7 @@ class Topstatistic extends React.Component<IHomeProps, any>
       <div className="index-statistic">
         <div className="statistic-box">
           {
-            process.env.REACT_APP_SERVER_ENV === 'PUB' ? (
+            process.env.REACT_APP_SERVER_ENV !== 'DEV' ? (
               <>
                 <div className="statistic-middlebox">
                   {
@@ -92,13 +92,14 @@ class Topstatistic extends React.Component<IHomeProps, any>
               </>
             ) : (
                 <>
-                  <div className="statistic-smallbox">
-                    {
-                      process.env.REACT_APP_SERVER_ENV !== 'PUB' && <img src={require('@/img/blocksbg-t.png')} alt="blocksbg.png" />
-                    }
+                  <div className="statistic-smallbox">                  
+                    {/* {
+                      process.env.REACT_APP_SERVER_ENV === 'PUB' && <img src={require('@/img/blocksbg-t.png')} alt="blocksbg.png" />
+                    } */}
                     {/* {
                       process.env.REACT_APP_SERVER_ENV === 'PUB' && <img src={require('@/img/blocksbg-m.png')} alt="blocksbg.png" />
                     } */}
+                    <img src={require('@/img/blocksbg-t.png')} alt="blocksbg.png" />
                     <div className="statistic-content">
                       <strong className="statistic-data">{this.props.home.blockCount}</strong>
                       <strong className="statistic-type">{this.intrl.home.lastBlock}</strong>
@@ -106,12 +107,13 @@ class Topstatistic extends React.Component<IHomeProps, any>
                     </div>
                   </div>
                   <div className="statistic-smallbox">
-                    {
+                    {/* {
                       process.env.REACT_APP_SERVER_ENV !== 'PUB' && <img src={require('@/img/tranbg-t.png')} alt="tranbg.png" />
                     }
                     {
                       process.env.REACT_APP_SERVER_ENV === 'PUB' && <img src={require('@/img/tranbg-m.png')} alt="tranbg.png" />
-                    }
+                    } */}
+                    <img src={require('@/img/tranbg-t.png')} alt="tranbg.png" />
                     <div className="statistic-content">
                       <strong className="statistic-data">{this.props.home.txCount}</strong>
                       <strong className="statistic-type">{this.intrl.home.totalTrans}</strong>
@@ -119,12 +121,13 @@ class Topstatistic extends React.Component<IHomeProps, any>
                     </div>
                   </div>
                   <div className="statistic-smallbox">
-                    {
+                    {/* {
                       process.env.REACT_APP_SERVER_ENV !== 'PUB' && <img src={require('@/img/addrbg-t.png')} alt="addrbg.png" />
                     }
                     {
                       process.env.REACT_APP_SERVER_ENV === 'PUB' && <img src={require('@/img/addrbg-m.png')} alt="addrbg.png" />
-                    }
+                    } */}
+                    <img src={require('@/img/addrbg-t.png')} alt="addrbg.png" />
                     <div className="statistic-content">
                       <strong className="statistic-data">{this.props.home.addrCount}</strong>
                       <strong className="statistic-type">{this.intrl.home.totalAddr}</strong>
@@ -138,7 +141,7 @@ class Topstatistic extends React.Component<IHomeProps, any>
         </div>
         <div className="mobile-statistic-box">
           {
-            process.env.REACT_APP_SERVER_ENV === 'PUB' ? (
+            process.env.REACT_APP_SERVER_ENV !== 'DEV' ? (
               <div className="statistic-middlebox">
                 {
                   this.props.home.statisInfo && (
