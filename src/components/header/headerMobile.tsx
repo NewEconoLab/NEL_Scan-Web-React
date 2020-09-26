@@ -98,8 +98,9 @@ export default class HeaderMobile extends React.Component<any, IState> {
     })
   }
   public getPath = (base) => {
-    const locations = this.props.history.location;
-    window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`
+    // const locations = this.props.history.location;
+    // window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`;
+    window.location.href = `${location.origin}${base || ''}`;
   }
 
   // 输入变化
@@ -272,7 +273,7 @@ export default class HeaderMobile extends React.Component<any, IState> {
                         <span><Link to="/transactions">{this.props.locale.transactions}</Link></span>
                         <span><Link to="/addresses">{this.props.locale.addresses}</Link></span>
                         {
-                          process.env.REACT_APP_SERVER_ENV === 'PUB' && <li><Link to="/contracts">{this.props.locale.contract}</Link></li>
+                          process.env.REACT_APP_SERVER_ENV !== 'DEV' && <span><Link to="/contracts">{this.props.locale.contract}</Link></span>
                         }
                       </div>
                     )

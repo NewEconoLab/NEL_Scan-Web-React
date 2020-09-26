@@ -274,12 +274,13 @@ export default class Header extends React.Component<IProps, IState>{
       isShowLanguage: false,
     })
   }
+  // 切换网络时跳首页
   public getPath = (base) =>
-  {
-    const locations = this.props.history.location;
-    console.log(location.origin);
-
-    window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`
+  {    
+    window.location.href = `${location.origin}${base || ''}`;
+    // const locations = this.props.history.location;
+    // console.log(location.origin);
+    // window.location.href = `${location.origin}${base || ''}${locations.pathname}${locations.search}${locations.hash}`;
   }
 
   // 切换英文
@@ -402,7 +403,7 @@ export default class Header extends React.Component<IProps, IState>{
                           <li><Link to="/transactions">{this.props.locale.transactions}</Link></li>
                           <li><Link to="/addresses">{this.props.locale.addresses}</Link></li> 
                           {
-                            process.env.REACT_APP_SERVER_ENV === 'PUB' && <li><Link to="/contracts">{this.props.locale.contract}</Link></li>
+                            process.env.REACT_APP_SERVER_ENV !== 'DEV' && <li><Link to="/contracts">{this.props.locale.contract}</Link></li>
                           }
                         </ul>
                       </div>
