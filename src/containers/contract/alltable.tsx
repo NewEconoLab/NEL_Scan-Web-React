@@ -1,5 +1,5 @@
 /**
- * 交易详情页
+ * 调用交易表
  */
 import * as React from 'react';
 import * as formatTime from 'utils/formatTime';
@@ -88,7 +88,7 @@ class AllTable extends React.Component<IContractProps> {
                                             if (index === 1) {
                                                 return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require(process.env.REACT_APP_SERVER_ENV === "PUB" ? '@/img/refresh.png' : '@/img/refreshTest.png')} /></li>
                                             }
-                                            if(index ===4 && process.env.REACT_APP_SERVER_ENV === "NEO3"){
+                                            if (index === 4 && process.env.REACT_APP_SERVER_ENV === "NEO3") {
                                                 return null
                                             }
                                             return <li key={index}>{item.name}</li>
@@ -116,16 +116,16 @@ class AllTable extends React.Component<IContractProps> {
                                                             <span><a href="javascript:;" onClick={this.toAddressInfo.bind(this, item.from)}>{item.from.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
                                                             {
                                                                 process.env.REACT_APP_SERVER_ENV === "NEO3" ?
-                                                                (
-                                                                    <span title={this.props.contract.conInfo ? this.props.contract.conInfo.name : '-'}><img src={require('@/img/contract-test.png')} alt="" />{(item.to === "当前合约"&&this.props.contract.conInfo) ? this.props.contract.conInfo.hash.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') : '-'}</span>
-                                                                ):(
-                                                                    <span title={this.props.contract.conInfo ? this.props.contract.conInfo.name : '-'}><img src={require('@/img/contract-test.png')} alt="" />{this.props.contract.conInfo ? this.props.contract.conInfo.name.replace(/^(.{10})(.*)(.{0})$/, '$1...$3') : '-'}</span>
-                                                                )
+                                                                    (
+                                                                        <span title={this.props.contract.conInfo ? this.props.contract.conInfo.name : '-'}><img src={require('@/img/contract-test.png')} alt="" />{(item.to === "当前合约" && this.props.contract.conInfo) ? this.props.contract.conInfo.hash.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') : '-'}</span>
+                                                                    ) : (
+                                                                        <span title={this.props.contract.conInfo ? this.props.contract.conInfo.name : '-'}><img src={require('@/img/contract-test.png')} alt="" />{this.props.contract.conInfo ? this.props.contract.conInfo.name.replace(/^(.{10})(.*)(.{0})$/, '$1...$3') : '-'}</span>
+                                                                    )
                                                             }
                                                             {
                                                                 process.env.REACT_APP_SERVER_ENV !== "NEO3" && <span>{item.value.toString()}</span>
                                                             }
-                                                            
+
                                                             <span>{item.net_fee}</span>
                                                         </li>
                                                     )
@@ -193,7 +193,7 @@ class AllTable extends React.Component<IContractProps> {
                                                                     <div className="table-line">
                                                                         <span className="line-title">{this.intrl.tableTh.to}</span>
                                                                         <span className="line-content">
-                                                                            <span><img src={require('@/img/contract-test.png')} alt="" />{(item.to === "当前合约"&&this.props.contract.conInfo) ? this.props.contract.conInfo.hash.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') : '-'}</span>
+                                                                            <span><img src={require('@/img/contract-test.png')} alt="" />{(item.to === "当前合约" && this.props.contract.conInfo) ? this.props.contract.conInfo.hash.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') : '-'}</span>
                                                                         </span>
                                                                     </div>
                                                                 ) :

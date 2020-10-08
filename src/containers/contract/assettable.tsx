@@ -1,5 +1,5 @@
 /**
- * 交易详情页
+ * 合约资产表
  */
 import * as React from 'react';
 import TitleText from '@/components/titletext/index';
@@ -14,7 +14,7 @@ import { IContractProps } from './interface/contract.interface';
 @observer
 class AssetTable extends React.Component<IContractProps> {
     public state = {
-        tabledata:[]
+        tabledata: []
     }
     public intrl = this.props.intl.messages;
     public assetTableTh = [
@@ -27,30 +27,29 @@ class AssetTable extends React.Component<IContractProps> {
             key: 'balance'
         }
     ]
-    public async componentDidMount(){
+    public async componentDidMount() {
         await this.props.contract.getbalance();
         await this.props.contract.getNep5Balance();
         console.log(this.props.contract.balanceList);
         console.log(this.props.contract.nep5BalanceList);
         this.setState({
-            tabledata:[
+            tabledata: [
                 ...this.props.contract.balanceList,
                 ...this.props.contract.nep5BalanceList
             ]
-        },()=>{
+        }, () => {
             console.log(this.state.tabledata)
         })
     }
-    
-    public render()
-    {
+
+    public render() {
         return (
             <>
                 <TitleText text={this.intrl.contract.title2} />
                 <div className="contractinfo-asset-table">
-                    <Table 
-                        tableTh={this.assetTableTh} 
-                        tableData={this.state.tabledata} 
+                    <Table
+                        tableTh={this.assetTableTh}
+                        tableData={this.state.tabledata}
                     />
                 </div>
             </>

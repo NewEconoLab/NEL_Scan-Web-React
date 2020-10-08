@@ -1,5 +1,5 @@
 /**
- * 内部列表页
+ * 内部列表表
  */
 import * as React from 'react';
 // import TitleText from '@/components/titletext/index';
@@ -51,16 +51,13 @@ class InterTransactions extends React.Component<IContractProps>
         isLoading: true,
         showTimeChange: true, // 转换时间显示，true默认显示计时，false显示默认时间
     }
-    public componentDidMount()
-    {
+    public componentDidMount() {
         this.getContractData();
     }
-    public componentWillUnmount()
-    {
+    public componentWillUnmount() {
         this.props.contract.contInterList = [];
     }
-    public getContractData = async () =>
-    {
+    public getContractData = async () => {
         await this.props.contract.getContractInterList(this.state.currentPage, this.state.pageSize);
         this.setState({
             isLoading: false
@@ -68,36 +65,30 @@ class InterTransactions extends React.Component<IContractProps>
     }
 
     // 刷新时间
-    public refreshTime = () =>
-    {
+    public refreshTime = () => {
         this.setState({
             showTimeChange: !this.state.showTimeChange
         })
     }
     // 交易详情链接
-    public goTransInfo = (txid: string) =>
-    {
+    public goTransInfo = (txid: string) => {
         this.props.history.push('/transaction/' + txid)
     }
     // 跳转到合约详情页
-    public toContractInfo = (hash: string) =>
-    {
+    public toContractInfo = (hash: string) => {
         const urltitle: string = process.env.REACT_APP_SERVER_ENV === 'DEV' ? '/test' : (process.env.REACT_APP_SERVER_ENV === 'NEO3' ? '/neo3' : "");
         window.location.href = urltitle + '/contract/' + hash;
     }
     // 翻页功能
-    public onGoPage = (index: number) =>
-    {
+    public onGoPage = (index: number) => {
         this.setState({
             currentPage: index,
             isLoading: true
-        }, async () =>
-        {
+        }, async () => {
             this.getContractData();
         })
     }
-    public render()
-    {
+    public render() {
 
         return (
             <div className="contract-table">
@@ -106,10 +97,8 @@ class InterTransactions extends React.Component<IContractProps>
                         <div className="table-th">
                             <ul>
                                 {
-                                    this.interTableTh.map((item, index) =>
-                                    {
-                                        if (index === 1)
-                                        {
+                                    this.interTableTh.map((item, index) => {
+                                        if (index === 1) {
                                             return <li key={index}>{item.name}<img onClick={this.refreshTime} className="refresh-img" src={require(process.env.REACT_APP_SERVER_ENV === "PUB" ? '@/img/refresh.png' : '@/img/refreshTest.png')} /></li>
                                         }
                                         return <li key={index}>{item.name}</li>
@@ -129,8 +118,7 @@ class InterTransactions extends React.Component<IContractProps>
                                 <div className="table-body">
                                     <ul>
                                         {
-                                            this.props.contract.contInterList.map((item: IInterTx, index: number) =>
-                                            {
+                                            this.props.contract.contInterList.map((item: IInterTx, index: number) => {
                                                 return (
                                                     <li key={index}>
                                                         <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, item.txid)}>{item.txid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
@@ -169,8 +157,7 @@ class InterTransactions extends React.Component<IContractProps>
                                     <ul>
                                         <li>
                                             {
-                                                this.interTableTh.map((item, index) =>
-                                                {
+                                                this.interTableTh.map((item, index) => {
                                                     return (
                                                         <div className="table-line" key={index}>
                                                             <span className="line-title" >{item.name}</span>
@@ -192,8 +179,7 @@ class InterTransactions extends React.Component<IContractProps>
                                 <div className="table-body">
                                     <ul>
                                         {
-                                            this.props.contract.contInterList.map((item: IInterTx, index: number) =>
-                                            {
+                                            this.props.contract.contInterList.map((item: IInterTx, index: number) => {
                                                 return (
                                                     <li key={index}>
                                                         <div className="table-line">

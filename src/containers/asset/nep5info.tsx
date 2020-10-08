@@ -57,8 +57,7 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         tranPageSize: 15
     }
     // 初始化数据
-    public componentDidMount()
-    {
+    public componentDidMount() {
         const params = this.props.match.params;
         this.setState({
             assetid: params["nep5id"]
@@ -69,115 +68,93 @@ class AssetInfo extends React.Component<IAssetInfoProps, {}> {
         this.props.assetinfo.getNep5TransCount("asset", params["nep5id"]);
         this.getTranList(params["nep5id"])
     }
-    public componentWillUnmount()
-    {
+    public componentWillUnmount() {
         this.props.assetinfo.balanceRankCount = 0;
         this.props.assetinfo.balanceRankList = [];
         this.props.assetinfo.nep5TransList = [];
         this.props.assetinfo.nep5TransCount = 0;
     }
     // 返回区块列表
-    public onGoBack = () =>
-    {
+    public onGoBack = () => {
         this.props.history.push('/assets/');
     }
     // 请求数据
-    public getBalanceRankList = (asset: string) =>
-    {
+    public getBalanceRankList = (asset: string) => {
         return this.props.assetinfo.getBalanceRankList(asset, this.state.pageSize, this.state.currentPage);
     }
     // 请求数据
-    public getTranList = (asset: string) =>
-    {
+    public getTranList = (asset: string) => {
         return this.props.assetinfo.getNep5Transaction(asset, this.state.tranCurrentPage, this.state.tranPageSize);
     }
     // 列表特殊处理
-    public renderBalance = (value, key) =>
-    {
-        if (key === 'addr')
-        {
+    public renderBalance = (value, key) => {
+        if (key === 'addr') {
             return <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, value)}>{value}</a></span>
         }
         return null;
     }
     // 列表特殊处理
-    public renderTrans = (value, key) =>
-    {
-        if (key === 'txid')
-        {
+    public renderTrans = (value, key) => {
+        if (key === 'txid') {
             const txid = value.replace(/^(.{6})(.*)(.{6})$/, '$1...$3');
             return <span><a href="javascript:;" onClick={this.goTransInfo.bind(this, value)}>{txid}</a></span>
         }
-        if (key === 'from')
-        {
-            if (value === '')
-            {
+        if (key === 'from') {
+            if (value === '') {
                 return <span>{process.env.REACT_APP_SERVER_ENV === "NEO3" ? 'system' : '-'}</span>
             }
             // return <span className="addr-text">{value}</span>
             return <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, value)}>{value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
         }
-        if (key === 'to')
-        {
-            if (value === '')
-            {
+        if (key === 'to') {
+            if (value === '') {
                 return <span>{process.env.REACT_APP_SERVER_ENV === "NEO3" ? 'system' : '-'}</span>
             }
             // return <span className="addr-text">{value}</span>
             return <span><a href="javascript:;" onClick={this.goAddrInfo.bind(this, value)}>{value.replace(/^(.{4})(.*)(.{4})$/, '$1...$3')}</a></span>
         }
-        if (key === 'blocktime')
-        {
+        if (key === 'blocktime') {
             value = formatTime.format('yyyy/MM/dd | hh:mm:ss', value.toString(), this.props.intl.locale);
             return <span>{value}</span>
         }
         return null;
     }
     // 跳转地址详情页
-    public goAddrInfo = (addr: string) =>
-    {
+    public goAddrInfo = (addr: string) => {
         this.props.history.push('/address/' + addr)
     }
     // 跳转交易详情页
-    public goTransInfo = (txid: string) =>
-    {
+    public goTransInfo = (txid: string) => {
         this.props.history.push('/transaction/' + txid)
     }
     // 跳转合约详情页
-    public goContractInfo = (txid: string) =>
-    {
+    public goContractInfo = (txid: string) => {
         this.props.history.push('/contract/' + txid)
     }
     // 翻页功能
-    public onBalancePage = (index: number) =>
-    {
+    public onBalancePage = (index: number) => {
         this.setState({
             currentPage: index
-        }, () =>
-        {
+        }, () => {
             this.getBalanceRankList(this.state.assetid);
         })
     }
     // 翻页功能
-    public onTranPage = (index: number) =>
-    {
+    public onTranPage = (index: number) => {
         this.setState({
             tranCurrentPage: index
-        }, () =>
-        {
+        }, () => {
             this.getTranList(this.state.assetid);
         })
     }
-    public render()
-    {
-        if (!this.props.assetinfo.nep5Info)
-        {
+    public render() {
+        if (!this.props.assetinfo.nep5Info) {
             return (
                 <div className="nodata-wrap">
                     <img src={require('@/img/nodata.png')} alt="" />
                     {
                         this.props.assetinfo.isPending ? <p>{this.intrl.nodata.pending}</p> : <p>{this.intrl.nodata.msg}</p>
-                    }}
+                    }
                 </div>
             )
         }

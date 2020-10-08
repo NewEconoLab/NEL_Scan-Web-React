@@ -4,8 +4,7 @@ import * as CoinTool from '@/utils/cointool';
 import { IContractStore, IContractInfo, IBalanceInfo, INep5Balance, IContractAll, IContractNep5, IBalanceList } from '../interface/contract.interface';
 import { IInterTx } from '@/containers/transaction/interface/transaction.interface';
 
-class Contract implements IContractStore
-{
+class Contract implements IContractStore {
     @observable public contractHash: string = ''; // 当前合约hash
     @observable public contractAddr: string = ''; // 当前合约地址
     @observable public conInfo: IContractInfo | null = null;  // 合约信息详情
@@ -17,19 +16,16 @@ class Contract implements IContractStore
     @observable public nep5TxList: IContractNep5[] = []; // nep5调用的列表
     @observable public contInterList: IInterTx[] = [];// 内部交易列表
     @observable public contInterListCount: number = 0// 内部交易统计
-    @observable public isPending:boolean = false;
+    @observable public isPending: boolean = false;
     /**
      * 获取合约信息详情
      */
-    @action public async getContractData()
-    {
+    @action public async getContractData() {
         let result: any = null;
         this.isPending = true;
-        try
-        {
+        try {
             result = await Api.getcontractinfo(this.contractHash);
-        } catch (error)
-        {
+        } catch (error) {
             this.conInfo = null;
             return error;
         }
@@ -38,14 +34,11 @@ class Contract implements IContractStore
         return true;
     }
 
-    @action public async getAllContrant(page: number, size: number)
-    {
+    @action public async getAllContrant(page: number, size: number) {
         let result: any = null;
-        try
-        {
-            result = await Api.getcontractalltx(this.contractHash, page, size);
-        } catch (error)
-        {
+        try {
+            result = await Api.getContractCallTx(this.contractHash, page, size);
+        } catch (error) {
             this.allTxList = [];
             return error;
         }
@@ -54,14 +47,11 @@ class Contract implements IContractStore
         return true;
     }
 
-    @action public async getNep5Contrant(page: number, size: number)
-    {
+    @action public async getNep5Contrant(page: number, size: number) {
         let result: any = null;
-        try
-        {
+        try {
             result = await Api.getcontractnep5tx(this.contractAddr, page, size);
-        } catch (error)
-        {
+        } catch (error) {
             this.nep5TxList = [];
             return error;
         }
@@ -70,24 +60,19 @@ class Contract implements IContractStore
         return true;
     }
 
-    @action public async getbalance()
-    {
+    @action public async getbalance() {
         let result: any = null;
         this.balanceList = [];
-        try
-        {
+        try {
             result = await Api.getBalance(this.contractAddr);
             console.log(result)
-        } catch (error)
-        {
+        } catch (error) {
             this.balanceList = [];
             return error;
         }
         const arr: IBalanceInfo[] = result || [];
-        if (arr.length !== 0)
-        {
-            this.balanceList = arr.map((key) =>
-            {
+        if (arr.length !== 0) {
+            this.balanceList = arr.map((key) => {
                 const newObject = {
                     assetName: CoinTool.toChangeAssetName(key),
                     balance: key.balance
@@ -98,23 +83,18 @@ class Contract implements IContractStore
         return true;
     }
 
-    @action public async getNep5Balance()
-    {
+    @action public async getNep5Balance() {
         let result: any = null;
         this.nep5BalanceList = [];
-        try
-        {
+        try {
             result = await Api.getnep5Balance(this.contractAddr);
-        } catch (error)
-        {
+        } catch (error) {
             return error;
         }
         console.log(result)
         const arr: INep5Balance[] = result || [];
-        if (arr.length !== 0)
-        {
-            this.nep5BalanceList = arr.map((key) =>
-            {
+        if (arr.length !== 0) {
+            this.nep5BalanceList = arr.map((key) => {
                 const newObject = {
                     assetName: key.symbol + "(" + key.assetid.replace(/^(.{4})(.*)(.{4})$/, '$1...$3') + ")",
                     balance: key.balance
@@ -129,14 +109,11 @@ class Contract implements IContractStore
      * @param page 
      * @param size 
      */
-    @action public async getContractInterList(page: number, size: number)
-    {
+    @action public async getContractInterList(page: number, size: number) {
         let result: any = null;
-        try
-        {
+        try {
             result = await Api.getContractInterList(this.contractHash, page, size);
-        } catch (error)
-        {
+        } catch (error) {
             this.contInterList = [];
             return error;
         }

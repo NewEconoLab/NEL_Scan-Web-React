@@ -1,5 +1,5 @@
 /**
- * 地址列表页
+ * 合约列表页
  */
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
@@ -39,7 +39,7 @@ class Contracts extends React.Component<IContractListProps, {}> {
   }
   // 初始化数据
   public componentDidMount() {
-    this.props.contractlist.getContractList(this.state.currentPage,this.state.pageSize);
+    this.props.contractlist.getContractList(this.state.currentPage, this.state.pageSize);
   }
   public componentWillUnmount() {
     this.props.contractlist.conList = [];
@@ -60,11 +60,11 @@ class Contracts extends React.Component<IContractListProps, {}> {
       return <span>{time}</span>
     }
     if (key === 'name') {
-      const name = value?value:'-';
+      const name = value ? value : '-';
       return <span>{name}</span>
     }
     if (key === 'author') {
-      const author = value?value:'-';
+      const author = value ? value : '-';
       return <span>{author}</span>
     }
     return null;

@@ -12,7 +12,7 @@ export default {
     testnet: "测试网",
     neo3test: "NEO3.0 测试网",
     lang: "语言",
-    contract:"合约"
+    contract: "合约"
   },
   hint: {
     type1: "确定期为竞拍第一阶段，时长为3天，此期间所有的出价都有效。当确定期最后一天有人出价时将触发最大时长为2天的随机期。否则竞拍即在确定期结束。",
@@ -77,12 +77,12 @@ export default {
     fee: "交易费",
     number: "数量",
     sender: "发送方",
-    index:"序号",
-    transid:"父交易ID",
-    contract:"合约哈希",
-    ctime:"创建时间",
-    cname:"名称",
-    cauthor:"作者",
+    index: "序号",
+    transid: "父交易ID",
+    contract: "合约哈希",
+    ctime: "创建时间",
+    cname: "名称",
+    cauthor: "作者",
   },
   page: {
     page: "第",
@@ -95,13 +95,13 @@ export default {
     totalAddr: "已创建的钱包地址数",
     blocks: "最新的10个区块",
     transactions: "最新的10笔交易",
-    neoprice:"NEO价格",
-    gasprice:"GAS价格",
-    sevenday:"7天活跃地址数",
-    neocount:"NEO持币地址数",
-    gascount:"GAS持币地址数",
-    totalcount:"交易总量",
-    txcount:"30天交易数"
+    neoprice: "NEO价格",
+    gasprice: "GAS价格",
+    sevenday: "7天活跃地址数",
+    neocount: "NEO持币地址数",
+    gascount: "GAS持币地址数",
+    totalcount: "交易总量",
+    txcount: "30天交易数"
   },
   block: {
     title1: "区块列表",
@@ -130,12 +130,12 @@ export default {
     alltx: '所有交易',
     nep5tx: 'Nep5交易',
     transfer: '转账交易',
-    intx:"内部交易",
-    tips1:"合约调用由",
-    tips2:"调用",
-    tips3:"，共生成",
-    tips4:"个合约内部交易",
-    contract:"调用"
+    intx: "内部交易",
+    tips1: "合约调用由",
+    tips2: "调用",
+    tips3: "，共生成",
+    tips4: "个合约内部交易",
+    contract: "调用"
   },
   address: {
     title1: "地址列表",
@@ -150,7 +150,7 @@ export default {
     alltx: '所有交易',
     nep5tx: 'Nep5交易',
     transfer: '转账交易',
-    intx:"内部交易"
+    intx: "内部交易"
   },
   asset: {
     title1: "资产",
@@ -235,7 +235,7 @@ export default {
     waiting: "交易已发出，等待共识确认...",
     waitcount: "（当前等待数量：",
     waitcount2: "）",
-    pending:"处理中"
+    pending: "排队中"
   },
   contract: {
     title1: "合约信息",
@@ -253,13 +253,13 @@ export default {
     all: "全部",
     contract: "合约",
     copy: "复制成功",
-    calltx:"调用交易",
-    title5:"合约列表"
+    calltx: "调用交易",
+    title5: "合约列表"
   },
-  other:{
-    call:"调用合约",
-    create:"创建合约",
-    update:"升级合约",
-    destory:"销毁合约"
+  other: {
+    call: "调用合约",
+    create: "创建合约",
+    update: "升级合约",
+    destory: "销毁合约"
   }
 }
