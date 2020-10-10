@@ -23,16 +23,14 @@ class ContractInfo extends React.Component<IContractProps> {
 
     }
     public intrl = this.props.intl.messages;
-    public componentDidMount()
-    {
+    public componentDidMount() {
         const params = this.props.match.params;
         this.props.contract.contractHash = '0x' + params["hash"].replace('0x', '');
         const hash: Neo.Uint160 = Neo.Uint160.parse(params["hash"].replace('0x', ''));
         this.props.contract.contractAddr = ThinNeo.Helper.GetAddressFromScriptHash(hash);
         this.getContractInfo()
     }
-    public componentWillUnmount()
-    {
+    public componentWillUnmount() {
 
         this.props.contract.contractHash = '';
         this.props.contract.conInfo = null;
@@ -46,31 +44,26 @@ class ContractInfo extends React.Component<IContractProps> {
         this.props.contract.contInterListCount = 0;
     }
     // 请求数据
-    public getContractInfo = () =>
-    {
+    public getContractInfo = () => {
         return this.props.contract.getContractData();
     }
     // 返回上一页
-    public onGoBack = () =>
-    {
+    public onGoBack = () => {
         this.props.history.go(-1);
     }
     // 显示标题下拉
-    public onShowType = () =>
-    {
+    public onShowType = () => {
         this.setState({
             showTranFlag: !this.state.showTranFlag
         })
     }
     // 点击选择标题
-    public onClickType = (type: number) =>
-    {
+    public onClickType = (type: number) => {
         this.setState({
             showTabletype: type
         })
     }
-    public handleToCopyHash = (hash: string) =>
-    {
+    public handleToCopyHash = (hash: string) => {
         console.log(hash);
         const oInput = document.createElement('input');
         oInput.value = hash;
@@ -82,14 +75,11 @@ class ContractInfo extends React.Component<IContractProps> {
         Toast(this.intrl.contract.copy);
     }
     // 跳转到nep5的详情页
-    public handleToNep5Info = (hash: string) =>
-    {
+    public handleToNep5Info = (hash: string) => {
         this.props.history.push('/nep5/' + hash)
     }
-    public render()
-    {
-        if (!this.props.contract.conInfo)
-        {
+    public render() {
+        if (!this.props.contract.conInfo) {
             return (
                 <div className="nodata-wrap">
                     <img src={require('@/img/tran-nodata.png')} alt="" />
@@ -138,7 +128,7 @@ class ContractInfo extends React.Component<IContractProps> {
                                 {
                                     process.env.REACT_APP_SERVER_ENV === "NEO3" ? (
                                         <span className="type-content">
-                                            {this.props.contract.conInfo.creator?this.props.contract.conInfo.creator:"system"}
+                                            {this.props.contract.conInfo.creator ? this.props.contract.conInfo.creator : "-"}
                                         </span>
                                     )
                                         : (
