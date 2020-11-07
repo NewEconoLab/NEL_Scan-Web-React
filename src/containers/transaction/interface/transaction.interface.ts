@@ -14,6 +14,7 @@ export interface ITransactionsStore {
     infoInterList:IInfoInterTX[],
     infoInterListCount:number,
     isPending:boolean,
+    logNotify:string,
     getTransList: (page: number, size: number, type: string) => Promise<boolean>,
     getTransInfo: (txid: string) => Promise<boolean>,
     getNep5Transbytxid: (txid: string) => Promise<boolean>,
@@ -21,7 +22,8 @@ export interface ITransactionsStore {
     getNep5List: (page: number, size: number) => Promise<boolean>,
     getPoolTypeAndCount: (txid: string) => Promise<boolean>,
     getInterList:(page: number, size: number)=>Promise<boolean>,
-    getInfoInterList:(txid:string)=>Promise<boolean>
+    getInfoInterList:(txid:string)=>Promise<boolean>,
+    getLogNotifyData:(txid:string)=>Promise<boolean>
 }
 export interface ITransactionsProps extends RouteComponentProps {
     intl: any,
