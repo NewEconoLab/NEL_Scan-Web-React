@@ -13,12 +13,14 @@ export interface IContractStore {
     contInterList:IInterTx[],
     contInterListCount:number,
     isPending:boolean,
+    manifestInfo:string,
     getContractData: () => Promise<boolean>,
     getAllContrant: (page: number, size: number) => Promise<boolean>,
     getNep5Contrant: (page: number, size: number) => Promise<boolean>,
     getbalance: () => Promise<boolean>,
     getNep5Balance: () => Promise<boolean>,
     getContractInterList:(page: number, size: number)=> Promise<boolean>,
+    getContractManifestData:()=> Promise<boolean>,
 }
 export interface IContractProps extends RouteComponentProps {
     contract: IContractStore,

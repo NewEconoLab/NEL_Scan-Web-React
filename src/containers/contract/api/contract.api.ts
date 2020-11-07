@@ -86,3 +86,14 @@ export const getContractInterList = (hash: string, page: number, size: number) =
     }
     return request(opts);
 }
+/**
+ * 查询manifest
+ * @param hash 合约哈希
+ */
+export const getContractManifest = (hash: string) => {
+    const opts = {
+        method: 'getContractManifest',
+        params: [hash]
+    }
+    return request(opts);
+}

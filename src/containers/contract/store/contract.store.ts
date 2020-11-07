@@ -17,6 +17,7 @@ class Contract implements IContractStore {
     @observable public contInterList: IInterTx[] = [];// 内部交易列表
     @observable public contInterListCount: number = 0// 内部交易统计
     @observable public isPending: boolean = false;
+    @observable public manifestInfo:string = '';
     /**
      * 获取合约信息详情
      */
@@ -121,5 +122,18 @@ class Contract implements IContractStore {
         this.contInterList = result[0].list || [];
         return true;
     }
+
+    @action public async getContractManifestData() {
+        let result: any = null;
+        try {
+            result = await Api.getContractManifest(this.contractHash);
+        } catch (error) {
+            this.contInterList = [];
+            return error;
+        }
+        this.manifestInfo = result[0].manifest || '';
+        return true;
+    }
+
 }
 export default new Contract();

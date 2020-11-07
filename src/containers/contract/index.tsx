@@ -28,7 +28,8 @@ class ContractInfo extends React.Component<IContractProps> {
         this.props.contract.contractHash = '0x' + params["hash"].replace('0x', '');
         const hash: Neo.Uint160 = Neo.Uint160.parse(params["hash"].replace('0x', ''));
         this.props.contract.contractAddr = ThinNeo.Helper.GetAddressFromScriptHash(hash);
-        this.getContractInfo()
+        this.getContractInfo();
+        this.props.contract.getContractManifestData();
     }
     public componentWillUnmount() {
 
@@ -122,7 +123,6 @@ class ContractInfo extends React.Component<IContractProps> {
                                     }
                                 </span>
                             </li>
-
                             <li>
                                 <span className="type-name">{this.intrl.contract.author}</span>
                                 {
@@ -229,6 +229,15 @@ class ContractInfo extends React.Component<IContractProps> {
                 {
                     this.state.showTabletype === 2 && (<InterTable {...this.props} />)
                 }
+                {
+                   this.props.contract.manifestInfo && (
+                        <div className="manifest-box">
+                            <TitleText text="Manifest" />
+                            <div className="manifest-content" dangerouslySetInnerHTML={{__html:this.props.contract.manifestInfo}} />
+                        </div>
+                   ) 
+                }
+                
             </div>
         );
     }
