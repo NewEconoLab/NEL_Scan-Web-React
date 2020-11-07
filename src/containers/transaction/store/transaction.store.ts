@@ -17,6 +17,7 @@ class Transaction implements ITransactionsStore {
     @observable public infoInterList:IInfoInterTX[]=[];
     @observable public infoInterListCount:number=0;
     @observable public isPending:boolean = false;
+    @observable public logNotify:string = '';
 
     /**
      * 根据交易类型获取交易列表（默认获取所有交易）
@@ -156,6 +157,18 @@ class Transaction implements ITransactionsStore {
         }
         this.infoInterListCount = result[ 0 ].count || 0;
         this.infoInterList = result ? result[ 0 ].list : [];
+        return true;
+    }
+
+    @action public async getLogNotifyData(txid: string) {
+        let result: any = null;
+        try {
+            result = await Api.getLogNotify(txid);
+        } catch (error) {
+            this.logNotify = '';
+            return false;
+        }
+        this.logNotify = result[ 0 ].notifications ? JSON.stringify( result[ 0 ].notifications) : '';
         return true;
     }
 }

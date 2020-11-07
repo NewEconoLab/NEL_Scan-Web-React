@@ -135,3 +135,16 @@ export const getInfoInnerList = (txid:string) => {
   }
   return request(opts);
 }
+/**
+ * 查询log/notify
+ * @param txid 
+ */
+export const getLogNotify = (txid:string) => {
+  const opts = {
+    method: 'getContractNotify',
+    params: [
+      txid
+    ]
+  }
+  return request(opts);
+}

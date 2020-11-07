@@ -88,7 +88,7 @@ class Transactions extends React.Component<ITransactionsProps, {}>
         {
           this.state.showTable === 1 && (<Nep5tx {...this.props} />)
         }
-  {
+        {
           this.state.showTable === 2 && (<Intertx {...this.props} />)
         }
       </div>
