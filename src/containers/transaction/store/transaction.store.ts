@@ -168,7 +168,14 @@ class Transaction implements ITransactionsStore {
             this.logNotify = '';
             return false;
         }
-        this.logNotify = result[ 0 ].notifications ? JSON.stringify( result[ 0 ].notifications) : '';
+        this.logNotify = '';
+        if(result[ 0 ].notifications){
+            try {
+                this.logNotify =  JSON.stringify( result[ 0 ].notifications,null,2);
+            } catch (error) {
+                this.logNotify = JSON.stringify( result[ 0 ].notifications)||'';
+            }
+        }
         return true;
     }
 }

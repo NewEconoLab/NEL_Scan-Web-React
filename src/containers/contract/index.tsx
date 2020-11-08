@@ -84,6 +84,13 @@ class ContractInfo extends React.Component<IContractProps> {
   public handleToNep5Info = (hash: string) => {
     this.props.history.push("/nep5/" + hash);
   };
+  public parseJson = (str: string) => {
+    try {
+      return JSON.stringify(JSON.parse(str), null, 2);
+    } catch (e) {
+      return str;
+    }
+  };
   public render() {
     if (!this.props.contract.conInfo) {
       return (
@@ -270,12 +277,11 @@ class ContractInfo extends React.Component<IContractProps> {
         {process.env.REACT_APP_SERVER_ENV === "NEO3" && (
           <div className="manifest-box">
             <TitleText text="Manifest" />
-            <div
-              className="manifest-content"
-              dangerouslySetInnerHTML={{
-                __html: this.props.contract.manifestInfo || "no data",
-              }}
-            />
+            <div className="manifest-content">
+              <pre className="mf-content">
+                {this.parseJson(this.props.contract.manifestInfo)}
+              </pre>
+            </div>
           </div>
         )}
       </div>

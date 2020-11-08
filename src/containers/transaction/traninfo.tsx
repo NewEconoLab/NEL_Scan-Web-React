@@ -507,12 +507,9 @@ class TransactionInfo extends React.Component<
         {process.env.REACT_APP_SERVER_ENV === "NEO3" && (
           <div className="log-notify-box">
             <TitleText text="Log/Notify" />
-            <div
-              className="log-notify-content"
-              dangerouslySetInnerHTML={{
-                __html: this.props.transaction.logNotify,
-              }}
-            />
+            <div className="log-notify-content" >
+              <pre className="ln-content">{this.props.transaction.logNotify}</pre>
+            </div>
           </div>
         )}
       </div>
