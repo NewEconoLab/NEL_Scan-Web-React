@@ -29,6 +29,7 @@ class AddressInfo implements IAddressInfoStore {
         try {
             result = await Api.getaddrinfo(address);
         } catch (error) {
+            this.isPending = false;
             return false;
         }
         this.addrInfo = result ? result[ 0 ] : {};

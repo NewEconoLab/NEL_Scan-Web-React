@@ -47,6 +47,7 @@ class Block implements IBlockStore {
             result = await Api.getblock(index);
         } catch (error) {
             this.blockInfo =  null;
+            this.isPending = false;
             return false;
         }
         this.blockInfo = result ? result[0] : null;

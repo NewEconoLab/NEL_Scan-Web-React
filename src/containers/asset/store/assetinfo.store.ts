@@ -23,6 +23,7 @@ class AssetInfo implements IAssetInfoStore {
         try {
             result = await Api.getassetinfo(assetid);
         } catch (error) {
+            this.isPending = false;
             return false;
         }
         this.assetInfo = result ? result[0] : null;
@@ -40,6 +41,7 @@ class AssetInfo implements IAssetInfoStore {
         try {
             result = await Api.getnep5info(nep5id);
         } catch (error) {
+            this.isPending = false;
             return false;
         }
         this.nep5Info = result ? result[0] : null;

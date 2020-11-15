@@ -72,6 +72,7 @@ class Transaction implements ITransactionsStore {
             }
         } catch (error) {
             this.tranInfo = null;
+            this.isPending = false;
             return false;
         }
         this.tranInfo = result[ 0 ] || [];

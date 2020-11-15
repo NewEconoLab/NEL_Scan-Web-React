@@ -28,6 +28,7 @@ class Contract implements IContractStore {
             result = await Api.getcontractinfo(this.contractHash);
         } catch (error) {
             this.conInfo = null;
+            this.isPending = false;
             return error;
         }
         this.conInfo = result[0] || null;

@@ -23,6 +23,7 @@ class NNSInfo implements INNSInfoStore {
         try {
             result = await Api.getauctionres(domain);
         } catch (error) {
+            this.isPending = false;
             return false;
         }
         this.nnsInfo = result ? result[0] : null;
