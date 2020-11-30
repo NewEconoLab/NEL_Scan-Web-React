@@ -84,6 +84,7 @@ class TransactionInfo extends React.Component<
     if (!this.props.transaction.tranInfo) {
       this.props.transaction.getPoolTypeAndCount(txid);
     }
+
     this.props.transaction.getInfoInterList(txid);
     if(process.env.REACT_APP_SERVER_ENV === "NEO3"){
         this.props.transaction.getLogNotifyData(txid);
@@ -368,20 +369,20 @@ class TransactionInfo extends React.Component<
                       this.props.transaction.tranInfo.blockindex
                     )}
                   >
-                    {this.props.transaction.tranInfo &&
-                      this.props.transaction.tranInfo.blockindex}
+                    {(this.props.transaction.tranInfo &&
+                      this.props.transaction.tranInfo.blockindex)||this.intrl.nodata.pending2}
                   </a>
                 </span>
               </li>
               <li>
                 <span className="type-name">{this.intrl.transaction.time}</span>
                 <span className="type-content">
-                  {this.props.transaction.tranInfo &&
+                  {(this.props.transaction.tranInfo &&
                     formatTime.format(
                       "yyyy/MM/dd | hh:mm:ss",
                       this.props.transaction.tranInfo.blocktime.toString(),
                       this.props.intl.locale
-                    )}
+                    ))||'-'}
                 </span>
               </li>
             </ul>

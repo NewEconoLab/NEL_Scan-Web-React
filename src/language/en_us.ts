@@ -235,7 +235,8 @@ export default {
     waiting: "Transaction sent, pending confirmation...",
     waitcount: "(transaction pending count: ",
     waitcount2: ")",
-    pending:"Processing"
+    pending:"Processing",
+    pending2:"Pending",
   },
   contract: {
     title1: "Contract Details",

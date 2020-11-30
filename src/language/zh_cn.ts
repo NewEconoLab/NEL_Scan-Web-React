@@ -235,7 +235,8 @@ export default {
     waiting: "交易已发出，等待共识确认...",
     waitcount: "（当前等待数量：",
     waitcount2: "）",
-    pending: "排队中"
+    pending: "排队中",
+    pending2:'待确认'
   },
   contract: {
     title1: "合约信息",
