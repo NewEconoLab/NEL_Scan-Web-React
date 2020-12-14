@@ -104,6 +104,7 @@ class TransactionInfo extends React.Component<
   };
   // 区块详情链接
   public goBlockInfo = (index: string) => {
+    if(!index) return;
     this.props.history.push("/block/" + index);
   };
   // 拼接vin vout
@@ -369,20 +370,21 @@ class TransactionInfo extends React.Component<
                       this.props.transaction.tranInfo.blockindex
                     )}
                   >
-                    {(this.props.transaction.tranInfo &&
-                      this.props.transaction.tranInfo.blockindex)||this.intrl.nodata.pending2}
+                    {(this.props.transaction.tranInfo && this.props.transaction.tranInfo.blockindex)
+                      ?this.props.transaction.tranInfo.blockindex:this.intrl.nodata.pending2}
                   </a>
                 </span>
               </li>
               <li>
                 <span className="type-name">{this.intrl.transaction.time}</span>
                 <span className="type-content">
-                  {(this.props.transaction.tranInfo &&
-                    formatTime.format(
+                  {(this.props.transaction.tranInfo && this.props.transaction.tranInfo.blocktime)
+                  ?formatTime.format(
                       "yyyy/MM/dd | hh:mm:ss",
                       this.props.transaction.tranInfo.blocktime.toString(),
                       this.props.intl.locale
-                    ))||'-'}
+                    ):
+                    '-'}
                 </span>
               </li>
             </ul>
