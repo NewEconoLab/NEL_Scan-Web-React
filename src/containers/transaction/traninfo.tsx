@@ -104,8 +104,9 @@ class TransactionInfo extends React.Component<
   };
   // 区块详情链接
   public goBlockInfo = (index: string) => {
-    if(!index) return;
-    this.props.history.push("/block/" + index);
+    if(index) {
+      this.props.history.push("/block/" + index);
+    }
   };
   // 拼接vin vout
   public doVinVoutList = () => {
